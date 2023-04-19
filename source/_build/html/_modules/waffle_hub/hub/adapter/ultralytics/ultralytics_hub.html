@@ -1,0 +1,654 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="../../../../../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../../../../../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../../../../../_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="../../../../../_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="../../../../../_static/javascripts/modernizr.js"></script>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'UA-XXXXX');
+</script>
+  
+  
+    <title>waffle_hub.hub.adapter.ultralytics.ultralytics_hub &#8212; Waffle  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/material.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/katex-math.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../../_static/copybutton.js"></script>
+    <script src="../../../../../_static/katex.min.js"></script>
+    <script src="../../../../../_static/auto-render.min.js"></script>
+    <script src="../../../../../_static/katex_autorenderer.js"></script>
+    <link rel="icon" href="../../../../../_static/waffle_icon.png"/>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=orange data-md-color-accent=light-orange>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#_modules/waffle_hub/hub/adapter/ultralytics/ultralytics_hub" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../../../../../index.html" title="Waffle  documentation"
+           class="md-header-nav__button md-logo">
+          
+            &nbsp;
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">Waffle</span>
+          <span class="md-header-nav__topic"> waffle_hub.hub.adapter.ultralytics.ultralytics_hub </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="../../../../../search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder="Search"
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            <a href="https://github.com/snuailab/waffle" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    waffle
+  </div>
+</a>
+          </div>
+        </div>
+      
+      
+  
+  <script src="../../../../../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../../../../../"versions.json"",
+        target_loc = "../../../../../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="../../../../../index.html" class="md-tabs__link">Waffle  documentation</a></li>
+          <li class="md-tabs__item"><a href="../../../../index.html" class="md-tabs__link">Module code</a></li>
+          <li class="md-tabs__item"><a href="../../../../waffle_hub.html" class="md-tabs__link">waffle_hub</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../../../../../index.html" title="Waffle documentation" class="md-nav__button md-logo">
+      
+        <img src="../../../../../_static/" alt=" logo" width="48" height="48">
+      
+    </a>
+    <a href="../../../../../index.html"
+       title="Waffle documentation">Waffle</a>
+  </label>
+    <div class="md-nav__source">
+      <a href="https://github.com/snuailab/waffle" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    waffle
+  </div>
+</a>
+    </div>
+  
+  
+
+  
+  <ul class="md-nav__list">
+    <li class="md-nav__item">
+    
+      <span class="md-nav__link caption"><span class="caption-text">waffle_hub</span></span>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../../../../../docs/waffle_hub.html" class="md-nav__link">waffle_hub package</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+      <span class="md-nav__link caption"><span class="caption-text">waffle_utils</span></span>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../../../../../docs/waffle_utils.html" class="md-nav__link">waffle_utils package</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+      <span class="md-nav__link caption"><span class="caption-text">waffle_menu</span></span>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="../../../../../docs/waffle_menu.html" class="md-nav__link">waffle_menu package</a>
+      
+    
+    </li>
+  </ul>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <h1 id="modules-waffle-hub-hub-adapter-ultralytics-ultralytics-hub--page-root">Source code for waffle_hub.hub.adapter.ultralytics.ultralytics_hub</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Ultralytics Hub</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span> <span class="nn">waffle_hub</span> <span class="kn">import</span> <span class="n">get_installed_backend_version</span>
+
+<span class="n">BACKEND_NAME</span> <span class="o">=</span> <span class="s2">"ultralytics"</span>
+<span class="n">BACKEND_VERSION</span> <span class="o">=</span> <span class="n">get_installed_backend_version</span><span class="p">(</span><span class="n">BACKEND_NAME</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span> <span class="k">as</span> <span class="n">T</span>
+<span class="kn">from</span> <span class="nn">ultralytics</span> <span class="kn">import</span> <span class="n">YOLO</span>
+<span class="kn">from</span> <span class="nn">waffle_utils.file</span> <span class="kn">import</span> <span class="n">io</span>
+
+<span class="kn">from</span> <span class="nn">waffle_hub.hub.base_hub</span> <span class="kn">import</span> <span class="n">BaseHub</span>
+<span class="kn">from</span> <span class="nn">waffle_hub.hub.model.wrapper</span> <span class="kn">import</span> <span class="n">ModelWrapper</span>
+<span class="kn">from</span> <span class="nn">waffle_hub.schema.configs</span> <span class="kn">import</span> <span class="n">TrainConfig</span>
+<span class="kn">from</span> <span class="nn">waffle_hub.utils.callback</span> <span class="kn">import</span> <span class="n">TrainCallback</span>
+
+
+<div class="viewcode-block" id="UltralyticsHub"><a class="viewcode-back" href="../../../../../docs/waffle_hub.hub.adapter.ultralytics.html#waffle_hub.hub.adapter.ultralytics.ultralytics_hub.UltralyticsHub">[docs]</a><span class="k">class</span> <span class="nc">UltralyticsHub</span><span class="p">(</span><span class="n">BaseHub</span><span class="p">):</span>
+
+    <span class="c1"># Common</span>
+    <span class="n">MODEL_TYPES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"object_detection"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"yolov8"</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="s2">"nsmlx"</span><span class="p">)},</span>
+        <span class="s2">"classification"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"yolov8"</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="s2">"nsmlx"</span><span class="p">)},</span>
+        <span class="c1"># "segmentation": {"yolov8": list("nsmlx")},</span>
+        <span class="c1"># "keypoint_detection": {"yolov8": list("nsmlx")},</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Backend Specifics</span>
+    <span class="n">TASK_MAP</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"object_detection"</span><span class="p">:</span> <span class="s2">"detect"</span><span class="p">,</span>
+        <span class="s2">"classification"</span><span class="p">:</span> <span class="s2">"classify"</span><span class="p">,</span>
+        <span class="c1"># "segmentation": "segment"</span>
+        <span class="c1"># "keypoint_detection": "pose"</span>
+    <span class="p">}</span>
+    <span class="n">TASK_SUFFIX</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"detect"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="s2">"classify"</span><span class="p">:</span> <span class="s2">"-cls"</span><span class="p">,</span>
+        <span class="c1"># "segment": "-seg",</span>
+    <span class="p">}</span>
+
+    <span class="n">DEFAULT_PARAMAS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"object_detection"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+            <span class="s2">"image_size"</span><span class="p">:</span> <span class="p">[</span><span class="mi">640</span><span class="p">,</span> <span class="mi">640</span><span class="p">],</span>
+            <span class="s2">"learning_rate"</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+            <span class="s2">"letter_box"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">"batch_size"</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">"classification"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+            <span class="s2">"image_size"</span><span class="p">:</span> <span class="p">[</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">],</span>
+            <span class="s2">"learning_rate"</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+            <span class="s2">"letter_box"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">"batch_size"</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">task</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">model_size</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">categories</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">root_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Create Ultralytics Hub Class. Do not use this class directly. Use UltralyticsHub.new() instead."""</span>
+
+        <span class="k">if</span> <span class="n">backend</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">backend</span> <span class="o">!=</span> <span class="n">BACKEND_NAME</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"you've loaded </span><span class="si">{</span><span class="n">backend</span><span class="si">}</span><span class="s2">. backend must be </span><span class="si">{</span><span class="n">BACKEND_NAME</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">version</span> <span class="o">!=</span> <span class="n">BACKEND_VERSION</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"you've loaded a </span><span class="si">{</span><span class="n">BACKEND_NAME</span><span class="si">}</span><span class="s2">==</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2"> version while </span><span class="si">{</span><span class="n">BACKEND_NAME</span><span class="si">}</span><span class="s2">==</span><span class="si">{</span><span class="n">BACKEND_VERSION</span><span class="si">}</span><span class="s2"> version is installed."</span>
+                <span class="s2">"It will cause unexpected results."</span>
+            <span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">backend</span><span class="o">=</span><span class="n">BACKEND_NAME</span><span class="p">,</span>
+            <span class="n">version</span><span class="o">=</span><span class="n">BACKEND_VERSION</span><span class="p">,</span>
+            <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span>
+            <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
+            <span class="n">model_size</span><span class="o">=</span><span class="n">model_size</span><span class="p">,</span>
+            <span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span>
+            <span class="n">root_dir</span><span class="o">=</span><span class="n">root_dir</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">backend_task_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TASK_MAP</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">]</span>
+
+<div class="viewcode-block" id="UltralyticsHub.new"><a class="viewcode-back" href="../../../../../docs/waffle_hub.hub.adapter.ultralytics.html#waffle_hub.hub.adapter.ultralytics.ultralytics_hub.UltralyticsHub.new">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">task</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">model_size</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">categories</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">root_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Create Ultralytics Hub.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): Hub name</span>
+<span class="sd">            task (str, optional): Task Name. See UltralyticsHub.TASKS. Defaults to None.</span>
+<span class="sd">            model_type (str, optional): Model Type. See UltralyticsHub.MODEL_TYPES. Defaults to None.</span>
+<span class="sd">            model_size (str, optional): Model Size. See UltralyticsHub.MODEL_SIZES. Defaults to None.</span>
+<span class="sd">            categories (Union[list[dict], list]): class dictionary or list. [{"supercategory": "name"}, ] or ["name",].</span>
+<span class="sd">            root_dir (str, optional): Root directory of hub repository. Defaults to None.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span>
+            <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span>
+            <span class="n">model_size</span><span class="o">=</span><span class="n">model_size</span><span class="p">,</span>
+            <span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span>
+            <span class="n">root_dir</span><span class="o">=</span><span class="n">root_dir</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># Hub Utils</span>
+<div class="viewcode-block" id="UltralyticsHub.get_preprocess"><a class="viewcode-back" href="../../../../../docs/waffle_hub.hub.adapter.ultralytics.html#waffle_hub.hub.adapter.ultralytics.ultralytics_hub.UltralyticsHub.get_preprocess">[docs]</a>    <span class="k">def</span> <span class="nf">get_preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">task</span> <span class="o">==</span> <span class="s2">"classification"</span><span class="p">:</span>
+            <span class="n">normalize</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Normalize</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">normalize</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">task</span> <span class="o">==</span> <span class="s2">"object_detection"</span><span class="p">:</span>
+            <span class="n">normalize</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Normalize</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">normalize</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Task </span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2"> is not implemented."</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">preprocess</span></div>
+
+<div class="viewcode-block" id="UltralyticsHub.get_postprocess"><a class="viewcode-back" href="../../../../../docs/waffle_hub.hub.adapter.ultralytics.html#waffle_hub.hub.adapter.ultralytics.ultralytics_hub.UltralyticsHub.get_postprocess">[docs]</a>    <span class="k">def</span> <span class="nf">get_postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">task</span> <span class="o">==</span> <span class="s2">"classification"</span><span class="p">:</span>
+
+            <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">task</span> <span class="o">==</span> <span class="s2">"object_detection"</span><span class="p">:</span>
+
+            <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span>
+                <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">image_size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># x[0]: prediction, x[1]: TODO: what is this...?</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+                <span class="n">cxcywh</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+                <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">cxcywh</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">x1</span> <span class="o">=</span> <span class="n">cx</span> <span class="o">-</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">y1</span> <span class="o">=</span> <span class="n">cy</span> <span class="o">-</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">x2</span> <span class="o">=</span> <span class="n">cx</span> <span class="o">+</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">y2</span> <span class="o">=</span> <span class="n">cy</span> <span class="o">+</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">xyxy</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="n">xyxy</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">/=</span> <span class="n">image_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">xyxy</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">/=</span> <span class="n">image_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">probs</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">4</span><span class="p">:]</span>
+                <span class="n">confidences</span><span class="p">,</span> <span class="n">class_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">xyxy</span><span class="p">,</span> <span class="n">confidences</span><span class="p">,</span> <span class="n">class_ids</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Task </span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2"> is not implemented."</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">inner</span></div>
+
+<div class="viewcode-block" id="UltralyticsHub.get_metrics"><a class="viewcode-back" href="../../../../../docs/waffle_hub.hub.adapter.ultralytics.html#waffle_hub.hub.adapter.ultralytics.ultralytics_hub.UltralyticsHub.get_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">get_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]]:</span>
+        <span class="c1"># read csv file</span>
+        <span class="c1"># epoch,         train/box_loss,         train/cls_loss,         train/dfl_loss,   metrics/precision(B),      metrics/recall(B),       metrics/mAP50(B),    metrics/mAP50-95(B),           val/box_loss,           val/cls_loss,           val/dfl_loss,                 lr/pg0,                 lr/pg1,                 lr/pg2</span>
+        <span class="c1">#              0,                 2.0349,                 4.4739,                  1.214,                0.75962,                0.34442,                0.22858,                0.18438,                0.61141,                 2.8409,                0.78766,                 0.0919,                 0.0009,                 0.0009</span>
+        <span class="c1">#              1,                 1.7328,                 4.0078,                 1.1147,                0.12267,                0.40909,                0.20891,                0.15007,                0.75082,                 2.7157,                0.79723,               0.082862,              0.0018624,              0.0018624</span>
+        <span class="c1"># and parse it to list[dict]</span>
+        <span class="c1"># [[{"tag": train/box_loss, "value": 0.0}, {"tag": train/box_loss, "value": 1.7328}, ...], ...]</span>
+        <span class="c1"># and return it</span>
+
+        <span class="n">csv_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">artifact_dir</span> <span class="o">/</span> <span class="s2">"results.csv"</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">csv_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+        <span class="n">header</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span>
+            <span class="n">metric</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+                <span class="n">metric</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="s2">"tag"</span><span class="p">:</span> <span class="n">header</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+                        <span class="s2">"value"</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">metrics</span></div>
+
+    <span class="c1"># Train Hook</span>
+<div class="viewcode-block" id="UltralyticsHub.on_train_start"><a class="viewcode-back" href="../../../../../docs/waffle_hub.hub.adapter.ultralytics.html#waffle_hub.hub.adapter.ultralytics.ultralytics_hub.UltralyticsHub.on_train_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">TrainConfig</span><span class="p">):</span>
+
+        <span class="c1"># set data</span>
+        <span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend_task_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"detect"</span><span class="p">,</span> <span class="s2">"segment"</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">".yml"</span><span class="p">,</span> <span class="s2">".yaml"</span><span class="p">]:</span>
+                <span class="n">yaml_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"*.yaml"</span><span class="p">))</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span>
+                    <span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"*.yml"</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">yaml_files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">"Ambiguous data file. Detected files: </span><span class="si">{</span><span class="n">yaml_files</span><span class="si">}</span><span class="s2">"</span>
+                    <span class="p">)</span>
+                <span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">yaml_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend_task_name</span> <span class="o">==</span> <span class="s2">"classify"</span><span class="p">:</span>
+
+            <span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">ImageFolder</span>
+
+            <span class="k">def</span> <span class="nf">find_categories</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">directory</span><span class="p">,</span> <span class="p">{</span>
+                    <span class="n">v</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
+                <span class="p">}</span>
+
+            <span class="n">ImageFolder</span><span class="o">.</span><span class="n">find_categories</span> <span class="o">=</span> <span class="n">find_categories</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Classification dataset should be directory. Not </span><span class="si">{</span><span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="si">}</span><span class="s2">"</span>
+                <span class="p">)</span>
+            <span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+        <span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">)</span>
+
+        <span class="c1"># pretrained model</span>
+        <span class="n">cfg</span><span class="o">.</span><span class="n">pretrained_model</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">cfg</span><span class="o">.</span><span class="n">pretrained_model</span>
+            <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">pretrained_model</span>
+            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_size</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">TASK_SUFFIX</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">backend_task_name</span><span class="p">]</span>
+            <span class="o">+</span> <span class="s2">".pt"</span>
+        <span class="p">)</span>
+
+        <span class="c1"># overwrite train config with default config</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_PARAMAS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">][</span><span class="n">k</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="UltralyticsHub.training"><a class="viewcode-back" href="../../../../../docs/waffle_hub.hub.adapter.ultralytics.html#waffle_hub.hub.adapter.ultralytics.ultralytics_hub.UltralyticsHub.training">[docs]</a>    <span class="k">def</span> <span class="nf">training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">TrainConfig</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">TrainCallback</span><span class="p">):</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">YOLO</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">pretrained_model</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backend_task_name</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">dataset_path</span><span class="p">,</span>
+            <span class="n">epochs</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">epochs</span><span class="p">,</span>
+            <span class="n">batch</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+            <span class="n">imgsz</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">image_size</span><span class="p">,</span>
+            <span class="n">lr0</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="n">lrf</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="n">rect</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">letter_box</span><span class="p">,</span>
+            <span class="n">device</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">workers</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hub_dir</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ARTIFACT_DIR</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">del</span> <span class="n">model</span></div>
+
+<div class="viewcode-block" id="UltralyticsHub.on_train_end"><a class="viewcode-back" href="../../../../../docs/waffle_hub.hub.adapter.ultralytics.html#waffle_hub.hub.adapter.ultralytics.ultralytics_hub.UltralyticsHub.on_train_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">TrainConfig</span><span class="p">):</span>
+        <span class="n">io</span><span class="o">.</span><span class="n">copy_file</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">artifact_dir</span> <span class="o">/</span> <span class="s2">"weights"</span> <span class="o">/</span> <span class="s2">"best.pt"</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best_ckpt_file</span><span class="p">,</span>
+            <span class="n">create_directory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">io</span><span class="o">.</span><span class="n">copy_file</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">artifact_dir</span> <span class="o">/</span> <span class="s2">"weights"</span> <span class="o">/</span> <span class="s2">"last.pt"</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_ckpt_file</span><span class="p">,</span>
+            <span class="n">create_directory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">io</span><span class="o">.</span><span class="n">save_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_metrics</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_file</span><span class="p">)</span></div>
+
+    <span class="c1"># Inference Hook</span>
+<div class="viewcode-block" id="UltralyticsHub.get_model"><a class="viewcode-back" href="../../../../../docs/waffle_hub.hub.adapter.ultralytics.html#waffle_hub.hub.adapter.ultralytics.ultralytics_hub.UltralyticsHub.get_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Get model.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            ModelWrapper: Model wrapper</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_train_sanity</span><span class="p">()</span>
+
+        <span class="c1"># get adapt functions</span>
+        <span class="n">preprocess</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_preprocess</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">)</span>
+        <span class="n">postprocess</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_postprocess</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">)</span>
+
+        <span class="c1"># get model</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">ModelWrapper</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">YOLO</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_ckpt_file</span><span class="p">)</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">(),</span>
+            <span class="n">preprocess</span><span class="o">=</span><span class="n">preprocess</span><span class="p">,</span>
+            <span class="n">postprocess</span><span class="o">=</span><span class="n">postprocess</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model</span></div>
+
+    <span class="c1"># Evaluate Hook</span>
+<div class="viewcode-block" id="UltralyticsHub.evaluating"><a class="viewcode-back" href="../../../../../docs/waffle_hub.hub.adapter.ultralytics.html#waffle_hub.hub.adapter.ultralytics.ultralytics_hub.UltralyticsHub.evaluating">[docs]</a>    <span class="k">def</span> <span class="nf">evaluating</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+</pre></div>
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2023, ZeroAct.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../../../../../_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>
