@@ -21,6 +21,7 @@ jobs:
       run: |
         cd docs
         make clean html
+        cd ..
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
