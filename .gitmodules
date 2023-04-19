@@ -1,0 +1,9 @@
+[submodule "waffle_hub"]
+	path = waffle_hub
+	url = https://github.com/snuailab/waffle_hub.git
+[submodule "waffle_utils"]
+	path = waffle_utils
+	url = https://github.com/snuailab/waffle_utils.git
+[submodule "waffle_menu"]
+	path = waffle_menu
+	url = https://github.com/snuailab/waffle_menu.git
