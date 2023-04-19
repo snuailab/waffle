@@ -1,0 +1,1189 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="../_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="../_static/javascripts/modernizr.js"></script>
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'UA-XXXXX');
+</script>
+  
+  
+    <title>waffle_hub package &#8212; Waffle  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/material.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/katex-math.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/katex.min.js"></script>
+    <script src="../_static/auto-render.min.js"></script>
+    <script src="../_static/katex_autorenderer.js"></script>
+    <link rel="icon" href="../_static/waffle_icon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="waffle_hub.dataset package" href="waffle_hub.dataset.html" />
+    <link rel="prev" title="Welcome to Waffle’s documentation!" href="../index.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=orange data-md-color-accent=light-orange>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#docs/waffle_hub" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../index.html" title="Waffle  documentation"
+           class="md-header-nav__button md-logo">
+          
+            &nbsp;
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">Waffle</span>
+          <span class="md-header-nav__topic"> waffle_hub package </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="../search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder="Search"
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            <a href="https://github.com/snuailab/waffle" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    waffle
+  </div>
+</a>
+          </div>
+        </div>
+      
+      
+  
+  <script src="../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../"versions.json"",
+        target_loc = "../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Waffle  documentation</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../index.html" title="Waffle documentation" class="md-nav__button md-logo">
+      
+        <img src="../_static/" alt=" logo" width="48" height="48">
+      
+    </a>
+    <a href="../index.html"
+       title="Waffle documentation">Waffle</a>
+  </label>
+    <div class="md-nav__source">
+      <a href="https://github.com/snuailab/waffle" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    waffle
+  </div>
+</a>
+    </div>
+  
+  
+
+  
+  <ul class="md-nav__list">
+    <li class="md-nav__item">
+    
+      <span class="md-nav__link caption"><span class="caption-text">waffle_hub</span></span>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    <label class="md-nav__link md-nav__link--active" for="__toc"> waffle_hub package </label>
+    
+      <a href="#" class="md-nav__link md-nav__link--active">waffle_hub package</a>
+      
+        
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">Contents</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#docs-waffle-hub--page-root" class="md-nav__link">waffle_hub package</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#subpackages" class="md-nav__link">Subpackages</a>
+        </li>
+        <li class="md-nav__item"><a href="#submodules" class="md-nav__link">Submodules</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-waffle_hub.run" class="md-nav__link">waffle_hub.run module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-waffle_hub" class="md-nav__link">Module contents</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#waffle_hub.BaseEnum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseEnum</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.CustomEnumMeta" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">CustomEnumMeta</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.DataType" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#waffle_hub.DataType.COCO" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType.COCO</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.DataType.TX_MODEL" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType.TX_MODEL</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.DataType.ULTRALYTICS" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType.ULTRALYTICS</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.DataType.YOLO" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType.YOLO</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.CLASSIFICATION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.CLASSIFICATION</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.KEYPOINT_DETECTION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.KEYPOINT_DETECTION</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.OBJECT_DETECTION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.OBJECT_DETECTION</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.REGRESSION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.REGRESSION</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.SEGMENTATION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.SEGMENTATION</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.TEXT_RECOGNITION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.TEXT_RECOGNITION</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.get_available_backends" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">get_available_backends()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.get_backends" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">get_backends()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.get_installed_backend_version" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">get_installed_backend_version()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../_sources/docs/waffle_hub.rst.txt">Show Source</a> </li>
+
+  </ul>
+</nav>
+      <ul class="md-nav__list"> 
+    <li class="md-nav__item">
+    
+    
+      <a href="#subpackages" class="md-nav__link">Subpackages</a>
+      <ul class="md-nav__list"> 
+    <li class="md-nav__item">
+    
+    
+      <a href="waffle_hub.dataset.html" class="md-nav__link">waffle_hub.dataset package</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="waffle_hub.experimental.html" class="md-nav__link">waffle_hub.experimental package</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="waffle_hub.hub.html" class="md-nav__link">waffle_hub.hub package</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="waffle_hub.schema.html" class="md-nav__link">waffle_hub.schema package</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="waffle_hub.utils.html" class="md-nav__link">waffle_hub.utils package</a>
+      
+    
+    </li></ul>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#submodules" class="md-nav__link">Submodules</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#module-waffle_hub.run" class="md-nav__link">waffle_hub.run module</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#module-waffle_hub" class="md-nav__link">Module contents</a>
+      <ul class="md-nav__list"> 
+    <li class="md-nav__item">
+    
+    
+      <a href="#waffle_hub.BaseEnum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseEnum</span></code></a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#waffle_hub.CustomEnumMeta" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">CustomEnumMeta</span></code></a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#waffle_hub.DataType" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType</span></code></a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#waffle_hub.TaskType" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType</span></code></a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#waffle_hub.get_available_backends" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">get_available_backends()</span></code></a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#waffle_hub.get_backends" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">get_backends()</span></code></a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#waffle_hub.get_installed_backend_version" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">get_installed_backend_version()</span></code></a>
+      
+    
+    </li></ul>
+    
+    </li></ul>
+    
+    </li>
+    <li class="md-nav__item">
+    
+      <span class="md-nav__link caption"><span class="caption-text">waffle_utils</span></span>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="waffle_utils.html" class="md-nav__link">waffle_utils package</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+      <span class="md-nav__link caption"><span class="caption-text">waffle_menu</span></span>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="waffle_menu.html" class="md-nav__link">waffle_menu package</a>
+      
+    
+    </li>
+  </ul>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">Contents</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#docs-waffle-hub--page-root" class="md-nav__link">waffle_hub package</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#subpackages" class="md-nav__link">Subpackages</a>
+        </li>
+        <li class="md-nav__item"><a href="#submodules" class="md-nav__link">Submodules</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-waffle_hub.run" class="md-nav__link">waffle_hub.run module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-waffle_hub" class="md-nav__link">Module contents</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#waffle_hub.BaseEnum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BaseEnum</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.CustomEnumMeta" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">CustomEnumMeta</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.DataType" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#waffle_hub.DataType.COCO" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType.COCO</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.DataType.TX_MODEL" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType.TX_MODEL</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.DataType.ULTRALYTICS" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType.ULTRALYTICS</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.DataType.YOLO" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataType.YOLO</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.CLASSIFICATION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.CLASSIFICATION</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.KEYPOINT_DETECTION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.KEYPOINT_DETECTION</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.OBJECT_DETECTION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.OBJECT_DETECTION</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.REGRESSION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.REGRESSION</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.SEGMENTATION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.SEGMENTATION</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.TaskType.TEXT_RECOGNITION" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">TaskType.TEXT_RECOGNITION</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.get_available_backends" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">get_available_backends()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.get_backends" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">get_backends()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#waffle_hub.get_installed_backend_version" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">get_installed_backend_version()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../_sources/docs/waffle_hub.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="waffle-hub-package">
+<h1 id="docs-waffle-hub--page-root">waffle_hub package<a class="headerlink" href="#docs-waffle-hub--page-root" title="Permalink to this heading">¶</a></h1>
+<section id="subpackages">
+<h2 id="subpackages">Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="waffle_hub.dataset.html">waffle_hub.dataset package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.dataset.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.dataset.adapter.html">waffle_hub.dataset.adapter package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.adapter.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.adapter.html#module-waffle_hub.dataset.adapter.coco">waffle_hub.dataset.adapter.coco module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.adapter.html#module-waffle_hub.dataset.adapter.yolo">waffle_hub.dataset.adapter.yolo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.adapter.html#module-waffle_hub.dataset.adapter">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.dataset.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.dataset.html#module-waffle_hub.dataset.dataset">waffle_hub.dataset.dataset module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.ANNOTATION_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.ANNOTATION_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.CATEGORY_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.CATEGORY_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.DATASET_INFO_FILE_NAME"><code class="docutils literal notranslate"><span class="pre">Dataset.DATASET_INFO_FILE_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.DEFAULT_DATASET_ROOT_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.DEFAULT_DATASET_ROOT_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.EXPORT_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.EXPORT_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.IMAGE_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.IMAGE_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.PREDICTION_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.PREDICTION_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.RAW_IMAGE_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.RAW_IMAGE_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.SET_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.SET_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.TEST_SET_FILE_NAME"><code class="docutils literal notranslate"><span class="pre">Dataset.TEST_SET_FILE_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.TRAIN_SET_FILE_NAME"><code class="docutils literal notranslate"><span class="pre">Dataset.TRAIN_SET_FILE_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.UNLABELED_SET_FILE_NAME"><code class="docutils literal notranslate"><span class="pre">Dataset.UNLABELED_SET_FILE_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.VAL_SET_FILE_NAME"><code class="docutils literal notranslate"><span class="pre">Dataset.VAL_SET_FILE_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.add_annotations"><code class="docutils literal notranslate"><span class="pre">Dataset.add_annotations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.add_categories"><code class="docutils literal notranslate"><span class="pre">Dataset.add_categories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.add_images"><code class="docutils literal notranslate"><span class="pre">Dataset.add_images()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.add_predictions"><code class="docutils literal notranslate"><span class="pre">Dataset.add_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.annotation_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.annotation_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.annotations"><code class="docutils literal notranslate"><span class="pre">Dataset.annotations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.categories"><code class="docutils literal notranslate"><span class="pre">Dataset.categories</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.category_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.category_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.category_names"><code class="docutils literal notranslate"><span class="pre">Dataset.category_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.clone"><code class="docutils literal notranslate"><span class="pre">Dataset.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.created"><code class="docutils literal notranslate"><span class="pre">Dataset.created</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.dataset_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.dataset_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.dataset_info_file"><code class="docutils literal notranslate"><span class="pre">Dataset.dataset_info_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.delete"><code class="docutils literal notranslate"><span class="pre">Dataset.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.export"><code class="docutils literal notranslate"><span class="pre">Dataset.export()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.export_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.export_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.from_coco"><code class="docutils literal notranslate"><span class="pre">Dataset.from_coco()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.get_annotations"><code class="docutils literal notranslate"><span class="pre">Dataset.get_annotations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.get_categories"><code class="docutils literal notranslate"><span class="pre">Dataset.get_categories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.get_images"><code class="docutils literal notranslate"><span class="pre">Dataset.get_images()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.get_predictions"><code class="docutils literal notranslate"><span class="pre">Dataset.get_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.get_split_ids"><code class="docutils literal notranslate"><span class="pre">Dataset.get_split_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.image_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.image_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.image_to_annotations"><code class="docutils literal notranslate"><span class="pre">Dataset.image_to_annotations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.images"><code class="docutils literal notranslate"><span class="pre">Dataset.images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.initialize"><code class="docutils literal notranslate"><span class="pre">Dataset.initialize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.initialized"><code class="docutils literal notranslate"><span class="pre">Dataset.initialized()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.load"><code class="docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.name"><code class="docutils literal notranslate"><span class="pre">Dataset.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.new"><code class="docutils literal notranslate"><span class="pre">Dataset.new()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.prediction_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.prediction_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.raw_image_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.raw_image_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.root_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.root_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.set_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.set_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.split"><code class="docutils literal notranslate"><span class="pre">Dataset.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.task"><code class="docutils literal notranslate"><span class="pre">Dataset.task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.test_set_file"><code class="docutils literal notranslate"><span class="pre">Dataset.test_set_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.train_set_file"><code class="docutils literal notranslate"><span class="pre">Dataset.train_set_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.unlabeled_images"><code class="docutils literal notranslate"><span class="pre">Dataset.unlabeled_images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.unlabeled_set_file"><code class="docutils literal notranslate"><span class="pre">Dataset.unlabeled_set_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.dataset.Dataset.val_set_file"><code class="docutils literal notranslate"><span class="pre">Dataset.val_set_file</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.dataset.html#module-waffle_hub.dataset">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.ANNOTATION_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.ANNOTATION_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.CATEGORY_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.CATEGORY_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.DATASET_INFO_FILE_NAME"><code class="docutils literal notranslate"><span class="pre">Dataset.DATASET_INFO_FILE_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.DEFAULT_DATASET_ROOT_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.DEFAULT_DATASET_ROOT_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.EXPORT_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.EXPORT_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.IMAGE_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.IMAGE_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.PREDICTION_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.PREDICTION_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.RAW_IMAGE_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.RAW_IMAGE_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.SET_DIR"><code class="docutils literal notranslate"><span class="pre">Dataset.SET_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.TEST_SET_FILE_NAME"><code class="docutils literal notranslate"><span class="pre">Dataset.TEST_SET_FILE_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.TRAIN_SET_FILE_NAME"><code class="docutils literal notranslate"><span class="pre">Dataset.TRAIN_SET_FILE_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.UNLABELED_SET_FILE_NAME"><code class="docutils literal notranslate"><span class="pre">Dataset.UNLABELED_SET_FILE_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.VAL_SET_FILE_NAME"><code class="docutils literal notranslate"><span class="pre">Dataset.VAL_SET_FILE_NAME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.add_annotations"><code class="docutils literal notranslate"><span class="pre">Dataset.add_annotations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.add_categories"><code class="docutils literal notranslate"><span class="pre">Dataset.add_categories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.add_images"><code class="docutils literal notranslate"><span class="pre">Dataset.add_images()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.add_predictions"><code class="docutils literal notranslate"><span class="pre">Dataset.add_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.annotation_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.annotation_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.annotations"><code class="docutils literal notranslate"><span class="pre">Dataset.annotations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.categories"><code class="docutils literal notranslate"><span class="pre">Dataset.categories</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.category_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.category_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.category_names"><code class="docutils literal notranslate"><span class="pre">Dataset.category_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.clone"><code class="docutils literal notranslate"><span class="pre">Dataset.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.created"><code class="docutils literal notranslate"><span class="pre">Dataset.created</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.dataset_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.dataset_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.dataset_info_file"><code class="docutils literal notranslate"><span class="pre">Dataset.dataset_info_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.delete"><code class="docutils literal notranslate"><span class="pre">Dataset.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.export"><code class="docutils literal notranslate"><span class="pre">Dataset.export()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.export_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.export_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.from_coco"><code class="docutils literal notranslate"><span class="pre">Dataset.from_coco()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.get_annotations"><code class="docutils literal notranslate"><span class="pre">Dataset.get_annotations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.get_categories"><code class="docutils literal notranslate"><span class="pre">Dataset.get_categories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.get_images"><code class="docutils literal notranslate"><span class="pre">Dataset.get_images()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.get_predictions"><code class="docutils literal notranslate"><span class="pre">Dataset.get_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.get_split_ids"><code class="docutils literal notranslate"><span class="pre">Dataset.get_split_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.image_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.image_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.image_to_annotations"><code class="docutils literal notranslate"><span class="pre">Dataset.image_to_annotations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.images"><code class="docutils literal notranslate"><span class="pre">Dataset.images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.initialize"><code class="docutils literal notranslate"><span class="pre">Dataset.initialize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.initialized"><code class="docutils literal notranslate"><span class="pre">Dataset.initialized()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.load"><code class="docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.name"><code class="docutils literal notranslate"><span class="pre">Dataset.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.new"><code class="docutils literal notranslate"><span class="pre">Dataset.new()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.prediction_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.prediction_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.raw_image_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.raw_image_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.root_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.root_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.set_dir"><code class="docutils literal notranslate"><span class="pre">Dataset.set_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.split"><code class="docutils literal notranslate"><span class="pre">Dataset.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.task"><code class="docutils literal notranslate"><span class="pre">Dataset.task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.test_set_file"><code class="docutils literal notranslate"><span class="pre">Dataset.test_set_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.train_set_file"><code class="docutils literal notranslate"><span class="pre">Dataset.train_set_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.unlabeled_images"><code class="docutils literal notranslate"><span class="pre">Dataset.unlabeled_images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.unlabeled_set_file"><code class="docutils literal notranslate"><span class="pre">Dataset.unlabeled_set_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.dataset.html#waffle_hub.dataset.Dataset.val_set_file"><code class="docutils literal notranslate"><span class="pre">Dataset.val_set_file</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="waffle_hub.experimental.html">waffle_hub.experimental package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.experimental.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.experimental.auto_label.html">waffle_hub.experimental.auto_label package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.experimental.auto_label.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.experimental.auto_label.html#waffle-hub-experimental-auto-label-grounding-dino-module">waffle_hub.experimental.auto_label.grounding_dino module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.experimental.auto_label.html#module-waffle_hub.experimental.auto_label">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.experimental.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.experimental.html#waffle-hub-experimental-serve-module">waffle_hub.experimental.serve module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.experimental.html#module-waffle_hub.experimental">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="waffle_hub.hub.html">waffle_hub.hub package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.hub.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.hub.adapter.html">waffle_hub.hub.adapter package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.adapter.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.adapter.html#module-waffle_hub.hub.adapter">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.hub.model.html">waffle_hub.hub.model package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.model.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.model.html#module-waffle_hub.hub.model.wrapper">waffle_hub.hub.model.wrapper module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.model.html#module-waffle_hub.hub.model">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.hub.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.hub.html#module-waffle_hub.hub.base_hub">waffle_hub.hub.base_hub module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub"><code class="docutils literal notranslate"><span class="pre">BaseHub</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.ARTIFACT_DIR"><code class="docutils literal notranslate"><span class="pre">BaseHub.ARTIFACT_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.BEST_CKPT_FILE"><code class="docutils literal notranslate"><span class="pre">BaseHub.BEST_CKPT_FILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.CONFIG_DIR"><code class="docutils literal notranslate"><span class="pre">BaseHub.CONFIG_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.DEFAULT_ROOT_DIR"><code class="docutils literal notranslate"><span class="pre">BaseHub.DEFAULT_ROOT_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.DRAW_DIR"><code class="docutils literal notranslate"><span class="pre">BaseHub.DRAW_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.EVALUATION_DIR"><code class="docutils literal notranslate"><span class="pre">BaseHub.EVALUATION_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.EXPORT_DIR"><code class="docutils literal notranslate"><span class="pre">BaseHub.EXPORT_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.INFERENCE_DIR"><code class="docutils literal notranslate"><span class="pre">BaseHub.INFERENCE_DIR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.LAST_CKPT_FILE"><code class="docutils literal notranslate"><span class="pre">BaseHub.LAST_CKPT_FILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.METRIC_FILE"><code class="docutils literal notranslate"><span class="pre">BaseHub.METRIC_FILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.MODEL_CONFIG_FILE"><code class="docutils literal notranslate"><span class="pre">BaseHub.MODEL_CONFIG_FILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.MODEL_TYPES"><code class="docutils literal notranslate"><span class="pre">BaseHub.MODEL_TYPES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.ONNX_FILE"><code class="docutils literal notranslate"><span class="pre">BaseHub.ONNX_FILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.TRAIN_CONFIG_FILE"><code class="docutils literal notranslate"><span class="pre">BaseHub.TRAIN_CONFIG_FILE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.after_export"><code class="docutils literal notranslate"><span class="pre">BaseHub.after_export()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.after_inference"><code class="docutils literal notranslate"><span class="pre">BaseHub.after_inference()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.after_train"><code class="docutils literal notranslate"><span class="pre">BaseHub.after_train()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.artifact_dir"><code class="docutils literal notranslate"><span class="pre">BaseHub.artifact_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.backend"><code class="docutils literal notranslate"><span class="pre">BaseHub.backend</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.before_export"><code class="docutils literal notranslate"><span class="pre">BaseHub.before_export()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.before_inference"><code class="docutils literal notranslate"><span class="pre">BaseHub.before_inference()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.before_train"><code class="docutils literal notranslate"><span class="pre">BaseHub.before_train()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.best_ckpt_file"><code class="docutils literal notranslate"><span class="pre">BaseHub.best_ckpt_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.categories"><code class="docutils literal notranslate"><span class="pre">BaseHub.categories</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.check_train_sanity"><code class="docutils literal notranslate"><span class="pre">BaseHub.check_train_sanity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.delete_artifact"><code class="docutils literal notranslate"><span class="pre">BaseHub.delete_artifact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.draw_dir"><code class="docutils literal notranslate"><span class="pre">BaseHub.draw_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.evaluate"><code class="docutils literal notranslate"><span class="pre">BaseHub.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.evaluation_dir"><code class="docutils literal notranslate"><span class="pre">BaseHub.evaluation_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.export"><code class="docutils literal notranslate"><span class="pre">BaseHub.export()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.export_dir"><code class="docutils literal notranslate"><span class="pre">BaseHub.export_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.exporting"><code class="docutils literal notranslate"><span class="pre">BaseHub.exporting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.from_model_config"><code class="docutils literal notranslate"><span class="pre">BaseHub.from_model_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.get_model"><code class="docutils literal notranslate"><span class="pre">BaseHub.get_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.get_model_config"><code class="docutils literal notranslate"><span class="pre">BaseHub.get_model_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.get_train_config"><code class="docutils literal notranslate"><span class="pre">BaseHub.get_train_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.hub_dir"><code class="docutils literal notranslate"><span class="pre">BaseHub.hub_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.inference"><code class="docutils literal notranslate"><span class="pre">BaseHub.inference()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.inference_dir"><code class="docutils literal notranslate"><span class="pre">BaseHub.inference_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.inferencing"><code class="docutils literal notranslate"><span class="pre">BaseHub.inferencing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.last_ckpt_file"><code class="docutils literal notranslate"><span class="pre">BaseHub.last_ckpt_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.load"><code class="docutils literal notranslate"><span class="pre">BaseHub.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.metric_file"><code class="docutils literal notranslate"><span class="pre">BaseHub.metric_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.model_config_file"><code class="docutils literal notranslate"><span class="pre">BaseHub.model_config_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.model_size"><code class="docutils literal notranslate"><span class="pre">BaseHub.model_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.model_type"><code class="docutils literal notranslate"><span class="pre">BaseHub.model_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.name"><code class="docutils literal notranslate"><span class="pre">BaseHub.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.on_export_end"><code class="docutils literal notranslate"><span class="pre">BaseHub.on_export_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.on_export_start"><code class="docutils literal notranslate"><span class="pre">BaseHub.on_export_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.on_inference_end"><code class="docutils literal notranslate"><span class="pre">BaseHub.on_inference_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.on_inference_start"><code class="docutils literal notranslate"><span class="pre">BaseHub.on_inference_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.on_train_end"><code class="docutils literal notranslate"><span class="pre">BaseHub.on_train_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.on_train_start"><code class="docutils literal notranslate"><span class="pre">BaseHub.on_train_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.onnx_file"><code class="docutils literal notranslate"><span class="pre">BaseHub.onnx_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.root_dir"><code class="docutils literal notranslate"><span class="pre">BaseHub.root_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.save_train_config"><code class="docutils literal notranslate"><span class="pre">BaseHub.save_train_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.task"><code class="docutils literal notranslate"><span class="pre">BaseHub.task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.train"><code class="docutils literal notranslate"><span class="pre">BaseHub.train()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.train_config_file"><code class="docutils literal notranslate"><span class="pre">BaseHub.train_config_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.training"><code class="docutils literal notranslate"><span class="pre">BaseHub.training()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.hub.html#waffle_hub.hub.base_hub.BaseHub.version"><code class="docutils literal notranslate"><span class="pre">BaseHub.version</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.hub.html#module-waffle_hub.hub">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="waffle_hub.schema.html">waffle_hub.schema package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.schema.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.fields.html">waffle_hub.schema.fields package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.fields.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.fields.html#module-waffle_hub.schema.fields.annotation">waffle_hub.schema.fields.annotation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.fields.html#module-waffle_hub.schema.fields.base_field">waffle_hub.schema.fields.base_field module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.fields.html#module-waffle_hub.schema.fields.category">waffle_hub.schema.fields.category module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.fields.html#module-waffle_hub.schema.fields.image">waffle_hub.schema.fields.image module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.fields.html#module-waffle_hub.schema.fields">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.schema.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.schema.html#module-waffle_hub.schema.base_schema">waffle_hub.schema.base_schema module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.base_schema.BaseSchema"><code class="docutils literal notranslate"><span class="pre">BaseSchema</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.base_schema.BaseSchema.load"><code class="docutils literal notranslate"><span class="pre">BaseSchema.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.base_schema.BaseSchema.save_json"><code class="docutils literal notranslate"><span class="pre">BaseSchema.save_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.base_schema.BaseSchema.save_yaml"><code class="docutils literal notranslate"><span class="pre">BaseSchema.save_yaml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.base_schema.BaseSchema.to_dict"><code class="docutils literal notranslate"><span class="pre">BaseSchema.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.schema.html#module-waffle_hub.schema.configs">waffle_hub.schema.configs module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ExportConfig"><code class="docutils literal notranslate"><span class="pre">ExportConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ExportConfig.batch_size"><code class="docutils literal notranslate"><span class="pre">ExportConfig.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ExportConfig.image_size"><code class="docutils literal notranslate"><span class="pre">ExportConfig.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ExportConfig.input_name"><code class="docutils literal notranslate"><span class="pre">ExportConfig.input_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ExportConfig.opset_version"><code class="docutils literal notranslate"><span class="pre">ExportConfig.opset_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ExportConfig.output_name"><code class="docutils literal notranslate"><span class="pre">ExportConfig.output_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig"><code class="docutils literal notranslate"><span class="pre">InferenceConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.batch_size"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.confidence_threshold"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.confidence_threshold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.device"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.draw"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.draw</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.half"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.half</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.image_size"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.iou_threshold"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.iou_threshold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.letter_box"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.letter_box</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.recursive"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.recursive</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.source"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.source</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.InferenceConfig.workers"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.workers</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ModelConfig"><code class="docutils literal notranslate"><span class="pre">ModelConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ModelConfig.backend"><code class="docutils literal notranslate"><span class="pre">ModelConfig.backend</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ModelConfig.categories"><code class="docutils literal notranslate"><span class="pre">ModelConfig.categories</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ModelConfig.model_size"><code class="docutils literal notranslate"><span class="pre">ModelConfig.model_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ModelConfig.model_type"><code class="docutils literal notranslate"><span class="pre">ModelConfig.model_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ModelConfig.name"><code class="docutils literal notranslate"><span class="pre">ModelConfig.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ModelConfig.task"><code class="docutils literal notranslate"><span class="pre">ModelConfig.task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.ModelConfig.version"><code class="docutils literal notranslate"><span class="pre">ModelConfig.version</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig"><code class="docutils literal notranslate"><span class="pre">TrainConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.batch_size"><code class="docutils literal notranslate"><span class="pre">TrainConfig.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.dataset_path"><code class="docutils literal notranslate"><span class="pre">TrainConfig.dataset_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.device"><code class="docutils literal notranslate"><span class="pre">TrainConfig.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.epochs"><code class="docutils literal notranslate"><span class="pre">TrainConfig.epochs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.image_size"><code class="docutils literal notranslate"><span class="pre">TrainConfig.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.learning_rate"><code class="docutils literal notranslate"><span class="pre">TrainConfig.learning_rate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.letter_box"><code class="docutils literal notranslate"><span class="pre">TrainConfig.letter_box</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.pretrained_model"><code class="docutils literal notranslate"><span class="pre">TrainConfig.pretrained_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.seed"><code class="docutils literal notranslate"><span class="pre">TrainConfig.seed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.verbose"><code class="docutils literal notranslate"><span class="pre">TrainConfig.verbose</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.configs.TrainConfig.workers"><code class="docutils literal notranslate"><span class="pre">TrainConfig.workers</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.schema.html#module-waffle_hub.schema.data">waffle_hub.schema.data module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.data.DatasetInfo"><code class="docutils literal notranslate"><span class="pre">DatasetInfo</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.data.DatasetInfo.created"><code class="docutils literal notranslate"><span class="pre">DatasetInfo.created</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.data.DatasetInfo.name"><code class="docutils literal notranslate"><span class="pre">DatasetInfo.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.data.DatasetInfo.task"><code class="docutils literal notranslate"><span class="pre">DatasetInfo.task</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.data.ImageInfo"><code class="docutils literal notranslate"><span class="pre">ImageInfo</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.data.ImageInfo.image_path"><code class="docutils literal notranslate"><span class="pre">ImageInfo.image_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.data.ImageInfo.input_shape"><code class="docutils literal notranslate"><span class="pre">ImageInfo.input_shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.data.ImageInfo.new_shape"><code class="docutils literal notranslate"><span class="pre">ImageInfo.new_shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.data.ImageInfo.ori_shape"><code class="docutils literal notranslate"><span class="pre">ImageInfo.ori_shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.data.ImageInfo.pad"><code class="docutils literal notranslate"><span class="pre">ImageInfo.pad</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.schema.html#module-waffle_hub.schema">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation"><code class="docutils literal notranslate"><span class="pre">Annotation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.annotation_id"><code class="docutils literal notranslate"><span class="pre">Annotation.annotation_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.area"><code class="docutils literal notranslate"><span class="pre">Annotation.area</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.bbox"><code class="docutils literal notranslate"><span class="pre">Annotation.bbox</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.caption"><code class="docutils literal notranslate"><span class="pre">Annotation.caption</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.category_id"><code class="docutils literal notranslate"><span class="pre">Annotation.category_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.classification"><code class="docutils literal notranslate"><span class="pre">Annotation.classification()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.image_id"><code class="docutils literal notranslate"><span class="pre">Annotation.image_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.is_prediction"><code class="docutils literal notranslate"><span class="pre">Annotation.is_prediction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.iscrowd"><code class="docutils literal notranslate"><span class="pre">Annotation.iscrowd</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.keypoint_detection"><code class="docutils literal notranslate"><span class="pre">Annotation.keypoint_detection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.keypoints"><code class="docutils literal notranslate"><span class="pre">Annotation.keypoints</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.new"><code class="docutils literal notranslate"><span class="pre">Annotation.new()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.num_keypoints"><code class="docutils literal notranslate"><span class="pre">Annotation.num_keypoints</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.object_detection"><code class="docutils literal notranslate"><span class="pre">Annotation.object_detection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.regression"><code class="docutils literal notranslate"><span class="pre">Annotation.regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.score"><code class="docutils literal notranslate"><span class="pre">Annotation.score</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.segmentation"><code class="docutils literal notranslate"><span class="pre">Annotation.segmentation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.task"><code class="docutils literal notranslate"><span class="pre">Annotation.task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.text_recognition"><code class="docutils literal notranslate"><span class="pre">Annotation.text_recognition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.to_dict"><code class="docutils literal notranslate"><span class="pre">Annotation.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Annotation.value"><code class="docutils literal notranslate"><span class="pre">Annotation.value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category"><code class="docutils literal notranslate"><span class="pre">Category</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.category_id"><code class="docutils literal notranslate"><span class="pre">Category.category_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.classification"><code class="docutils literal notranslate"><span class="pre">Category.classification()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.keypoint_detection"><code class="docutils literal notranslate"><span class="pre">Category.keypoint_detection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.keypoints"><code class="docutils literal notranslate"><span class="pre">Category.keypoints</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.name"><code class="docutils literal notranslate"><span class="pre">Category.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.new"><code class="docutils literal notranslate"><span class="pre">Category.new()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.object_detection"><code class="docutils literal notranslate"><span class="pre">Category.object_detection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.segmentation"><code class="docutils literal notranslate"><span class="pre">Category.segmentation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.skeleton"><code class="docutils literal notranslate"><span class="pre">Category.skeleton</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.supercategory"><code class="docutils literal notranslate"><span class="pre">Category.supercategory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.task"><code class="docutils literal notranslate"><span class="pre">Category.task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.text_recognition"><code class="docutils literal notranslate"><span class="pre">Category.text_recognition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Category.to_dict"><code class="docutils literal notranslate"><span class="pre">Category.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.DatasetInfo"><code class="docutils literal notranslate"><span class="pre">DatasetInfo</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.DatasetInfo.created"><code class="docutils literal notranslate"><span class="pre">DatasetInfo.created</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.DatasetInfo.name"><code class="docutils literal notranslate"><span class="pre">DatasetInfo.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.DatasetInfo.task"><code class="docutils literal notranslate"><span class="pre">DatasetInfo.task</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ExportConfig"><code class="docutils literal notranslate"><span class="pre">ExportConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ExportConfig.batch_size"><code class="docutils literal notranslate"><span class="pre">ExportConfig.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ExportConfig.image_size"><code class="docutils literal notranslate"><span class="pre">ExportConfig.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ExportConfig.input_name"><code class="docutils literal notranslate"><span class="pre">ExportConfig.input_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ExportConfig.opset_version"><code class="docutils literal notranslate"><span class="pre">ExportConfig.opset_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ExportConfig.output_name"><code class="docutils literal notranslate"><span class="pre">ExportConfig.output_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Image.date_captured"><code class="docutils literal notranslate"><span class="pre">Image.date_captured</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Image.file_name"><code class="docutils literal notranslate"><span class="pre">Image.file_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Image.height"><code class="docutils literal notranslate"><span class="pre">Image.height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Image.image_id"><code class="docutils literal notranslate"><span class="pre">Image.image_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Image.new"><code class="docutils literal notranslate"><span class="pre">Image.new()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Image.to_dict"><code class="docutils literal notranslate"><span class="pre">Image.to_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.Image.width"><code class="docutils literal notranslate"><span class="pre">Image.width</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ImageInfo"><code class="docutils literal notranslate"><span class="pre">ImageInfo</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ImageInfo.image_path"><code class="docutils literal notranslate"><span class="pre">ImageInfo.image_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ImageInfo.input_shape"><code class="docutils literal notranslate"><span class="pre">ImageInfo.input_shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ImageInfo.new_shape"><code class="docutils literal notranslate"><span class="pre">ImageInfo.new_shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ImageInfo.ori_shape"><code class="docutils literal notranslate"><span class="pre">ImageInfo.ori_shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ImageInfo.pad"><code class="docutils literal notranslate"><span class="pre">ImageInfo.pad</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig"><code class="docutils literal notranslate"><span class="pre">InferenceConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.batch_size"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.confidence_threshold"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.confidence_threshold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.device"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.draw"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.draw</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.half"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.half</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.image_size"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.iou_threshold"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.iou_threshold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.letter_box"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.letter_box</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.recursive"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.recursive</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.source"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.source</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.InferenceConfig.workers"><code class="docutils literal notranslate"><span class="pre">InferenceConfig.workers</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ModelConfig"><code class="docutils literal notranslate"><span class="pre">ModelConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ModelConfig.backend"><code class="docutils literal notranslate"><span class="pre">ModelConfig.backend</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ModelConfig.categories"><code class="docutils literal notranslate"><span class="pre">ModelConfig.categories</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ModelConfig.model_size"><code class="docutils literal notranslate"><span class="pre">ModelConfig.model_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ModelConfig.model_type"><code class="docutils literal notranslate"><span class="pre">ModelConfig.model_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ModelConfig.name"><code class="docutils literal notranslate"><span class="pre">ModelConfig.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ModelConfig.task"><code class="docutils literal notranslate"><span class="pre">ModelConfig.task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.ModelConfig.version"><code class="docutils literal notranslate"><span class="pre">ModelConfig.version</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig"><code class="docutils literal notranslate"><span class="pre">TrainConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.batch_size"><code class="docutils literal notranslate"><span class="pre">TrainConfig.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.dataset_path"><code class="docutils literal notranslate"><span class="pre">TrainConfig.dataset_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.device"><code class="docutils literal notranslate"><span class="pre">TrainConfig.device</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.epochs"><code class="docutils literal notranslate"><span class="pre">TrainConfig.epochs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.image_size"><code class="docutils literal notranslate"><span class="pre">TrainConfig.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.learning_rate"><code class="docutils literal notranslate"><span class="pre">TrainConfig.learning_rate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.letter_box"><code class="docutils literal notranslate"><span class="pre">TrainConfig.letter_box</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.pretrained_model"><code class="docutils literal notranslate"><span class="pre">TrainConfig.pretrained_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.seed"><code class="docutils literal notranslate"><span class="pre">TrainConfig.seed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.verbose"><code class="docutils literal notranslate"><span class="pre">TrainConfig.verbose</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.schema.html#waffle_hub.schema.TrainConfig.workers"><code class="docutils literal notranslate"><span class="pre">TrainConfig.workers</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="waffle_hub.utils.html">waffle_hub.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.utils.html#module-waffle_hub.utils.callback">waffle_hub.utils.callback module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ExportCallback"><code class="docutils literal notranslate"><span class="pre">ExportCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ExportCallback.export_file"><code class="docutils literal notranslate"><span class="pre">ExportCallback.export_file</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.InferenceCallback"><code class="docutils literal notranslate"><span class="pre">InferenceCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.InferenceCallback.draw_dir"><code class="docutils literal notranslate"><span class="pre">InferenceCallback.draw_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.InferenceCallback.inference_dir"><code class="docutils literal notranslate"><span class="pre">InferenceCallback.inference_dir</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback.force_finish"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback.force_finish()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback.get_progress"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback.get_progress()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback.get_remaining_time"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback.get_remaining_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback.is_failed"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback.is_failed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback.is_finished"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback.is_finished()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback.join"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback.register_thread"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback.register_thread()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback.set_failed"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback.set_failed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback.start"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback.start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.ThreadProgressCallback.update"><code class="docutils literal notranslate"><span class="pre">ThreadProgressCallback.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.TrainCallback"><code class="docutils literal notranslate"><span class="pre">TrainCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.TrainCallback.best_ckpt_file"><code class="docutils literal notranslate"><span class="pre">TrainCallback.best_ckpt_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.TrainCallback.get_metrics"><code class="docutils literal notranslate"><span class="pre">TrainCallback.get_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.TrainCallback.get_progress"><code class="docutils literal notranslate"><span class="pre">TrainCallback.get_progress()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.TrainCallback.last_ckpt_file"><code class="docutils literal notranslate"><span class="pre">TrainCallback.last_ckpt_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.TrainCallback.metric_file"><code class="docutils literal notranslate"><span class="pre">TrainCallback.metric_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.callback.TrainCallback.result_dir"><code class="docutils literal notranslate"><span class="pre">TrainCallback.result_dir</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.utils.html#module-waffle_hub.utils.data">waffle_hub.utils.data module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.data.ImageDataset"><code class="docutils literal notranslate"><span class="pre">ImageDataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.data.ImageDataset.get_dataloader"><code class="docutils literal notranslate"><span class="pre">ImageDataset.get_dataloader()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.data.collate_fn"><code class="docutils literal notranslate"><span class="pre">collate_fn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.data.get_images"><code class="docutils literal notranslate"><span class="pre">get_images()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.data.resize_image"><code class="docutils literal notranslate"><span class="pre">resize_image()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.utils.html#module-waffle_hub.utils.draw">waffle_hub.utils.draw module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.draw.draw_classification"><code class="docutils literal notranslate"><span class="pre">draw_classification()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.draw.draw_object_detection"><code class="docutils literal notranslate"><span class="pre">draw_object_detection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="waffle_hub.utils.html#waffle_hub.utils.draw.draw_results"><code class="docutils literal notranslate"><span class="pre">draw_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="waffle_hub.utils.html#module-waffle_hub.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2 id="submodules">Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-waffle_hub.run">
+<span id="waffle-hub-run-module"></span><h2 id="module-waffle_hub.run">waffle_hub.run module<a class="headerlink" href="#module-waffle_hub.run" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-waffle_hub">
+<span id="module-contents"></span><h2 id="module-waffle_hub">Module contents<a class="headerlink" href="#module-waffle_hub" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="waffle_hub.BaseEnum">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BaseEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/waffle_hub.html#BaseEnum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#waffle_hub.BaseEnum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Base class for Enum</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">BaseEnum</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">BLUE</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span> <span class="o">==</span> <span class="s2">"red"</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span> <span class="o">==</span> <span class="s2">"RED"</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">"red"</span> <span class="ow">in</span> <span class="n">DataType</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">"RED"</span> <span class="ow">in</span> <span class="n">DataType</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="waffle_hub.CustomEnumMeta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CustomEnumMeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classdict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/waffle_hub.html#CustomEnumMeta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#waffle_hub.CustomEnumMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">EnumMeta</span></code></p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="waffle_hub.DataType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DataType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/waffle_hub.html#DataType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#waffle_hub.DataType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#waffle_hub.BaseEnum" title="waffle_hub.BaseEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEnum</span></code></a></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="waffle_hub.DataType.COCO">
+<span class="sig-name descname"><span class="pre">COCO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#waffle_hub.DataType.COCO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="waffle_hub.DataType.TX_MODEL">
+<span class="sig-name descname"><span class="pre">TX_MODEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#waffle_hub.DataType.TX_MODEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="waffle_hub.DataType.ULTRALYTICS">
+<span class="sig-name descname"><span class="pre">ULTRALYTICS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#waffle_hub.DataType.ULTRALYTICS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="waffle_hub.DataType.YOLO">
+<span class="sig-name descname"><span class="pre">YOLO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#waffle_hub.DataType.YOLO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="waffle_hub.TaskType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TaskType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/waffle_hub.html#TaskType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#waffle_hub.TaskType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#waffle_hub.BaseEnum" title="waffle_hub.BaseEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEnum</span></code></a></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="waffle_hub.TaskType.CLASSIFICATION">
+<span class="sig-name descname"><span class="pre">CLASSIFICATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#waffle_hub.TaskType.CLASSIFICATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="waffle_hub.TaskType.KEYPOINT_DETECTION">
+<span class="sig-name descname"><span class="pre">KEYPOINT_DETECTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#waffle_hub.TaskType.KEYPOINT_DETECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="waffle_hub.TaskType.OBJECT_DETECTION">
+<span class="sig-name descname"><span class="pre">OBJECT_DETECTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#waffle_hub.TaskType.OBJECT_DETECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="waffle_hub.TaskType.REGRESSION">
+<span class="sig-name descname"><span class="pre">REGRESSION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#waffle_hub.TaskType.REGRESSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="waffle_hub.TaskType.SEGMENTATION">
+<span class="sig-name descname"><span class="pre">SEGMENTATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#waffle_hub.TaskType.SEGMENTATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="waffle_hub.TaskType.TEXT_RECOGNITION">
+<span class="sig-name descname"><span class="pre">TEXT_RECOGNITION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#waffle_hub.TaskType.TEXT_RECOGNITION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="waffle_hub.get_available_backends">
+<span class="sig-name descname"><span class="pre">get_available_backends</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/waffle_hub.html#get_available_backends"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#waffle_hub.get_available_backends" title="Permalink to this definition">¶</a></dt>
+<dd><p>Available backends</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="waffle_hub.get_backends">
+<span class="sig-name descname"><span class="pre">get_backends</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/waffle_hub.html#get_backends"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#waffle_hub.get_backends" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="waffle_hub.get_installed_backend_version">
+<span class="sig-name descname"><span class="pre">get_installed_backend_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/waffle_hub.html#get_installed_backend_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#waffle_hub.get_installed_backend_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</section>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="../index.html" title="Welcome to Waffle’s documentation!"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> Previous </span> Welcome to Waffle’s documentation! </span>
+              </div>
+            </a>
+          
+          
+            <a href="waffle_hub.dataset.html" title="waffle_hub.dataset package"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> Next </span> waffle_hub.dataset package </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2023, ZeroAct.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>
