@@ -33,12 +33,3 @@ Waffle utils
    :caption: waffle_utils
 
    docs/waffle_utils
-
-
-Waffle menu
-============
-.. toctree::
-   :maxdepth: 1
-   :caption: waffle_menu
-
-   docs/waffle_menu

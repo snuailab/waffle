@@ -34,7 +34,6 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../waffle_hub'))
 sys.path.insert(0, os.path.abspath('../waffle_utils'))
-sys.path.insert(0, os.path.abspath('../waffle_menu'))
 
 # -- General configuration ---------------------------------------------------
 
