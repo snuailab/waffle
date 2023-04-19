@@ -1,0 +1,11 @@
+# docs
+mkdocs
+pymdown-extensions
+mkdocs-material
+
+sphinx
+sphinx-material
+sphinxcontrib-katex
+sphinx-copybutton
+sphinx-panels
+myst-parser
