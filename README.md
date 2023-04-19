@@ -4,8 +4,7 @@
 ## Installation
 
 ```bash
-git clone https://github.com/snuailab/waffle.git
-pip install waffle_*/
+pip install waffle_hub
 ```
 
 ## See What Waffle Can Do

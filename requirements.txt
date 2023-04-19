@@ -1,8 +1,6 @@
-# docs
-mkdocs
-pymdown-extensions
-mkdocs-material
+waffle_hub>=0.1.8
 
+# docs
 sphinx
 sphinx-material
 sphinxcontrib-katex
