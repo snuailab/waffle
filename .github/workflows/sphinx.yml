@@ -18,15 +18,17 @@ jobs:
         python -m pip install --upgrade pip wheel
         pip install -r requirements.txt
     - name: Build HTML
-      uses: ammaraskar/sphinx-action@master
+      run: |
+        cd docs
+        make clean html
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
         name: html-docs
-        path: docs/build/html/
+        path: docs/_build/html
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       if: github.ref == 'refs/heads/main'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: docs/build/html
+        publish_dir: docs/_build/html
