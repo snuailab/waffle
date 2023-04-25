@@ -104,6 +104,6 @@ html_sidebars = {
 }
 
 html_static_path = ['_static']
-html_favicon = '_static/icons/waffle_icon.png'
+html_favicon = 'images/waffle_icon.png'
 
 add_module_names = False

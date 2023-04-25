@@ -6,7 +6,7 @@
 Welcome to Waffle's documentation!
 ==================================
 
-.. image:: _static/icons/waffle_banner.png
+.. image:: images/waffle_banner.png
   :width: 80%
   :align: center
   :alt: Waffle Banner
