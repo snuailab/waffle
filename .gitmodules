@@ -1,6 +1,6 @@
-[submodule "waffle_hub"]
-	path = waffle_hub
-	url = https://github.com/snuailab/waffle_hub.git
 [submodule "waffle_utils"]
 	path = waffle_utils
 	url = https://github.com/snuailab/waffle_utils.git
+[submodule "autocare_tx_model"]
+	path = autocare_tx_model
+	url = https://github.com/snuailab/autocare_tx_model.git
