@@ -1,9 +1,7 @@
-waffle_hub>=0.1.8
+waffle_hub>=0.2.0
+gradio
 
 # docs
-sphinx
-sphinx-material
-sphinxcontrib-katex
-sphinx-copybutton
-sphinx-panels
-myst-parser
+mkdocs
+mkdocstrings-python
+mkdocs-jupyter
