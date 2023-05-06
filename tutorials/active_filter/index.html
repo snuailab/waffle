@@ -15,7 +15,7 @@
         <link rel="next" href="../../waffle_hub/">
       
       <link rel="icon" href="../../assets/waffle_icon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.9">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ded33207.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
       
       
 
@@ -59,7 +59,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="indigo">
   
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#active-filtering-with-hub" class="md-skip">
+        <a href="#active-sampling-with-hub" class="md-skip">
           Skip to content
         </a>
       
@@ -107,6 +107,8 @@
         </div>
       </div>
     </div>
+    
+      
     
     
     
@@ -402,8 +404,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#active-filtering-with-hub" class="md-nav__link">
-    Active Filtering with hub
+  <a href="#active-sampling-with-hub" class="md-nav__link">
+    Active Sampling with hub
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load-trained-hub" class="md-nav__link">
+    Load trained Hub
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-sampling-methods" class="md-nav__link">
+    Import Sampling Methods
   </a>
   
 </li>
@@ -750,8 +766,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#active-filtering-with-hub" class="md-nav__link">
-    Active Filtering with hub
+  <a href="#active-sampling-with-hub" class="md-nav__link">
+    Active Sampling with hub
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load-trained-hub" class="md-nav__link">
+    Load trained Hub
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-sampling-methods" class="md-nav__link">
+    Import Sampling Methods
   </a>
   
 </li>
@@ -1813,7 +1843,22 @@ Licensed under the Apache License, Version 2.0.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="active-filtering-with-hub">Active Filtering with hub<a class="anchor-link" href="#active-filtering-with-hub">&#182;</a></h2>
+<h2 id="active-sampling-with-hub">Active Sampling with hub<a class="anchor-link" href="#active-sampling-with-hub">&#182;</a></h2><p>Active Learning is a data sampling technique that allows you to select the most informative samples from a large unlabeled dataset. This is done by training a model on a small subset of labeled data and then using the model to predict the labels of the unlabeled data. The samples with the highest prediction uncertainty are then selected for labeling. This process is repeated until the model is trained on all the data. The model is then retrained on the entire dataset. This process is called active learning. <br /></p>
+<p>You can get more information about active learning from our <a href="https://blog.snuailab.ai/active-flow-part-1-active-learning-intro-166b24582ffc">Blog Post</a>. <br /></p>
+<p>This is our private feature. If you want to use it, please contact us. <br /></p>
+
+</div>
+</div>
+</div>
+</div>
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="load-trained-hub">Load trained Hub<a class="anchor-link" href="#load-trained-hub">&#182;</a></h2><p>To use active learning, you need to load the trained hub.</p>
+
 </div>
 </div>
 </div>
@@ -1884,6 +1929,22 @@ hub = UltralyticsHub.load("ultralytics_mnist_detection")</div>
 
 </div>
 
+</div>
+</div>
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="import-sampling-methods">Import Sampling Methods<a class="anchor-link" href="#import-sampling-methods">&#182;</a></h2><p>This tutorial uses the following sampling methods: <br /></p>
+<ul>
+<li>Random Sampling</li>
+<li><a href="https://arxiv.org/abs/2303.08978">PL2N Sampling</a></li>
+</ul>
+
+</div>
+</div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -2457,7 +2518,7 @@ class="
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.instant", "navigation.sections", "navigation.footer", "content.code.copy"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.51198bba.min.js"></script>
+      <script src="../../assets/javascripts/bundle.fac441b0.min.js"></script>
       
     
   </body>

@@ -15,7 +15,7 @@
         <link rel="next" href="../using_hub/">
       
       <link rel="icon" href="../../assets/waffle_icon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.9">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ded33207.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
       
       
 
@@ -59,7 +59,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="indigo">
   
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#download-sample-dataset-from-asset" class="md-skip">
+        <a href="#download-sample-dataset" class="md-skip">
           Skip to content
         </a>
       
@@ -107,6 +107,8 @@
         </div>
       </div>
     </div>
+    
+      
     
     
     
@@ -374,8 +376,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#download-sample-dataset-from-asset" class="md-nav__link">
-    Download Sample dataset from asset
+  <a href="#download-sample-dataset" class="md-nav__link">
+    Download Sample dataset
   </a>
   
 </li>
@@ -771,8 +773,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#download-sample-dataset-from-asset" class="md-nav__link">
-    Download Sample dataset from asset
+  <a href="#download-sample-dataset" class="md-nav__link">
+    Download Sample dataset
   </a>
   
 </li>
@@ -1855,7 +1857,9 @@ Licensed under the Apache License, Version 2.0.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="download-sample-dataset-from-asset">Download Sample dataset from <a href="https://github.com/snuailab/assets">asset</a><a class="anchor-link" href="#download-sample-dataset-from-asset">&#182;</a></h2>
+<h2 id="download-sample-dataset">Download Sample dataset<a class="anchor-link" href="#download-sample-dataset">&#182;</a></h2><p>We provide sample dataset for this tutorial. You can download it from <a href="https://github.com/snuailab/assets">asset</a>. <br />
+This dataset can be used for <code>Classification</code>, <code>Object Detection</code>, <code>Semantic Segmentation</code>, <code>Instance Segmentation</code> tasks.</p>
+
 </div>
 </div>
 </div>
@@ -2092,7 +2096,8 @@ mnist.zip           100%[===================&gt;] 154.12K  --.-KB/s    in 0.02s
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="convert-to-waffle-dataset">Convert to Waffle Dataset<a class="anchor-link" href="#convert-to-waffle-dataset">&#182;</a></h2>
+<h2 id="convert-to-waffle-dataset">Convert to Waffle Dataset<a class="anchor-link" href="#convert-to-waffle-dataset">&#182;</a></h2><p>You can create <code>Waffle Dataset</code> from <code>COCO</code>, <code>YOLO</code>, <code>HuggingFace</code> format.</p>
+
 </div>
 </div>
 </div>
@@ -2179,13 +2184,25 @@ Importing coco dataset: 100%|██████████| 100/100 [00:00&lt;0
 </div>
 
 </div>
+</div>
+<div  class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><code>Dataset</code> instance provides several useful properties and methods. See <a href="https://research.snuailab.ai/waffle/waffle_hub/dataset/dataset/">Dataset Documentation</a> for more details.</p>
+
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div  class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2218,7 +2235,7 @@ Importing coco dataset: 100%|██████████| 100/100 [00:00&lt;0
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
 
 
 
@@ -2320,7 +2337,9 @@ list(dataset.set_dir.iterdir())</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="export-dataset-to-other-formats">Export Dataset to other formats<a class="anchor-link" href="#export-dataset-to-other-formats">&#182;</a></h2>
+<h2 id="export-dataset-to-other-formats">Export Dataset to other formats<a class="anchor-link" href="#export-dataset-to-other-formats">&#182;</a></h2><p>After splitting dataset, you can export dataset to other formats. <br />
+The returned value of <code>Dataset.export()</code> can be used in training <code>Hub</code> directly.</p>
+
 </div>
 </div>
 </div>
@@ -2671,7 +2690,7 @@ Downloading and preparing dataset generator/default to /home/lhj/.cache/huggingf
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.instant", "navigation.sections", "navigation.footer", "content.code.copy"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.51198bba.min.js"></script>
+      <script src="../../assets/javascripts/bundle.fac441b0.min.js"></script>
       
     
   </body>
