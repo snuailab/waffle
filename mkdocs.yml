@@ -49,6 +49,7 @@ nav:
     - Dataset: tutorials/prepare_dataset.ipynb
     - Using Hub: tutorials/using_hub.ipynb
     - Active Filter: tutorials/active_filter.ipynb
+    - Visualization: tutorials/visualization.ipynb
   - Documentations:
     - Waffle Hub:
       - Introduction: waffle_hub/README.md
