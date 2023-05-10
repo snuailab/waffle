@@ -1,7 +1,7 @@
 <div align="center">
   <p>
     <a href="http://snuailab.ai/">
-        <img width="75%" src="https://raw.githubusercontent.com/snuailab/assets/main/waffle/icons/waffle_banner.png">
+        <img width="75%" src="assets/waffle_banner.png">
     </a>
   </p>
 </div>
@@ -16,6 +16,6 @@ When it comes to MLOps (machine learning operations), you need to be able to kee
 
 Here comes Waffle🧇. Waffle is a framework that lets you use lots of different deep learning tools through just one interface. It's user-friendly and easy😊. We believe it's going to make a big revolution in the AI industry.
 
-<img src="https://raw.githubusercontent.com/snuailab/assets/main/waffle/docs/diagrams/hub_flow.png">
+<img src="assets/hub_flow.png">
 
 Experience the power💪 of revolution that Waffle🧇 brings to you, unlocking limitless possibilities for your machine learning projects.
