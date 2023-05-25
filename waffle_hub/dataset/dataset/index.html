@@ -2517,7 +2517,7 @@ If you have other types of data, you can use from_* methods to create a dataset.
 
 
 <h2 id="waffle_hub.dataset.dataset.Dataset.split" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">split</span><span class="p">(</span><span class="n">train_ratio</span><span class="p">,</span> <span class="n">val_ratio</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">test_ratio</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">split</span><span class="p">(</span><span class="n">train_ratio</span><span class="p">,</span> <span class="n">val_ratio</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">test_ratio</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">SplitMethod</span><span class="o">.</span><span class="n">RANDOM</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
 
 </h2>
 
@@ -2565,6 +2565,16 @@ If you have other types of data, you can use from_* methods to create a dataset.
           <td><p>test num ratio (0 ~ 1).</p></td>
           <td>
                 <code>0.0</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>method</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[str, <span title="waffle_hub.SplitMethod">SplitMethod</span>]</code>
+          </td>
+          <td><p>split method. Defaults to SplitMethod.RANDOM.</p></td>
+          <td>
+                <code>SplitMethod.RANDOM</code>
           </td>
         </tr>
         <tr>

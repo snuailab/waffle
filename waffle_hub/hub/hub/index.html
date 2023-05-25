@@ -643,6 +643,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#waffle_hub.hub.base_hub.BaseHub.default_params" class="md-nav__link">
+    default_params
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#waffle_hub.hub.base_hub.BaseHub.draw_dir" class="md-nav__link">
     draw_dir
   </a>
@@ -812,6 +819,13 @@
         <li class="md-nav__item">
   <a href="#waffle_hub.hub.base_hub.BaseHub.get_evaluate_result" class="md-nav__link">
     get_evaluate_result()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#waffle_hub.hub.base_hub.BaseHub.get_image_loader" class="md-nav__link">
+    get_image_loader()
   </a>
   
 </li>
@@ -1081,6 +1095,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#waffle_hub.hub.base_hub.BaseHub.default_params" class="md-nav__link">
+    default_params
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#waffle_hub.hub.base_hub.BaseHub.draw_dir" class="md-nav__link">
     draw_dir
   </a>
@@ -1250,6 +1271,13 @@
         <li class="md-nav__item">
   <a href="#waffle_hub.hub.base_hub.BaseHub.get_evaluate_result" class="md-nav__link">
     get_evaluate_result()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#waffle_hub.hub.base_hub.BaseHub.get_image_loader" class="md-nav__link">
+    get_image_loader()
   </a>
   
 </li>
@@ -1490,8 +1518,8 @@
 <code class="highlight language-python"><span class="n">artifact_dir</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1512,8 +1540,8 @@
 <code class="highlight language-python"><span class="n">backend</span><span class="p">:</span> <span class="nb">str</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
       <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
   </span>
 
 </h2>
@@ -1534,8 +1562,8 @@
 <code class="highlight language-python"><span class="n">best_ckpt_file</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1552,12 +1580,50 @@
 
 
 
+<h2 id="waffle_hub.hub.base_hub.BaseHub.default_params" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">default_params</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get default values from model.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>dict</code></td>          <td>
+          </td>
+          <td><p>default values</p></td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
 <h2 id="waffle_hub.hub.base_hub.BaseHub.draw_dir" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">draw_dir</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1578,8 +1644,8 @@
 <code class="highlight language-python"><span class="n">evaluate_file</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1600,8 +1666,8 @@
 <code class="highlight language-python"><span class="n">hub_dir</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1622,8 +1688,8 @@
 <code class="highlight language-python"><span class="n">inference_dir</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1644,8 +1710,8 @@
 <code class="highlight language-python"><span class="n">inference_file</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1666,8 +1732,8 @@
 <code class="highlight language-python"><span class="n">last_ckpt_file</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1688,8 +1754,8 @@
 <code class="highlight language-python"><span class="n">metric_file</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1710,8 +1776,8 @@
 <code class="highlight language-python"><span class="n">model_config_file</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1732,8 +1798,8 @@
 <code class="highlight language-python"><span class="n">model_size</span><span class="p">:</span> <span class="nb">str</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
       <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
   </span>
 
 </h2>
@@ -1754,8 +1820,8 @@
 <code class="highlight language-python"><span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
       <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
   </span>
 
 </h2>
@@ -1776,8 +1842,8 @@
 <code class="highlight language-python"><span class="n">name</span><span class="p">:</span> <span class="nb">str</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
       <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
   </span>
 
 </h2>
@@ -1798,8 +1864,8 @@
 <code class="highlight language-python"><span class="n">onnx_file</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1820,8 +1886,8 @@
 <code class="highlight language-python"><span class="n">root_dir</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
       <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
   </span>
 
 </h2>
@@ -1842,8 +1908,8 @@
 <code class="highlight language-python"><span class="n">task</span><span class="p">:</span> <span class="nb">str</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
       <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
   </span>
 
 </h2>
@@ -1864,8 +1930,8 @@
 <code class="highlight language-python"><span class="n">train_config_file</span><span class="p">:</span> <span class="n">Path</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
       <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 </h2>
@@ -1886,8 +1952,8 @@
 <code class="highlight language-python"><span class="n">version</span><span class="p">:</span> <span class="nb">str</span></code>
   
   <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
       <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
   </span>
 
 </h2>
@@ -2569,6 +2635,55 @@ hubs/my_hub/weights/model.onnx</p>
     </tbody>
   </table>
 
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="waffle_hub.hub.base_hub.BaseHub.get_image_loader" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_image_loader</span><span class="p">()</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Get image loader function.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>tuple[torch.<span title="torch.Tensor">Tensor</span>, <span title="waffle_hub.schema.data.ImageInfo">ImageInfo</span>]</code>
+          </td>
+          <td><p>tuple[torch.Tensor, ImageInfo]: input transform function</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="example">
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>transform = hub.get_image_loader()
+image, image_info = transform("path/to/image.jpg")
+model = hub.get_model()
+output = model(image.unsqueeze(0))</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
   </div>
 
 </div>

@@ -814,7 +814,7 @@
 <p><code>Waffle Hub</code> provide two key component classes: <code>Hub</code> and <code>Dataset</code>.</p>
 <h2 id="hub"><a href="hub/hub/">Hub</a></h2>
 <p><code>Hub</code> provides same interface for various powerfull Deep Learning Frameworks. Here is our brief system architecture.</p>
-<p><img src="https://raw.githubusercontent.com/snuailab/assets/main/waffle/docs/diagrams/hub_flow.png"></p>
+<p><img src="assets/hub_flow.png"></p>
 <p>Each input and output adapter is responsible for converting our interface to the framework's interface. For example, <a href="https://github.com/ultralytics/ultralytics"><code>Ultralytics</code></a> uses <code>imgsz</code> for image size parameter, but <a href="https://github.com/facebookresearch/detectron2"><code>detectron2</code></a> uses <code>IMAGE_SIZE</code>. So, we need to convert our interface to the framework's interface. <code>waffle_hub</code> provides <code>InputAdapter</code> and <code>OutputAdapter</code> for this purpose.</p>
 <h2 id="dataset"><a href="dataset/dataset/">Dataset</a></h2>
 <p><code>Dataset</code> class support many types of data format such as <code>coco</code>, <code>yolo</code>. You can use it to convert dataset or manage dataset.</p>
