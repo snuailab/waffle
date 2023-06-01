@@ -1,6 +1,6 @@
 site_name: SNUAILAB Waffle
-repo_url: https://github.com/snuailab/waffle
-repo_name: snuailab/waffle
+repo_url: https://github.com/snuailab/waffle_hub
+repo_name: snuailab/waffle_hub
 
 theme:
   name: material
