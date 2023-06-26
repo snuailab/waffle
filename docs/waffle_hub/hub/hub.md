@@ -6,7 +6,7 @@
             - new
         show_source: false
 
-::: waffle_hub.hub.base_hub.BaseHub
+::: waffle_hub.hub.Hub
     handler: python
     options:
         show_source: false
