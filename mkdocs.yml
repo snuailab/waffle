@@ -46,10 +46,19 @@ nav:
   - Home: README.md
   - Tutorials:
     - Introduction: tutorials/README.md
-    - Dataset: tutorials/prepare_dataset.ipynb
-    - Using Hub: tutorials/using_hub.ipynb
-    - Active Filter: tutorials/active_filter.ipynb
-    - Visualization: tutorials/visualization.ipynb
+    - Dataset: 
+      - tutorials/dataset/README.md
+      - Import: tutorials/dataset/import.ipynb
+      - Split: tutorials/dataset/split.ipynb
+      - Export: tutorials/dataset/export.ipynb
+    - Hub:
+      - tutorials/hub/README.md
+      - Create: tutorials/hub/create.ipynb
+      - Train: tutorials/hub/train.ipynb
+      # - Test: tutorials/hub/test.ipynb
+      - Export: tutorials/hub/export.ipynb
+    - Menu:
+      - tutorials/menu/README.md
   - Documentations:
     - Waffle Hub:
       - Introduction: waffle_hub/README.md

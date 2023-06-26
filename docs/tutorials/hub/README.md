@@ -1,9 +1,9 @@
 You can do following things with this Waffle Hub:
 
-- [Create Hub](create)
-- [Train Hub](train)
+- [Create](create)
+- [Train](train)
 - [Inference](inferenece)
-- [Export Hub](export)
+- [Export](export)
 <!-- - [Benchmark Hub](benchmark) -->
 
 
