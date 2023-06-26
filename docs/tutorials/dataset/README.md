@@ -2,7 +2,6 @@ You can do following things with this Waffle Dataset:
 
 - [Import Dataset](import)
 - [Split](split)
-- [Merge](merge)
 - [Export](export)
 
 
