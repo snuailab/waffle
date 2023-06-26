@@ -1,0 +1,7 @@
+path: /home/lhj/ws/release/waffle/docs/tutorials/hub/datasets/sample_dataset/exports/YOLO
+train: train
+val: val
+test: test
+names:
+    0: '1'
+    1: '2'

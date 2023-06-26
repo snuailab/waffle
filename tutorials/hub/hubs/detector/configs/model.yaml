@@ -1,0 +1,11 @@
+name: detector
+backend: ultralytics
+version: 8.0.112
+task: OBJECT_DETECTION
+model_type: yolov8
+model_size: n
+categories:
+-   supercategory: object
+    name: '1'
+-   supercategory: object
+    name: '2'

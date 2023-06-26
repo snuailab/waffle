@@ -1,0 +1,13 @@
+dataset_path: /home/lhj/ws/release/waffle/docs/tutorials/hub/datasets/sample_dataset/exports/YOLO/data.yaml
+epochs: 50
+batch_size: 64
+image_size:
+- 640
+- 640
+learning_rate: 0.01
+letter_box: true
+pretrained_model: yolov8n.pt
+device: '0'
+workers: 2
+seed: 0
+verbose: true

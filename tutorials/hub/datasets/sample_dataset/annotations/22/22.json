@@ -1,0 +1,13 @@
+{
+    "annotation_id": 22,
+    "image_id": 22,
+    "category_id": 2,
+    "bbox": [
+        85,
+        105,
+        39,
+        39
+    ],
+    "area": 1521.0,
+    "iscrowd": 0
+}
