@@ -14,11 +14,11 @@ class BasePage:
         self.title = title
         self.subtitle = subtitle
         self.description = description
-    
+
     def render_title(self):
         if self.title:
             return st.title(self.title)
-    
+
     def render_sub_title(self):
         if self.subtitle:
             return st.subheader(self.subtitle)

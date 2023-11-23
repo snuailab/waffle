@@ -1,6 +1,7 @@
-from collections import namedtuple, OrderedDict
+from collections import OrderedDict, namedtuple
 
 from src.schema import PageInfo
+
 from . import DatasetPage
 
 ComponentInfo = namedtuple("ComponentInfo", ["page_class", "page_info"])
@@ -8,11 +9,8 @@ ComponentInfo = namedtuple("ComponentInfo", ["page_class", "page_info"])
 pages = OrderedDict(
     {
         "Dataset": ComponentInfo(
-            DatasetPage, PageInfo(
-                title="Dataset", 
-                subtitle=None, 
-                description="This is Waffle Dataset!"
-            )
+            DatasetPage,
+            PageInfo(title="Dataset", subtitle=None, description="This is Waffle Dataset!"),
         ),
     }
 )
