@@ -1,7 +1,6 @@
 from abc import abstractmethod
 
 import streamlit as st
-from src.schema import PageInfo
 
 
 class BasePage:
@@ -32,10 +31,17 @@ class BasePage:
         raise NotImplementedError
 
     def render(self):
-        self.render_title()
-        self.render_sub_title()
-        self.render_description()
-        self.render_content()
+        try:
+            self.render_title()
+            self.render_sub_title()
+            self.render_description()
+            self.render_content()
+        except Exception as e:
+            st.error(e)
+            raise e
+
+        if st.button("refresh"):
+            st.experimental_rerun()
 
     def __call__(self):
         self.render()

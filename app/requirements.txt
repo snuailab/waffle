@@ -1,2 +1,4 @@
 streamlit
+streamlit-tags
+streamlit-image_viewer
 python-dotenv

@@ -26,15 +26,6 @@ SET_CODES = {
 
 
 class DatasetPage(BasePage):
-    @property
-    def root_dir(self):
-        if getattr(st.session_state, "waffle_dataset_root_dir", None):
-            root_dir = st.session_state.waffle_dataset_root_dir
-        else:
-            root_dir = os.getenv("WAFFLE_DATASET_ROOT_DIR", None)
-
-        return Dataset.parse_root_dir(root_dir)
-
     # utils
     def get_images(self, dataset: Dataset, set_name: str = "total") -> list[Image]:
         if set_name == "total":
@@ -58,27 +49,24 @@ class DatasetPage(BasePage):
         image_to_annotations = dataset.image_to_annotations
         image_to_annotations = {image_id: image_to_annotations[image_id] for image_id in image_ids}
 
-        num_annotations = sum([len(annotations) for annotations in image_to_annotations.values()])
-
+        num_annotations = 0
         num_images_per_category = OrderedDict(
             {category.category_id: set() for category in categories}
         )
+        num_instances_per_category = OrderedDict(
+            {category.category_id: 0 for category in categories}
+        )
         for image_id, annotations in image_to_annotations.items():
+            num_annotations += len(annotations)
             for annotation in annotations:
                 num_images_per_category[annotation.category_id].add(image_id)
+                num_instances_per_category[annotation.category_id] += 1
         num_images_per_category = OrderedDict(
             {
                 category_id: len(image_ids)
                 for category_id, image_ids in num_images_per_category.items()
             }
         )
-
-        num_instances_per_category = OrderedDict(
-            {category.category_id: 0 for category in categories}
-        )
-        for image_id, annotations in image_to_annotations.items():
-            for annotation in annotations:
-                num_instances_per_category[annotation.category_id] += 1
 
         return {
             "images": images,
@@ -138,7 +126,7 @@ class DatasetPage(BasePage):
                         task=st.session_state.import_dataset_task_type,
                         coco_root_dir=temp_dir,
                         coco_file=[json_file.name for json_file in json_files],
-                        root_dir=self.root_dir,
+                        root_dir=st.session_state.waffle_dataset_root_dir,
                     )
 
                 del image_zip_file
@@ -151,15 +139,18 @@ class DatasetPage(BasePage):
             st.text("NOT IMPLEMENTED YET")
 
     def render_select_dataset(self):
+        dataset_list = Dataset.get_dataset_list(root_dir=st.session_state.waffle_dataset_root_dir)
         st.selectbox(
             label="Select Dataset",
-            options=[None] + Dataset.get_dataset_list(root_dir=self.root_dir),
+            options=dataset_list,
             index=0,
             key="select_dataset_name",
         )
 
     def render_actions(self):
-        dataset = Dataset.load(st.session_state.select_dataset_name, root_dir=self.root_dir)
+        dataset = Dataset.load(
+            st.session_state.select_dataset_name, root_dir=st.session_state.waffle_dataset_root_dir
+        )
 
         st.subheader("Split")
         train_ratio = st.slider("split ratio", 0.0, 1.0, 0.8, 0.05, key="split_ratio")
@@ -188,7 +179,9 @@ class DatasetPage(BasePage):
             st.experimental_rerun()
 
     def render_dataset_info(self):
-        dataset = Dataset.load(st.session_state.select_dataset_name, root_dir=self.root_dir)
+        dataset = Dataset.load(
+            st.session_state.select_dataset_name, root_dir=st.session_state.waffle_dataset_root_dir
+        )
 
         st.subheader("Dataset Info")
         st.write(dataset.get_dataset_info().to_dict())
@@ -248,8 +241,6 @@ class DatasetPage(BasePage):
         image_viewer(image_paths)
 
     def render_content(self):
-        st.text_input("Dataset Root Directory", self.root_dir, key="waffle_dataset_root_dir")
-
         with st.expander("Import New Dataset"):
             self.render_import_dataset()
         self.render_select_dataset()
