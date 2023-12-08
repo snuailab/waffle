@@ -1,20 +1,16 @@
 import logging
-import os
-from collections import OrderedDict, defaultdict
+from collections import defaultdict
 from pathlib import Path
-from tempfile import NamedTemporaryFile, TemporaryDirectory
 
 import streamlit as st
 from src.component.auto_component import generate_component
-from src.util.plot import plot_bar
-from streamlit_image_viewer import image_viewer
+from src.schema.run import RunType
+from src.service.run_service import run_service
 from streamlit_tags import st_tags
-from waffle_utils.file import io
 
 from waffle_hub.dataset import Dataset
 from waffle_hub.hub import Hub
 from waffle_hub.schema.configs import TrainConfig
-from waffle_hub.schema.fields import Image
 
 from .base_page import BasePage
 
@@ -68,8 +64,8 @@ class HubPage(BasePage):
 
     def get_train_status(self) -> dict:
         hub = self.get_hub()
-        if hub.training_info_file.exists():
-            return self.get_hub().get_training_info()
+        if hub.training_status_file.exists():
+            return hub.get_training_status()
         else:
             return None
 
@@ -112,11 +108,46 @@ class HubPage(BasePage):
             st.session_state.select_waffle_model = model_name
 
     def render_select_model(self):
+        st.subheader("Select Model")
         model_list = Hub.get_hub_list(root_dir=st.session_state.waffle_hub_root_dir)
-        st.selectbox("Select Model", model_list, index=0, key="select_waffle_model")
+
+        filter_maps = defaultdict(list)
+        model_infos = []
+        model_captions = []
+        for name in model_list:
+            hub = Hub.load(name, root_dir=st.session_state.waffle_hub_root_dir)
+
+            model_info = hub.get_model_config().to_dict()
+            model_infos.append(model_info)
+            for key, value in model_info.items():
+                if isinstance(value, (str, int, float)) and key != "name":
+                    filter_maps[key].append(value)
+
+            model_captions.append(
+                f"Task: {hub.task.upper():>24}, Categories: {str(hub.categories):>20}"
+            )
+
+        for key, value in filter_maps.items():
+            filter_maps[key] = list(set(value))
+
+        filter_key = st.selectbox("filter key", ["All"] + list(filter_maps.keys()), key="filter_key")
+        if filter_key and filter_key != "All":
+            values = list(filter_maps[st.session_state.filter_key])
+            st.multiselect("filter value", values, default=values, key="filter_value")
+
+            filtered_model_index = []
+            for i, model_info in enumerate(model_infos):
+                if model_info[st.session_state.filter_key] in st.session_state.filter_value:
+                    filtered_model_index.append(i)
+
+            model_list = [model_list[i] for i in filtered_model_index]
+            model_captions = [model_captions[i] for i in filtered_model_index]
+
+        st.radio("Select Model", model_list, 0, captions=model_captions, key="select_waffle_model")
 
     def render_model_info(self):
         hub = self.get_hub()
+        st.subheader("Model Info")
         st.write(hub.get_model_config().to_dict())
 
     def render_train(self):
@@ -167,46 +198,65 @@ class HubPage(BasePage):
             st.subheader("Train Status")
             st.write(train_status.to_dict())
 
-        trainable = initialized and (not train_status or train_status.status == "INIT")
+        trainable = initialized and (not train_status or train_status.status_desc == "INIT")
 
         if st.button("Run", disabled=not trainable):
-            import subprocess
-            import sys
+            run_service.add_run(hub.name, RunType.TRAIN, self.train_run_file)
 
-            subprocess.Popen([sys.executable, self.train_run_file])
+    def render_train_results(self):
+        hub = self.get_hub()
+
+        st.write(hub.get_training_status().to_dict())
+        st.write(hub.get_evaluate_result())
 
     def render_evaluate(self):
         if st.button("Evaluate"):
             pass
 
     def render_predict(self):
-        if st.button("Predict"):
-            pass
+        hub = self.get_hub()
+        pass
 
     def render_export(self):
         if st.button("Export"):
             pass
 
+    def render_delete(self):
+        hub = self.get_hub()
+        agree = st.checkbox("I agree to delete this model. This action cannot be undone.")
+        if st.button("Delete", disabled=not agree):
+            hub.delete_hub()
+            st.success("Delete done!")
+            st.experimental_rerun()
+
     def render_content(self):
         with st.expander("Create new Model"):
             self.render_new_model()
-
+        st.divider()
         self.render_select_model()
-
         if st.session_state.select_waffle_model:
-            with st.expander("Model Info"):
+            st.divider()
+
+            col1, col2 = st.columns([0.4, 0.6], gap="medium")
+            with col1:
                 self.render_model_info()
+            with col2:
+                with st.expander("Train"):
+                    self.render_train()
 
-            with st.expander("Train"):
-                self.render_train()
+                train_status = self.get_train_status()
+                if train_status:
+                    with st.expander("Train Results"):
+                        self.render_train_results()
 
-            train_status = self.get_train_status()
-            if train_status and train_status.status == "SUCCESS":
-                with st.expander("Evaluate"):
-                    self.render_evaluate()
+                    if train_status.status_desc == "SUCCESS":
+                        with st.expander("Evaluate"):
+                            self.render_evaluate()
 
-                with st.expander("Predict"):
-                    self.render_predict()
+                        with st.expander("Predict"):
+                            self.render_predict()
 
-                with st.expander("Export"):
-                    self.render_export()
+                        with st.expander("Export"):
+                            self.render_export()
+
+                self.render_delete()

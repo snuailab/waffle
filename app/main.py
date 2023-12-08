@@ -6,6 +6,8 @@ load_dotenv()
 
 import streamlit as st
 from src.page.nav import get_page_list, nav
+from src.util.resource import cpu_check, gpu_check, memory_check
+from streamlit_autorefresh import st_autorefresh
 from waffle_utils.log import initialize_logger
 
 from waffle_hub.dataset import Dataset
@@ -19,6 +21,7 @@ st.set_page_config(
     page_icon="🧇",
     layout="wide",
 )
+
 
 st.sidebar.title("Waffle App")
 current_page = st.sidebar.selectbox(

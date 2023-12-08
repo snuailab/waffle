@@ -1,4 +1,9 @@
-streamlit
+streamlit==1.29.0
 streamlit-tags
 streamlit-image_viewer
+streamlit-ace
+streamlit-autorefresh==1.0.1
+
 python-dotenv
+
+nvitop
