@@ -10,19 +10,19 @@ pages = OrderedDict(
     {
         "Dataset": ComponentInfo(
             DatasetPage,
-            PageInfo(title="Dataset", subtitle=None, description="This is Waffle Dataset!"),
+            PageInfo(title="Dataset", subtitle="", description="This is Waffle Dataset!"),
         ),
-        "Model": ComponentInfo(
+        "Hub": ComponentInfo(
             HubPage,
-            PageInfo(title="Model", subtitle=None, description="This is Waffle Hub!"),
+            PageInfo(title="Hub", subtitle="", description="This is Waffle Hub!"),
         ),
         "Playground": ComponentInfo(
             PlayGround,
-            PageInfo(title="Playground", subtitle=None, description=None),
+            PageInfo(title="Playground", subtitle="", description=""),
         ),
         "Run": ComponentInfo(
             RunPage,
-            PageInfo(title="Run", subtitle=None, description=None),
+            PageInfo(title="Run", subtitle="", description=""),
         ),
     },
 )

@@ -2,9 +2,8 @@ from collections import defaultdict
 
 import streamlit as st
 from src.service.run_service import run_service
-from src.util.resource import cpu_check, gpu_check, memory_check
+from src.utils.resource import cpu_check, gpu_check, memory_check
 from streamlit_autorefresh import st_autorefresh
-
 from waffle_hub.hub import Hub
 from waffle_hub.schema.running_status import TrainingStatus
 

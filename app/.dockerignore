@@ -1,0 +1,10 @@
+results/
+datasets/
+videos/
+__pycache__/
+.pre-commit-config.yaml
+.vscode/
+docker/
+.gitignore
+LICENSE
+ex/

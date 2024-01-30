@@ -41,7 +41,7 @@ class BasePage:
             raise e
 
         if st.button("refresh"):
-            st.experimental_rerun()
+            st.rerun()
 
     def __call__(self):
         self.render()

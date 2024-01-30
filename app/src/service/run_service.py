@@ -6,7 +6,7 @@ import time
 import uuid
 
 from src.schema.run import Run
-from waffle_utils.log.time import datetime_now
+from waffle_utils.logger.time import datetime_now
 
 
 class RunService:
