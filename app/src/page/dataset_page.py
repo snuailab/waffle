@@ -185,24 +185,27 @@ class DatasetPage(BasePage):
     def render_dataset_statistics(self):
 
         st.subheader("Statistics")
-        set_name = st.radio(
-            "split_radio",
-            ["total", "train", "val", "test", "unlabeled"],
-            0,
-            key="dataset_info_select_split",
-        )
-        statistics = wd.get_statistics(
-            dataset_name=st.session_state.select_dataset_name,
-            set_name=set_name,
-            root_dir=st.session_state.waffle_dataset_root_dir,
-        )
-        st.write(
-            {
-                "num_images": statistics["num_images"],
-                "num_categories": statistics["num_categories"],
-                "num_instances": statistics["num_annotations"],
-            }
-        )
+        col1, col2 = st.columns([0.3, 0.7], gap="medium")
+        with col1:
+            set_name = st.radio(
+                "split_radio",
+                ["total", "train", "val", "test", "unlabeled"],
+                0,
+                key="dataset_info_select_split",
+            )
+        with col2:
+            statistics = wd.get_statistics(
+                dataset_name=st.session_state.select_dataset_name,
+                set_name=set_name,
+                root_dir=st.session_state.waffle_dataset_root_dir,
+            )
+            st.write(
+                {
+                    "num_images": statistics["num_images"],
+                    "num_categories": statistics["num_categories"],
+                    "num_instances": statistics["num_annotations"],
+                }
+            )
 
         columns = st.columns(2)
 
@@ -239,13 +242,14 @@ class DatasetPage(BasePage):
         st.subheader("Sample Images")
 
         draw = st.checkbox("Show Annotations")
-        image_paths = wd.get_sample_image_paths(
-            dataset_name=st.session_state.select_dataset_name,
-            sample_num=105,
-            draw=draw,
-            set_name=set_name,
-            root_dir=st.session_state.waffle_dataset_root_dir,
-        )
+        with st.spinner("Drawing..."):
+            image_paths = wd.get_sample_image_paths(
+                dataset_name=st.session_state.select_dataset_name,
+                sample_num=105,
+                draw=draw,
+                set_name=set_name,
+                root_dir=st.session_state.waffle_dataset_root_dir,
+            )
 
         image_viewer(image_paths, ncol=5, nrow=3)
 

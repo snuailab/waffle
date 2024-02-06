@@ -22,13 +22,26 @@ def get_parse_root_dir() -> Path:
     return Dataset.parse_root_dir(os.getenv("WAFFLE_DATASET_ROOT_DIR", None))
 
 
-def get_dataset_list(root_dir: str = None) -> list[str]:
-    return Dataset.get_dataset_list(root_dir=root_dir)
+def get_dataset_list(root_dir: str = None, task: str = None) -> list[str]:
+    dataset_list = Dataset.get_dataset_list(root_dir=root_dir)
+    temp_list = dataset_list.copy()
+    if task:
+        for dataset_name in dataset_list:
+            dataset = Dataset.load(dataset_name, root_dir=root_dir)
+            if dataset.task.lower() != task.lower():
+                temp_list.remove(dataset_name)
+
+    return temp_list
 
 
 def get_dataset_info_dict(dataset_name: str, root_dir: str = None) -> dict:
     dataset = Dataset.load(dataset_name, root_dir=root_dir)
     return dataset.get_dataset_info().to_dict()
+
+
+def get_category_names(dataset_name: str, root_dir: str = None) -> list[str]:
+    dataset = Dataset.load(dataset_name, root_dir=root_dir)
+    return dataset.get_category_names()
 
 
 def get_images(dataset_name: str, set_name: str = "total", root_dir: str = None) -> list[Image]:
