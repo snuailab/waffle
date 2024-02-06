@@ -16,10 +16,10 @@ pages = OrderedDict(
             HubPage,
             PageInfo(title="Hub", subtitle="", description="This is Waffle Hub!"),
         ),
-        "Playground": ComponentInfo(
-            PlayGround,
-            PageInfo(title="Playground", subtitle="", description=""),
-        ),
+        # "Playground": ComponentInfo(
+        #     PlayGround,
+        #     PageInfo(title="Playground", subtitle="", description=""),
+        # ),
         "Run": ComponentInfo(
             RunPage,
             PageInfo(title="Run", subtitle="", description=""),
