@@ -40,3 +40,26 @@ def plot_bar(
         plt.legend()
 
     return fig
+
+
+def plot_graphs(
+    x: list,
+    y: list[list],
+    labels: list[str],
+    title: str = "",
+    xlabel: str = "",
+    ylabel: str = "",
+    line_style: str = "-",
+    marker: str = "o",
+    figsize: tuple = (10, 5),
+    legend: bool = True,
+):
+    fig = plt.figure(figsize=figsize)
+    for i in range(len(labels)):
+        plt.plot(x, y[i], line_style + marker, label=labels[i], color=colors[i])
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    if legend:
+        plt.legend()
+    return fig

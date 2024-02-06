@@ -10,7 +10,7 @@ def generate_component(name: str, type_: type, default=None, key=None):
         return st.text_input(name, value=default, key=key)
 
     if type_ == int:
-        return st.number_input(name, value=default, key=key)
+        return st.number_input(name, value=int(default) if default else 0, key=key)
 
     if type_ == float:
         return st.number_input(name, value=default, key=key)

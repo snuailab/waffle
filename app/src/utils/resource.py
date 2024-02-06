@@ -1,3 +1,4 @@
+import torch
 from nvitop import Device
 
 
@@ -43,3 +44,18 @@ def gpu_check() -> str:
         result += "".join(list(map(lambda x: x.ljust(width), s_))) + "\n"
 
     return result
+
+
+def get_available_devices() -> list[str]:
+    """Check available devices
+
+    Returns:
+        list[str]: available devices
+    """
+    base = ["cpu"]
+    # check available gpu
+    if torch.cuda.is_available():
+        devices = Device.all()
+        base.extend([f"{device.index}" for device in devices])
+
+    return base
