@@ -2,7 +2,7 @@ import os
 
 import torch
 from waffle_hub.hub import Hub
-from waffle_hub.schema.result import TrainResult
+from waffle_hub.schema.result import EvaluateResult, InferenceResult, TrainResult
 
 
 def get_parse_root_dir():
@@ -184,7 +184,6 @@ def train(hub_name: str, args: dict, root_dir: str = None) -> TrainResult:
     hub = Hub.load(hub_name, root_dir=root_dir)
     if hub.artifact_dir.exists():
         hub.delete_artifact()
-    torch.multiprocessing.set_start_method("spawn")
     return hub.train(**args)
 
 
@@ -197,9 +196,8 @@ def is_trained(hub_name: str, root_dir: str = None) -> bool:
     return False
 
 
-def evaluate(hub_name: str, args: dict, root_dir: str = None) -> TrainResult:
+def evaluate(hub_name: str, args: dict, root_dir: str = None) -> EvaluateResult:
     hub = Hub.load(hub_name, root_dir=root_dir)
-    torch.multiprocessing.set_start_method("spawn")
     hub.evaluate(
         dataset=args["dataset"],
         root_dir=args["root_dir"],
@@ -224,3 +222,26 @@ def is_evaluated(hub_name: str, root_dir: str = None) -> bool:
         if status is not None:
             return status["status_desc"] == "SUCCESS"
     return False
+
+
+def inference(hub_name: str, args: dict, root_dir: str = None) -> InferenceResult:
+    hub = Hub.load(hub_name, root_dir=root_dir)
+    hub.inference(
+        source=args["source"],
+        recursive=args["recursive"],
+        image_size=args["image_size"],
+        letter_box=args["letter_box"],
+        batch_size=args["batch_size"],
+        confidence_threshold=args["confidence_threshold"],
+        iou_threshold=args["iou_threshold"],
+        half=args["half"],
+        workers=args["workers"],
+        device=args["device"],
+        draw=args["draw"],
+        show=args["show"],
+    )
+    return hub.inference(**args)
+
+
+def export_onnx(hub_name: str, args: dict, root_dir: str = None):
+    hub = Hub.load(hub_name, root_dir=root_dir)

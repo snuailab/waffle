@@ -1,3 +1,4 @@
+import multiprocessing
 import os
 
 from dotenv import load_dotenv
@@ -16,33 +17,32 @@ initialize_logger(
     "logs/app.log", root_level="WARNING", console_level="WARNING", file_level="WARNING"
 )
 
+if multiprocessing.current_process().name == "MainProcess":
+    st.set_page_config(
+        "Waffle App",
+        page_icon="🧇",
+        layout="wide",
+    )
 
-st.set_page_config(
-    "Waffle App",
-    page_icon="🧇",
-    layout="wide",
-)
+    st.sidebar.title("Waffle App")
+    current_page = st.sidebar.selectbox(
+        label="Select Page",
+        options=get_page_list(),
+    )
 
+    st.sidebar.divider()
+    st.sidebar.subheader("Settings")
+    st.sidebar.text_input(
+        "Dataset Root Dir",
+        value=wd.get_parse_root_dir(),
+        key="waffle_dataset_root_dir",
+    )
+    st.sidebar.text_input(
+        "Hub Root Dir",
+        value=wh.get_parse_root_dir(),
+        key="waffle_hub_root_dir",
+    )
 
-st.sidebar.title("Waffle App")
-current_page = st.sidebar.selectbox(
-    label="Select Page",
-    options=get_page_list(),
-)
+    st.sidebar.divider()
 
-st.sidebar.divider()
-st.sidebar.subheader("Settings")
-st.sidebar.text_input(
-    "Dataset Root Dir",
-    value=wd.get_parse_root_dir(),
-    key="waffle_dataset_root_dir",
-)
-st.sidebar.text_input(
-    "Hub Root Dir",
-    value=wh.get_parse_root_dir(),
-    key="waffle_hub_root_dir",
-)
-
-st.sidebar.divider()
-
-page = nav(current_page)
+    page = nav(current_page)

@@ -3,6 +3,7 @@ import threading
 import time
 from multiprocessing import Process
 
+import torch
 from src.schema.run import RunInfo
 from waffle_utils.logger.time import datetime_now
 
@@ -22,6 +23,11 @@ class RunService:
         self.process_check_thread = threading.Thread(target=self.check_alive_loop)
         self.process_check_thread.start()
 
+        try:
+            torch.multiprocessing.set_start_method("forkserver")
+        except RuntimeError:
+            pass
+
     def __del__(self):
         self.stop = True
         self.run_loop_thread.join()
@@ -30,6 +36,7 @@ class RunService:
     def add_run(self, name, run_type, func, args):
         if name in list(self.run_dict.keys()):
             # log 이미 존재하는 프로세스입니다.
+            name = f"{name}_{datetime_now()}"
             return
         if self.queue.qsize() >= self.max_queue:
             # log 큐가 가득 찼습니다.

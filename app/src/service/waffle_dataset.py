@@ -94,6 +94,13 @@ def get_statistics(dataset_name: str, set_name: str = "total", root_dir: str = N
     }
 
 
+def get_split_list(dataset_name: str, root_dir: str = None) -> list[str]:
+    dataset = Dataset.load(dataset_name, root_dir=root_dir)
+    set_names = ["train", "val", "test", "unlabeled"]
+    split_ids = dataset.get_split_ids()
+    return [set_name for set_name in set_names if len(split_ids[SET_CODES[set_name]]) > 0]
+
+
 def get_sample_image_paths(
     dataset_name: str,
     sample_num: int = 100,

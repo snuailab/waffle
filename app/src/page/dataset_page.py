@@ -189,7 +189,11 @@ class DatasetPage(BasePage):
         with col1:
             set_name = st.radio(
                 "split_radio",
-                ["total", "train", "val", "test", "unlabeled"],
+                ["total"]
+                + wd.get_split_list(
+                    dataset_name=st.session_state.select_dataset_name,
+                    root_dir=st.session_state.waffle_dataset_root_dir,
+                ),
                 0,
                 key="dataset_info_select_split",
             )
