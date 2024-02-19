@@ -1,6 +1,7 @@
 import queue
 import threading
 import time
+from copy import copy
 from multiprocessing import Process
 
 import torch
@@ -36,8 +37,7 @@ class RunService:
     def add_run(self, name, run_type, func, args):
         if name in list(self.run_dict.keys()):
             # log 이미 존재하는 프로세스입니다.
-            name = f"{name}_{datetime_now()}"
-            return
+            name = f"{name}_{time.time():.0f}"
         if self.queue.qsize() >= self.max_queue:
             # log 큐가 가득 찼습니다.
             return
@@ -104,10 +104,11 @@ class RunService:
         # poll: error = 1, success = 0, kill and wait = None
         while not self.stop:
             while len(self.running_process_dict) > 0:
-                temp_dict = self.running_process_dict.copy()
-                for name, process in temp_dict.items():
+                dict_keys = copy(list(self.running_process_dict.keys()))
+                for key in dict_keys:
+                    name = key
+                    process = self.running_process_dict[name]
                     if not process.is_alive():
-                        self.run_dict[name][0].end_time = datetime_now()
                         self._del_running_process_dict(name)
                 time.sleep(0.5)
             time.sleep(1)

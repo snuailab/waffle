@@ -19,3 +19,4 @@ class RunType:
     EVALUATE = "evaluate"
     INFERENCE = "inference"
     EXPORT_ONNX = "export_onnx"
+    EXPORT_WAFFLE = "export_waffle"
