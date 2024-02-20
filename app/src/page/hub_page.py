@@ -10,8 +10,9 @@ from src.service import waffle_hub as wh
 from src.service.run_service import run_service
 from src.utils.plot import plot_graphs
 from src.utils.resource import get_available_devices
+from streamlit_image_viewer import image_viewer
 from streamlit_tags import st_tags
-from waffle_hub.schema.configs import TrainConfig
+from waffle_utils.file import io, search
 
 from .base_page import BasePage
 
@@ -22,7 +23,7 @@ class HubPage(BasePage):
     # render
     def render_new_hub(self):
         st.subheader("New Hub")
-
+        # Todo: import waffle format
         model_name = st.text_input("Model Name", key="waffle_hub_name")
         backend = st.selectbox("Backend", wh.get_available_backends(), key="waffle_hub_backend")
         task_type = st.selectbox(
@@ -46,7 +47,7 @@ class HubPage(BasePage):
             if not model_name:
                 st.error("Model Name is required")
                 return
-            wh.new(
+            hub = wh.new(
                 name=model_name,
                 backend=backend,
                 task=task_type,
@@ -55,7 +56,7 @@ class HubPage(BasePage):
                 categories=categories if categories else None,
                 hub_root_dir=st.session_state.waffle_hub_root_dir,
             )
-            st.session_state.select_waffle_hub = model_name
+            st.session_state.select_waffle_hub = hub
 
     def render_select_hub(self):
         st.subheader("Select Hub")
@@ -66,17 +67,16 @@ class HubPage(BasePage):
         model_infos = []
         model_captions = []
         for name in model_list:
-            model_info = wh.get_model_config_dict(
-                name, root_dir=st.session_state.waffle_hub_root_dir
-            )
-            model_status = wh.get_train_status(name, root_dir=st.session_state.waffle_hub_root_dir)
+            hub = wh.load(name, root_dir=st.session_state.waffle_hub_root_dir)
+            model_info = wh.get_model_config_dict(hub)
+            model_status = wh.get_train_status(hub)
             model_info["status"] = model_status.status_desc if model_status else "INIT"
             model_infos.append(model_info)
             for key in filter_map_keys:
                 filter_maps[key].append(model_info[key])
 
             model_captions.append(
-                f"Task: {model_info['task'].upper():>24}, Categories: {str([category['name'] for category in model_info['categories']]):>20}, Status: {model_status.status_desc if model_status else 'INIT'}"
+                f"Backend: {model_info['backend'].upper():>24}, Task: {model_info['task'].upper():>24}, Categories: {str([category['name'] for category in model_info['categories']]):>20}, Status: {model_status.status_desc if model_status else 'INIT'}"
             )
 
         for key, value in filter_maps.items():
@@ -95,21 +95,19 @@ class HubPage(BasePage):
             model_list = [model_list[i] for i in filtered_model_index]
             model_captions = [model_captions[i] for i in filtered_model_index]
 
-        st.radio("Select Model", model_list, 0, captions=model_captions, key="select_waffle_hub")
+        hub_name = st.radio(
+            "Select Hub", model_list, 0, captions=model_captions, key="select_waffle_hub_name"
+        )
+        st.session_state.select_waffle_hub = wh.load(
+            hub_name, root_dir=st.session_state.waffle_hub_root_dir
+        )
 
     def render_hub_info(self):
         st.subheader("Hub Info")
-        st.write(
-            wh.get_model_config_dict(
-                st.session_state.select_waffle_hub, root_dir=st.session_state.waffle_hub_root_dir
-            )
-        )
+        st.write(wh.get_model_config_dict(st.session_state.select_waffle_hub))
 
     def render_train_config(self):
-        hub_model_config = wh.get_model_config_dict(
-            hub_name=st.session_state.select_waffle_hub,
-            root_dir=st.session_state.waffle_hub_root_dir,
-        )
+        hub_model_config = wh.get_model_config_dict(st.session_state.select_waffle_hub)
         if hub_model_config is None:
             return
         dataset_list = wd.get_dataset_list(
@@ -118,10 +116,7 @@ class HubPage(BasePage):
         )
         st.selectbox("Dataset", dataset_list, key="waffle_hub_train_dataset")
 
-        default_params = wh.get_default_train_params(
-            hub_name=st.session_state.select_waffle_hub,
-            root_dir=st.session_state.waffle_hub_root_dir,
-        )
+        default_params = wh.get_default_train_params(st.session_state.select_waffle_hub)
         # if Path(self.train_config_file).exists():
         #     default_params.update(TrainConfig.load(self.train_config_file).to_dict())
         col = st.columns(3, gap="medium")
@@ -160,8 +155,7 @@ class HubPage(BasePage):
             with st.expander("Advance"):
                 st.info("To-do: Advance Configs")  # TODO: Advance Configs
                 default_advance_params = wh.get_default_advanced_train_params(
-                    hub_name=st.session_state.select_waffle_hub,
-                    root_dir=st.session_state.waffle_hub_root_dir,
+                    st.session_state.select_waffle_hub
                 )
                 if default_advance_params:
                     for key, value in default_advance_params.items():
@@ -173,6 +167,8 @@ class HubPage(BasePage):
             st.number_input("seed", value=42, key="train_seed")
 
     def render_train(self):
+        if st.session_state.select_waffle_hub is None:
+            return
         self.render_train_config()
         st.session_state.train_button_disabled = False
         if not st.session_state.waffle_hub_train_dataset:
@@ -184,9 +180,7 @@ class HubPage(BasePage):
             st.session_state.train_button_disabled = True
 
         if st.session_state.waffle_hub_train_dataset:
-            c = wh.get_category_names(
-                st.session_state.select_waffle_hub, st.session_state.waffle_hub_root_dir
-            )
+            c = wh.get_category_names(st.session_state.select_waffle_hub)
             if c != []:
                 if set(c) != set(
                     wd.get_category_names(
@@ -223,11 +217,12 @@ class HubPage(BasePage):
                 "advance_params": None,  # TODO: Advance Configs
             }
             run_args = {
-                "hub_name": st.session_state.select_waffle_hub,
+                "hub": st.session_state.select_waffle_hub,
                 "args": kwargs,
-                "root_dir": st.session_state.waffle_hub_root_dir,
             }
-            run_name = st.session_state.select_waffle_hub + str(RunType.TRAIN)
+
+            wh.delete_status(st.session_state.select_waffle_hub, RunType.TRAIN)
+            run_name = f"{st.session_state.select_waffle_hub.name}_{str(RunType.TRAIN)}"
             run_service.add_run(run_name, RunType.TRAIN, wh.train, run_args)
             st.info("Train Process is registered.")
 
@@ -241,67 +236,78 @@ class HubPage(BasePage):
         #     )
 
     def render_train_result(self):
-        if wh.is_trained(
-            st.session_state.select_waffle_hub, root_dir=st.session_state.waffle_hub_root_dir
-        ):
+        if wh.is_trained(st.session_state.select_waffle_hub):
             st.subheader("Train Results")
-            metrics = wh.get_metrics(
-                st.session_state.select_waffle_hub, root_dir=st.session_state.waffle_hub_root_dir
-            )
+            metrics = wh.get_metrics(st.session_state.select_waffle_hub)
             st.write(metrics[-1])
             # x = [i + 1 for i in range(len(metrics))]
             # y = [[metric[i]["value"] for metric in metrics] for i in range(1, len(metrics[0]))]
             # labels = [metrics[0][i]["tag"] for i in range(1, len(metrics[0]))]
             # st.pyplot(plot_graphs(x, y, labels, "Metrics"))
 
-    def render_func_config(self) -> dict:
-        train_config = wh.get_train_config(
-            hub_name=st.session_state.select_waffle_hub,
-            root_dir=st.session_state.waffle_hub_root_dir,
-        )
+    def render_func_config(self, func: str) -> dict:
+        train_config = wh.get_train_config(st.session_state.select_waffle_hub)
         col = st.columns(3, gap="medium")
         with col[0]:
-            batch_size = st.number_input("batch_size", value=int(train_config["batch_size"]))
+            batch_size = st.number_input(
+                "batch_size", value=int(train_config["batch_size"]), key=f"{func}_batch_size"
+            )
             sub_col = st.columns(2, gap="medium")
             with sub_col[0]:
                 image_width = st.number_input(
-                    "image_width", value=int(train_config["image_size"][0])
+                    "image_width",
+                    value=int(train_config["image_size"][0]),
+                    key=f"{func}_image_width",
                 )
             with sub_col[1]:
                 image_height = st.number_input(
-                    "image_height", value=int(train_config["image_size"][1])
+                    "image_height",
+                    value=int(train_config["image_size"][1]),
+                    key=f"{func}_image_height",
                 )
 
             sub_col = st.columns(2, gap="medium")
             with sub_col[0]:
                 container = st.container(border=True)
-                letter_box = container.checkbox("letter_box", value=bool(train_config["letter_box"]))
+                letter_box = container.checkbox(
+                    "letter_box", value=bool(train_config["letter_box"]), key=f"{func}_letter_box"
+                )
             with sub_col[1]:
                 container = st.container(border=True)
-                half = container.checkbox("half", value=False)
+                half = container.checkbox("half", value=False, key=f"{func}_half")
         with col[1]:
             confidence_threshold = st.slider(
-                "Confidence Threshold", min_value=0.0, max_value=1.0, value=0.25
+                "Confidence Threshold",
+                min_value=0.0,
+                max_value=1.0,
+                value=0.25,
+                key=f"{func}_confidence_threshold",
             )
-            iou_threshold = st.slider("IoU Threshold", min_value=0.0, max_value=1.0, value=0.5)
-            with st.expander("Advance"):
-                st.info("To-do: Advance Configs")  # TODO: Advance Configs
-                if train_config["advance_params"] != {}:
-                    for key, value in train_config["advance_params"].items():
-                        st.write(f"{key}: {value} ({type(value)})")
+            iou_threshold = st.slider(
+                "IoU Threshold", min_value=0.0, max_value=1.0, value=0.5, key=f"{func}_iou_threshold"
+            )
 
         with col[2]:
             if len(train_config["device"].split(",")) > 1:
                 device = st.multiselect(
-                    "device", get_available_devices(), default=train_config["device"].split(",")
+                    "device",
+                    get_available_devices(),
+                    default=train_config["device"].split(","),
+                    key=f"{func}_device",
                 )
             else:
                 device = st.multiselect(
-                    "device", get_available_devices(), default=[train_config["device"]]
+                    "device",
+                    get_available_devices(),
+                    default=[train_config["device"]],
+                    key=f"{func}_device",
                 )
 
-            num_workers = st.number_input("num_workers", value=0)
-            seed = st.number_input("seed", value=42)
+            num_workers = st.number_input("num_workers", value=0, key=f"{func}_num_workers")
+
+        device = "cpu" if "cpu" in device else ",".join(device)
+        if "cpu" in device:
+            st.info("CPU is selected. If you want to use GPU, please select only GPU number.")
 
         return {
             "batch_size": batch_size,
@@ -310,17 +316,12 @@ class HubPage(BasePage):
             "half": half,
             "confidence_threshold": confidence_threshold,
             "iou_threshold": iou_threshold,
-            "device": "cpu" if "cpu" in device else ",".join(device),
-            "advance_params": None,  # TODO: Advance Configs
+            "device": device,
             "workers": num_workers,
-            "seed": seed,
         }
 
     def render_evaluate(self):
-        hub_model_config = wh.get_model_config_dict(
-            hub_name=st.session_state.select_waffle_hub,
-            root_dir=st.session_state.waffle_hub_root_dir,
-        )
+        hub_model_config = wh.get_model_config_dict(st.session_state.select_waffle_hub)
         if hub_model_config is None:
             return
         dataset_list = wd.get_dataset_list(
@@ -341,13 +342,12 @@ class HubPage(BasePage):
                 st.selectbox(
                     "Set Name", set_list, index=len(set_list) - 1, key="waffle_hub_eval_set_name"
                 )
-        config = self.render_func_config()
+        config = self.render_func_config("eval")
         dataset_dict = {
             "dataset": st.session_state.waffle_hub_eval_dataset,
             "dataset_root_dir": st.session_state.waffle_dataset_root_dir,
         }
         config.update(dataset_dict)
-        st.write(config)
 
         st.session_state.eval_button_disabled = False
         if not st.session_state.waffle_hub_eval_dataset:
@@ -359,9 +359,7 @@ class HubPage(BasePage):
             st.session_state.eval_button_disabled = True
 
         if st.session_state.waffle_hub_eval_dataset:
-            c = wh.get_category_names(
-                st.session_state.select_waffle_hub, st.session_state.waffle_hub_root_dir
-            )
+            c = wh.get_category_names(st.session_state.select_waffle_hub)
             if c != []:
                 if set(c) != set(
                     wd.get_category_names(
@@ -371,49 +369,228 @@ class HubPage(BasePage):
                 ):
                     st.error("Dataset and hub categories are not matched")
                     st.session_state.eval_button_disabled = True
-        if "cpu" in config["device"]:
-            st.info("CPU is selected. If you want to use GPU, please select only GPU number.")
 
         if st.button("Evaluate", disabled=st.session_state.eval_button_disabled):
             kwargs = config
             run_args = {
-                "hub_name": st.session_state.select_waffle_hub,
+                "hub": st.session_state.select_waffle_hub,
                 "args": kwargs,
-                "root_dir": st.session_state.waffle_hub_root_dir,
             }
-            run_name = st.session_state.select_waffle_hub + str(RunType.EVALUATE)
+            wh.delete_status(st.session_state.select_waffle_hub, RunType.EVALUATE)
+            run_name = f"{st.session_state.select_waffle_hub.name}_{str(RunType.EVALUATE)}"
             run_service.add_run(run_name, RunType.EVALUATE, wh.evaluate, run_args)
             st.info("Evaluate Process is registered.")
 
     def render_evaluate_result(self):
-        if wh.is_evaluated(
-            st.session_state.select_waffle_hub, root_dir=st.session_state.waffle_hub_root_dir
-        ):
+        if wh.is_evaluated(st.session_state.select_waffle_hub):
             st.subheader("Evaluate Results")
-            st.write(
-                wh.get_evaluate_result(
-                    st.session_state.select_waffle_hub,
-                    root_dir=st.session_state.waffle_hub_root_dir,
-                )
+            st.write(wh.get_evaluate_result(st.session_state.select_waffle_hub))
+            self.render_delete_result(RunType.EVALUATE)
+
+    def render_inference(self):
+        st.session_state.infer_button_disabled = False
+        data_type = st.radio(
+            "Data Type",
+            ["Image", "Video", "Webcam"],
+            index=0,
+            key="inference_data_type",
+            horizontal=True,
+        )
+        if data_type == "Image":
+            st_data = st.file_uploader(
+                "Upload Image",
+                type=["jpg", "jpeg", "png"],
+                key="inference_image",
+                accept_multiple_files=True,
             )
+        elif data_type == "Video":
+            st_data = st.file_uploader(
+                "Upload Video", type=["mp4", "avi", "mkv"], key="inference_video"
+            )
+        elif data_type == "Webcam":
+            st.warning("To-do")  # TODO: Webcam
+            st.session_state.infer_button_disabled = True
+            st.write("Webcam")
+            picture = st.camera_input("Take a picture")
+            if picture:
+                st.image(picture)
+            st_data = None
 
-    def render_predict(self):
-        hub = self.get_hub()
-        pass
+        config = self.render_func_config("infer")
 
-    def render_export(self):
-        if st.button("Export"):
-            pass
+        if not st_data:
+            st.error("Please upload a file")
+            st.session_state.infer_button_disabled = True
 
-    def render_delete(self):
-        agree = st.checkbox("I agree to delete this model. This action cannot be undone.")
+        if config["device"] == "":
+            st.error("Please select a device")
+            st.session_state.infer_button_disabled = True
+
+        if st.button("Inference", disabled=st.session_state.infer_button_disabled):
+            # save image
+            source_save_dir = (
+                Path(st.session_state.waffle_hub_root_dir)
+                / st.session_state.select_waffle_hub.name
+                / "temp_source"
+            )
+            if source_save_dir.exists():
+                io.remove_directory(source_save_dir, recursive=True)
+            io.make_directory(source_save_dir)
+
+            if data_type == "Image":
+                for i, file in enumerate(st_data):
+                    file_path = source_save_dir / f"image_{i}{Path(file.name).suffix}"
+                    with open(file_path, "wb") as f:
+                        f.write(file.read())
+                source = source_save_dir
+            elif data_type == "Video":
+                file_path = source_save_dir / f"video{Path(st_data.name).suffix}"
+                with open(file_path, "wb") as f:
+                    f.write(st_data.read())
+                source = file_path
+
+            infer_dict = {
+                "source": str(source),
+                "recursive": True,
+                "draw": True,
+            }
+            config.update(infer_dict)
+            run_args = {
+                "hub": st.session_state.select_waffle_hub,
+                "args": config,
+            }
+
+            wh.delete_status(st.session_state.select_waffle_hub, RunType.INFERENCE)
+            run_name = f"{st.session_state.select_waffle_hub.name}_{str(RunType.INFERENCE)}"
+            run_service.add_run(run_name, RunType.INFERENCE, wh.inference, run_args)
+            st.info("Inference Process is registered.")
+
+    def render_inference_result(self):
+        if wh.is_inferenced(st.session_state.select_waffle_hub):
+            st.subheader("Inference Results")
+            infer_path = (
+                Path(st.session_state.waffle_hub_root_dir)
+                / st.session_state.select_waffle_hub.name
+                / "inferences"
+            )
+            image_list = search.get_image_files(directory=infer_path / "draws")
+            with st.spinner("Image Loading..."):
+                if len(image_list) > 1000:
+                    image_list = image_list[:1000]
+                image_viewer(image_list, ncol=5, nrow=2, image_name_visible=True)
+            video_path = search.get_video_files(directory=infer_path)
+            if video_path != []:
+                with st.spinner("Video Loading..."):
+                    st.video(str(video_path[0]))
+            self.render_delete_result(RunType.INFERENCE)
+
+    def render_export_onnx(self):
+        train_config = wh.get_train_config(st.session_state.select_waffle_hub)
+        batch_size = st.number_input(
+            "batch_size", value=int(train_config["batch_size"]), key="export_batch_size"
+        )
+        sub_col = st.columns(2, gap="medium")
+        with sub_col[0]:
+            image_width = st.number_input(
+                "image_width", value=int(train_config["image_size"][0]), key=f"export_image_width"
+            )
+        with sub_col[1]:
+            image_height = st.number_input(
+                "image_height", value=int(train_config["image_size"][1]), key=f"export_image_height"
+            )
+        opset_version = st.number_input("opset_version", value=11, key="export_opset_version")
+        container = st.container(border=True)
+        half = container.checkbox("half", value=False, key=f"export_half")
+        if len(train_config["device"].split(",")) > 1:
+            device = st.multiselect(
+                "device",
+                get_available_devices(),
+                default=train_config["device"].split(","),
+                key=f"export_device",
+            )
+        else:
+            device = st.multiselect(
+                "device",
+                get_available_devices(),
+                default=[train_config["device"]],
+                key=f"export_device",
+            )
+        device = "cpu" if "cpu" in device else ",".join(device)
+        if "cpu" in device:
+            st.info("CPU is selected. If you want to use GPU, please select only GPU number.")
+
+        if st.button("Export Onnx"):
+            kwargs = {
+                "batch_size": batch_size,
+                "image_size": [image_width, image_height],
+                "half": half,
+                "device": device,
+                "opset_version": opset_version,
+            }
+            run_args = {
+                "hub": st.session_state.select_waffle_hub,
+                "args": kwargs,
+            }
+            wh.delete_status(st.session_state.select_waffle_hub, RunType.EXPORT_ONNX)
+            run_name = f"{st.session_state.select_waffle_hub.name}_{str(RunType.EXPORT_ONNX)}"
+            run_service.add_run(run_name, RunType.EXPORT_ONNX, wh.export_onnx, run_args)
+            st.info("Export Onnx Process is registered.")
+
+    def render_export_waffle(self):
+        if st.button("Export Waffle"):
+            run_args = {
+                "hub": st.session_state.select_waffle_hub,
+            }
+            wh.delete_status(st.session_state.select_waffle_hub, RunType.EXPORT_WAFFLE)
+            run_name = f"{st.session_state.select_waffle_hub.name}_{str(RunType.EXPORT_WAFFLE)}"
+            run_service.add_run(run_name, RunType.EXPORT_WAFFLE, wh.export_waffle, run_args)
+            st.info("Export Waffle Process is registered.")
+
+    def render_export_onnx_result(self):
+        if wh.is_exported_onnx(st.session_state.select_waffle_hub):
+            st.subheader("Export Onnx Results")
+            onnx_file_path = wh.get_export_onnx_path(st.session_state.select_waffle_hub)
+            with open(onnx_file_path, "rb") as f:
+                onnx_model_bytes = f.read()
+            st.download_button(
+                label="Download Onnx Model",
+                data=onnx_model_bytes,
+                file_name=Path(onnx_file_path).name,
+                key="download_onnx_model",
+            )
+            self.render_delete_result(RunType.EXPORT_ONNX)
+
+    def render_export_waffle_result(self):
+        if wh.is_exported_waffle(st.session_state.select_waffle_hub):
+            st.subheader("Export Waffle Results")
+            waffle_file_path = wh.get_export_waffle_path(st.session_state.select_waffle_hub)
+            with open(waffle_file_path, "rb") as f:
+                waffle_model_bytes = f.read()
+            st.download_button(
+                label="Download Waffle Model",
+                data=waffle_model_bytes,
+                file_name=Path(waffle_file_path).name,
+                key="download_waffle_model",
+            )
+            self.render_delete_result(RunType.EXPORT_WAFFLE)
+
+    def render_delete_hub(self):
+        agree = st.checkbox("I agree to delete this hub. This action cannot be undone.")
         if st.button("Delete", disabled=not agree):
-            wh.delete_hub(
-                hub_name=st.session_state.select_waffle_hub,
-                root_dir=st.session_state.waffle_hub_root_dir,
-            )
+            wh.delete_hub(st.session_state.select_waffle_hub)
             st.success("Delete done!")
             st.rerun()
+
+    def render_delete_result(self, run_type: str):
+        with st.expander(f"Delete {run_type} result"):
+            agree = st.checkbox(
+                "I agree to delete this result. This action cannot be undone.",
+                key=f"delete_{run_type}_result_checkbox",
+            )
+            if st.button("Delete", disabled=not agree, key=f"delete_{run_type}_result_button"):
+                wh.delete_result(st.session_state.select_waffle_hub, run_type)
+                st.success(f"Delete {run_type} result done!")
+                st.rerun()
 
     def render_content(self):
         with st.expander("Create new Hub"):
@@ -423,7 +600,7 @@ class HubPage(BasePage):
         with col1:
             self.render_select_hub()
             with st.expander("Hub delete"):
-                self.render_delete()
+                self.render_delete_hub()
         with col2:
             self.render_hub_info()
 
@@ -439,9 +616,7 @@ class HubPage(BasePage):
             self.render_train_result()
         with eval_tab:
             st.subheader("Evaluate")
-            if wh.is_trained(
-                st.session_state.select_waffle_hub, root_dir=st.session_state.waffle_hub_root_dir
-            ):
+            if wh.is_trained(st.session_state.select_waffle_hub):
                 self.render_evaluate()
                 st.divider()
                 self.render_evaluate_result()
@@ -450,19 +625,32 @@ class HubPage(BasePage):
 
         with infer_tab:
             st.subheader("Inference")
-            if wh.is_trained(
-                st.session_state.select_waffle_hub, root_dir=st.session_state.waffle_hub_root_dir
-            ):
-                pass
+            if wh.is_trained(st.session_state.select_waffle_hub):
+                self.render_inference()
+                st.divider()
+                self.render_inference_result()
             else:
                 st.warning("This hub is not trained yet.")
 
         with export_tab:
-            st.subheader("Export Onnx")
-            if wh.is_trained(
-                st.session_state.select_waffle_hub, root_dir=st.session_state.waffle_hub_root_dir
-            ):
-                pass
+
+            if wh.is_trained(st.session_state.select_waffle_hub):
+                container = st.container(border=True)
+                col1, col2 = container.columns([0.5, 0.5], gap="medium")
+                with col1:
+                    st.subheader("Export Onnx")
+                    with st.expander("Export Onnx"):
+                        self.render_export_onnx()
+                with col2:
+                    st.subheader("Export Waffle")
+                    with st.expander("Export Waffle"):
+                        self.render_export_waffle()
+                container = st.container(border=True)
+                col1, col2 = container.columns([0.5, 0.5], gap="medium")
+                with col1:
+                    self.render_export_onnx_result()
+                with col2:
+                    self.render_export_waffle_result()
             else:
                 st.warning("This hub is not trained yet.")
 

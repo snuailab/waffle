@@ -6,11 +6,19 @@ class RunInfo:
     name: str = None
     run_type: str = None
 
+    status: str = None
+
     scheduled_time: str = None
     start_time: str = None
     end_time: str = None
 
-    def dict(self):
+    current_step: int = None
+    total_step: int = None
+
+    error_type: str = None
+    error_msg: str = None
+
+    def to_dict(self):
         return asdict(self)
 
 

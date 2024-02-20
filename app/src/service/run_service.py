@@ -5,8 +5,10 @@ from copy import copy
 from multiprocessing import Process
 
 import torch
-from src.schema.run import RunInfo
+from src.schema.run import RunInfo, RunType
 from waffle_utils.logger.time import datetime_now
+
+from .waffle_hub import get_status
 
 
 class RunService:
@@ -25,7 +27,7 @@ class RunService:
         self.process_check_thread.start()
 
         try:
-            torch.multiprocessing.set_start_method("forkserver")
+            torch.multiprocessing.set_start_method("spawn")
         except RuntimeError:
             pass
 
@@ -46,21 +48,28 @@ class RunService:
             name=name,
             run_type=run_type,
             scheduled_time=datetime_now(),
+            status="INIT",
         )
-        run = (run_info, func, args)
+        run = {
+            "run_info": run_info,
+            "func": func,
+            "args": args,
+        }
 
         self.run_dict[name] = run
         self.queue.put(run)
 
-    def get_run_info(self, name):
-        return self.run_dict.get(name, None)[0]
+    def get_run(self, name):
+        return self.run_dict.get(name, None)
 
     def get_run_list(self, run_type: str = None):
         if run_type is None:
             return [run_name for run_name in self.run_dict.keys()]
         else:
             return [
-                run_name for run_name, run in self.run_dict.items() if run[0].run_type == run_type
+                run_name
+                for run_name, run in self.run_dict.items()
+                if run["run_info"].run_type == run_type
             ]
 
     def del_run_list(self, name: str):
@@ -72,7 +81,7 @@ class RunService:
             while not self.queue.empty():
                 if len(self.running_process_dict) < self.max_run:
                     run = self.queue.get()
-                    self.run(run_info=run[0], func=run[1], args=run[2])
+                    self.run(run_info=run["run_info"], func=run["func"], args=run["args"])
                 else:
                     time.sleep(0.5)
             time.sleep(1)
@@ -87,29 +96,54 @@ class RunService:
         if process:
             self._del_running_process_dict(name)
             process.terminate()
-            time.sleep(0.5)
+            process.join(5)
+            process.kill()
+            process.join()
+            process.close()
+            self._log_run_info(name)
+
+    def _log_run_info(self, name):
+        run = self.run_dict[name]
+        run_info = run["run_info"]
+        status = get_status(run_info.run_type, run["args"]["hub"])
+        if status is None:
+            return
+        run_info.status = status.status_desc
+        run_info.current_step = status.step
+        run_info.total_step = status.total_step
+        run_info.error_type = status.error_type
+        run_info.error_msg = status.error_msg
 
     def _add_running_process_dict(self, name, process):
-        self.run_dict[name][0].start_time = datetime_now()
+        self.run_dict[name]["run_info"].start_time = datetime_now()
         self.running_process_dict[name] = process
 
     def _del_running_process_dict(self, name):
-        self.run_dict[name][0].end_time = datetime_now()
+        self.run_dict[name]["run_info"].end_time = datetime_now()
         del self.running_process_dict[name]
 
-    def get_running_process_name_list(self):
-        return [run_name for run_name in self.running_process_dict.keys()]
+    def get_running_process_name_list(self, run_type: str = None):
+        if run_type is None:
+            return [run_name for run_name in self.running_process_dict.keys()]
+        else:
+            return [
+                run_name
+                for run_name in self.running_process_dict.keys()
+                if self.run_dict[run_name]["run_info"].run_type == run_type
+            ]
 
     def check_alive_loop(self):
-        # poll: error = 1, success = 0, kill and wait = None
         while not self.stop:
             while len(self.running_process_dict) > 0:
                 dict_keys = copy(list(self.running_process_dict.keys()))
                 for key in dict_keys:
-                    name = key
-                    process = self.running_process_dict[name]
-                    if not process.is_alive():
-                        self._del_running_process_dict(name)
+                    process = self.running_process_dict[key]
+                    self._log_run_info(key)
+                    if self.run_dict[key]["run_info"].status in ["SUCCESS", "FAILED", "STOPPED"]:
+                        self._del_running_process_dict(key)
+                        process.kill()
+                        process.join()
+                        process.close()
                 time.sleep(0.5)
             time.sleep(1)
 
