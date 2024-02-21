@@ -8,6 +8,7 @@ streamlit-image_viewer
 streamlit-ace
 streamlit-datalist
 streamlit-autorefresh==1.0.1
+streamlit-shadcn-ui
 
 python-dotenv
 

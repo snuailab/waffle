@@ -183,7 +183,6 @@ class DatasetPage(BasePage):
         st.write(dataset_info)
 
     def render_dataset_statistics(self):
-
         st.subheader("Statistics")
         col1, col2 = st.columns([0.3, 0.7], gap="medium")
         with col1:
@@ -254,8 +253,7 @@ class DatasetPage(BasePage):
                 set_name=set_name,
                 root_dir=st.session_state.waffle_dataset_root_dir,
             )
-
-        image_viewer(image_paths, ncol=5, nrow=3)
+            image_viewer(image_paths, ncol=5, nrow=3)
 
     def render_content(self):
         with st.expander("Import New Dataset"):
@@ -271,5 +269,5 @@ class DatasetPage(BasePage):
             with col2:
                 self.render_actions()
 
-            with st.expander("Dataset Statistics", expanded=True):
+            with st.expander("Dataset Statistics"):
                 self.render_dataset_statistics()

@@ -3,6 +3,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import streamlit as st
+import streamlit_shadcn_ui as ui
 from src.component.auto_component import generate_component
 from src.schema.run import RunType
 from src.service import waffle_dataset as wd
@@ -11,6 +12,7 @@ from src.service.run_service import run_service
 from src.utils.plot import plot_graphs
 from src.utils.resource import get_available_devices
 from streamlit_image_viewer import image_viewer
+from streamlit_player import st_player
 from streamlit_tags import st_tags
 from waffle_utils.file import io, search
 
@@ -480,8 +482,8 @@ class HubPage(BasePage):
                 image_viewer(image_list, ncol=5, nrow=2, image_name_visible=True)
             video_path = search.get_video_files(directory=infer_path)
             if video_path != []:
-                with st.spinner("Video Loading..."):
-                    st.video(str(video_path[0]))
+                st.write(str(video_path[0].absolute()))
+                st.video(str(video_path[0].absolute()), format="video/avi")
             self.render_delete_result(RunType.INFERENCE)
 
     def render_export_onnx(self):
@@ -606,15 +608,16 @@ class HubPage(BasePage):
 
         st.divider()
 
-        train_tab, eval_tab, infer_tab, export_tab = st.tabs(
-            ["Train", "Evaluate", "Inference", "Export"]
-        )
-        with train_tab:
+        tab = ui.tabs(["Train", "Evaluate", "Inference", "Export"])
+        # train_tab, eval_tab, infer_tab, export_tab = st.tabs(
+        #     ["Train", "Evaluate", "Inference", "Export"]
+        # )
+        if tab == "Train":
             st.subheader("Train")
             self.render_train()
             st.divider()
             self.render_train_result()
-        with eval_tab:
+        elif tab == "Evaluate":
             st.subheader("Evaluate")
             if wh.is_trained(st.session_state.select_waffle_hub):
                 self.render_evaluate()
@@ -622,8 +625,7 @@ class HubPage(BasePage):
                 self.render_evaluate_result()
             else:
                 st.warning("This hub is not trained yet.")
-
-        with infer_tab:
+        elif tab == "Inference":
             st.subheader("Inference")
             if wh.is_trained(st.session_state.select_waffle_hub):
                 self.render_inference()
@@ -631,9 +633,7 @@ class HubPage(BasePage):
                 self.render_inference_result()
             else:
                 st.warning("This hub is not trained yet.")
-
-        with export_tab:
-
+        elif tab == "Export":
             if wh.is_trained(st.session_state.select_waffle_hub):
                 container = st.container(border=True)
                 col1, col2 = container.columns([0.5, 0.5], gap="medium")
@@ -653,30 +653,3 @@ class HubPage(BasePage):
                     self.render_export_waffle_result()
             else:
                 st.warning("This hub is not trained yet.")
-
-        # if st.session_state.select_waffle_hub:
-        #     st.divider()
-
-        #     col1, col2 = st.columns([0.4, 0.6], gap="medium")
-        #     with col1:
-        #         self.render_model_info()
-        #     with col2:
-        #         with st.expander("Train"):
-        #             self.render_train()
-
-        #         train_status = self.get_train_status()
-        #         if train_status:
-        #             with st.expander("Train Results"):
-        #                 self.render_train_results()
-
-        #             if train_status.status_desc == "SUCCESS":
-        #                 with st.expander("Evaluate"):
-        #                     self.render_evaluate()
-
-        #                 with st.expander("Predict"):
-        #                     self.render_predict()
-
-        #                 with st.expander("Export"):
-        #                     self.render_export()
-
-        #         self.render_delete()
