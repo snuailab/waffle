@@ -12,7 +12,6 @@ from src.service.run_service import run_service
 from src.utils.plot import plot_graphs
 from src.utils.resource import get_available_devices
 from streamlit_image_viewer import image_viewer
-from streamlit_player import st_player
 from streamlit_tags import st_tags
 from waffle_utils.file import io, search
 
