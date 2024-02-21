@@ -7,6 +7,7 @@ ENV OMP_NUM_THREADS=1
 ENV MKL_SERVICE_FORCE_INTEL=1
 
 # Install Python packages (no cache)
+# ref: https://dev.im-bot.com/docker-select-caching/
 ARG NO_CACHE_ARG
 
 WORKDIR /workspace
