@@ -10,10 +10,10 @@ ENV MKL_SERVICE_FORCE_INTEL=1
 # ref: https://dev.im-bot.com/docker-select-caching/
 ARG NO_CACHE_ARG
 
-WORKDIR /workspace
-COPY . ./app
+WORKDIR /workspace/app
+COPY . .
 RUN pip install -U pip \
-    && pip install -r app/requirements.txt \
+    && pip install -r requirements.txt \
     && pip install -U numpy
 
-ENTRYPOINT ["bash", "app/entrypoint.sh"]
+ENTRYPOINT ["bash", "entrypoint.sh"]
