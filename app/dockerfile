@@ -16,4 +16,4 @@ RUN pip install -U pip \
     && pip install -r app/requirements.txt \
     && pip install -U numpy
 
-ENTRYPOINT python -m streamlit run app/main.py --server.port $WAFFLE_APP_PORT --server.fileWatcherType none
+ENTRYPOINT ["bash", "app/entrypoint.sh"]

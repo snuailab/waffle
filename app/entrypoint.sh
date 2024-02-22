@@ -1,0 +1,1 @@
+python -m streamlit run main.py --server.port $WAFFLE_APP_PORT --server.fileWatcherType none
