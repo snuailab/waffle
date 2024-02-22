@@ -7,7 +7,7 @@ from typing import Union
 
 from waffle_hub.dataset import Dataset
 from waffle_hub.schema.fields import Image
-from waffle_utils.file import io
+from waffle_utils.file import io, search
 
 SET_CODES = {
     "total": None,
@@ -131,7 +131,6 @@ def get_sample_image_paths(
 
 
 # waffle dataset methods
-# TODO: type?
 def from_coco(dataset_name: str, root_dir: str, task: str, image_zip_file, json_files):
     temp_image_zip_file = NamedTemporaryFile(suffix=".zip")
     temp_image_zip_file.write(image_zip_file.read())
@@ -152,14 +151,29 @@ def from_coco(dataset_name: str, root_dir: str, task: str, image_zip_file, json_
         )
 
 
-# def from_yolo(dataset_name: str, root_dir: str, task: str, yolo_root_dir: str, yaml_path: str):
-#     Dataset.from_yolo(
-#         name=dataset_name,
-#         task=task,
-#         yolo_root_dir=yolo_root_dir,
-#         yaml_path=yaml_path,
-#         root_dir=root_dir,
-#     )
+def from_yolo(dataset_name: str, root_dir: str, task: str, yolo_root_zip_file):
+    temp_root_zip_file = NamedTemporaryFile(suffix=".zip")
+    temp_root_zip_file.write(yolo_root_zip_file.read())
+
+    with TemporaryDirectory() as temp_dir:
+        io.unzip(temp_root_zip_file.name, temp_dir, create_directory=True)
+        yaml_file = search.get_files(temp_dir, extension=".yaml")
+        if yaml_file:
+            if len(yaml_file) > 1:
+                raise ValueError("There are multiple yaml files in the root directory.")
+            temp_yaml_file = yaml_file[0]
+        else:
+            if task != "classification":
+                raise ValueError(f"{task} requires a yaml file.")
+            temp_yaml_file = None
+
+        Dataset.from_yolo(
+            name=dataset_name,
+            task=task,
+            yolo_root_dir=temp_dir,
+            yaml_path=temp_yaml_file,
+            root_dir=root_dir,
+        )
 
 
 def load(dataset_name: str, root_dir: str = None) -> Dataset:

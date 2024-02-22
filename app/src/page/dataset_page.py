@@ -70,6 +70,31 @@ class DatasetPage(BasePage):
 
         elif data_type == "yolo":
             st.text("NOT IMPLEMENTED YET")
+            st.selectbox(
+                "Task Type",
+                [
+                    "classification",
+                    "object_detection",
+                    "instance_segmentation",
+                ],
+                key="import_dataset_task_type",
+            )
+            st_yolo_root_zip_file = st.file_uploader(
+                "yolo_root_zip_file",
+                type=["zip"],
+                key="import_dataset_yolo_root_zip",
+                accept_multiple_files=False,
+            )
+            if st.button("Import"):
+                wd.from_yolo(
+                    dataset_name=st.session_state.import_dataset_name,
+                    task=st.session_state.import_dataset_task_type,
+                    yolo_root_zip_file=st_yolo_root_zip_file,
+                    root_dir=st.session_state.waffle_dataset_root_dir,
+                )
+
+                st.success("Import done!")
+                st.session_state.select_dataset_name = st.session_state.import_dataset_name
 
     def render_select_dataset(self):
         st.subheader("Select Dataset")
@@ -163,17 +188,6 @@ class DatasetPage(BasePage):
                         "Download", data, f"{data_type}.zip", key="download_exported_dataset"
                     )
 
-        st.divider()
-
-        agree = st.checkbox("I agree to delete this dataset. This action cannot be undone.")
-        if st.button("Delete", disabled=not agree):
-            wd.delete(
-                dataset_name=st.session_state.select_dataset_name,
-                root_dir=st.session_state.waffle_dataset_root_dir,
-            )
-            st.success("Delete done!")
-            st.experimental_rerun()
-
     def render_dataset_info(self):
         st.subheader("Dataset Info")
         dataset_info = wd.get_dataset_info_dict(
@@ -181,6 +195,18 @@ class DatasetPage(BasePage):
             root_dir=st.session_state.waffle_dataset_root_dir,
         )
         st.write(dataset_info)
+
+        st.divider()
+
+        with st.expander("Dataset Delete"):
+            agree = st.checkbox("I agree to delete this dataset. This action cannot be undone.")
+            if st.button("Delete", disabled=not agree):
+                wd.delete(
+                    dataset_name=st.session_state.select_dataset_name,
+                    root_dir=st.session_state.waffle_dataset_root_dir,
+                )
+                st.success("Delete done!")
+                st.experimental_rerun()
 
     def render_dataset_statistics(self):
         st.subheader("Statistics")
