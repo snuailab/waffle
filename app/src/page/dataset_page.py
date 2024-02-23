@@ -171,7 +171,7 @@ class DatasetPage(BasePage):
         st.divider()
 
         st.subheader("Download Dataset")
-        data_type = st.selectbox("format", ["coco", "yolo"])
+        data_type = st.selectbox("format", ["coco", "yolo", "autocare_dlt", "transformers"])
         if st.button("Export"):
             exported_directory = wd.export(
                 dataset_name=st.session_state.select_dataset_name,
