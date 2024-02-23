@@ -24,40 +24,65 @@ class HubPage(BasePage):
     # render
     def render_new_hub(self):
         st.subheader("New Hub")
-        # Todo: import waffle format
-        model_name = st.text_input("Model Name", key="waffle_hub_name")
-        backend = st.selectbox("Backend", wh.get_available_backends(), key="waffle_hub_backend")
-        task_type = st.selectbox(
-            "Task Type", wh.get_available_tasks(backend=backend), key="waffle_hub_task_type"
+        create_type = st.radio(
+            "Create Type", ["New", "From Waffle"], key="create_type", horizontal=True
         )
-        model_type = st.selectbox(
-            "Model Type",
-            wh.get_available_model_types(backend=backend, task=task_type),
-            key="waffle_hub_model_type",
-        )
-        model_size = st.selectbox(
-            "Model Size",
-            wh.get_available_model_sizes(backend=backend, task=task_type, model_type=model_type),
-            key="waffle_hub_model_size",
-        )
-        categories = st_tags(
-            label="Categories", text="Press enter to add more", key="waffle_hub_categories"
-        )
-
-        if st.button("Create"):
-            if not model_name:
-                st.error("Model Name is required")
-                return
-            hub = wh.new(
-                name=model_name,
-                backend=backend,
-                task=task_type,
-                model_type=model_type,
-                model_size=model_size,
-                categories=categories if categories else None,
-                hub_root_dir=st.session_state.waffle_hub_root_dir,
+        if create_type == "New":
+            hub_name = st.text_input("Hub Name", key="waffle_hub_name")
+            backend = st.selectbox("Backend", wh.get_available_backends(), key="waffle_hub_backend")
+            task_type = st.selectbox(
+                "Task Type", wh.get_available_tasks(backend=backend), key="waffle_hub_task_type"
             )
-            st.session_state.select_waffle_hub = hub
+            model_type = st.selectbox(
+                "Model Type",
+                wh.get_available_model_types(backend=backend, task=task_type),
+                key="waffle_hub_model_type",
+            )
+            model_size = st.selectbox(
+                "Model Size",
+                wh.get_available_model_sizes(backend=backend, task=task_type, model_type=model_type),
+                key="waffle_hub_model_size",
+            )
+            categories = st_tags(
+                label="Categories", text="Press enter to add more", key="waffle_hub_categories"
+            )
+
+            if st.button("Create"):
+                if not hub_name:
+                    st.error("Model Name is required")
+                    return
+                hub = wh.new(
+                    name=hub_name,
+                    backend=backend,
+                    task=task_type,
+                    model_type=model_type,
+                    model_size=model_size,
+                    categories=categories if categories else None,
+                    hub_root_dir=st.session_state.waffle_hub_root_dir,
+                )
+                st.session_state.select_waffle_hub = hub
+                st.success("Create done!")
+
+        elif create_type == "From Waffle":
+            hub_name = st.text_input("Hub Name", key="waffle_hub_name")
+            st_waffle_file = st.file_uploader(
+                "waffle_file",
+                type=["waffle"],
+                key="upload_waffle_file",
+                accept_multiple_files=False,
+            )
+            if st.button("Create", disabled=not st_waffle_file):
+                if not hub_name:
+                    st.error("Model Name is required")
+                    return
+                hub = wh.from_waffle(
+                    name=hub_name,
+                    hub_root_dir=st.session_state.waffle_hub_root_dir,
+                    waffle_file=st_waffle_file,
+                )
+
+                st.session_state.select_waffle_hub = hub
+                st.success("Create done!")
 
     def render_select_hub(self):
         st.subheader("Select Hub")

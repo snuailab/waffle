@@ -1,5 +1,6 @@
 import os
 import time
+from tempfile import NamedTemporaryFile
 
 import torch
 from src.schema.run import RunType
@@ -199,6 +200,17 @@ def new(
         model_size=model_size,
         categories=categories if categories else None,
         hub_root_dir=hub_root_dir,
+    )
+
+
+def from_waffle(name: str, hub_root_dir: str, waffle_file) -> Hub:
+    temp_waffle_file = NamedTemporaryFile(suffix=".waffle")
+    temp_waffle_file.write(waffle_file.read())
+
+    return Hub.from_waffle_file(
+        name=name,
+        waffle_file=str(temp_waffle_file.name),
+        root_dir=hub_root_dir,
     )
 
 
