@@ -448,7 +448,9 @@ class HubPage(BasePage):
                     if isinstance(d["value"], list):
                         continue
                     with cols[i]:
-                        ui.metric_card(title=d["tag"], content=d["value"], key=f"metric_{d['tag']}")
+                        ui.metric_card(
+                            title=d["tag"], content=f"{d['value']:>.3}", key=f"metric_{d['tag']}"
+                        )
 
             st.write(result)
 
@@ -673,21 +675,25 @@ class HubPage(BasePage):
 
         st.divider()
 
+        st.subheader("Hub Actions")
         tab = ui.tabs(["Train", "Evaluate", "Inference", "Export"])
         # train_tab, eval_tab, infer_tab, export_tab = st.tabs(
         #     ["Train", "Evaluate", "Inference", "Export"]
         # )
         if tab == "Train":
             st.subheader("Train")
-            self.render_train()
+            with st.spinner("Loading default settings..."):
+                self.render_train()
             st.divider()
-            self.render_train_result()
+            with st.spinner("Loading Train Results..."):
+                self.render_train_result()
         elif tab == "Evaluate":
             st.subheader("Evaluate")
             if wh.is_trained(st.session_state.select_waffle_hub):
                 self.render_evaluate()
                 st.divider()
-                self.render_evaluate_result()
+                with st.spinner("Loading Evaluate Results..."):
+                    self.render_evaluate_result()
             else:
                 st.warning("This hub is not trained yet.")
         elif tab == "Inference":
@@ -695,7 +701,8 @@ class HubPage(BasePage):
             if wh.is_trained(st.session_state.select_waffle_hub):
                 self.render_inference()
                 st.divider()
-                self.render_inference_result()
+                with st.spinner("Loading Inference Results..."):
+                    self.render_inference_result()
             else:
                 st.warning("This hub is not trained yet.")
         elif tab == "Export":

@@ -55,6 +55,9 @@ def get_images(dataset_name: str, set_name: str = "total", root_dir: str = None)
 
 def get_statistics(dataset_name: str, set_name: str = "total", root_dir: str = None) -> dict:
     dataset = Dataset.load(dataset_name, root_dir=root_dir)
+    if dataset.task.lower() == "text_recognition":
+        # raise ValueError("Text recognition dataset does not support statistics.")
+        return None
     if set_name == "total":
         images = dataset.get_images()
     else:
@@ -97,7 +100,10 @@ def get_statistics(dataset_name: str, set_name: str = "total", root_dir: str = N
 def get_split_list(dataset_name: str, root_dir: str = None) -> list[str]:
     dataset = Dataset.load(dataset_name, root_dir=root_dir)
     set_names = ["train", "val", "test", "unlabeled"]
-    split_ids = dataset.get_split_ids()
+    try:
+        split_ids = dataset.get_split_ids()
+    except FileNotFoundError:
+        return []
     return [set_name for set_name in set_names if len(split_ids[SET_CODES[set_name]]) > 0]
 
 
@@ -195,3 +201,13 @@ def export(dataset_name: str, data_type: str, root_dir: str = None) -> str:
 def delete(dataset_name: str, root_dir: str = None):
     dataset = Dataset.load(dataset_name, root_dir=root_dir)
     dataset.delete()
+
+
+def merge(new_dataset_name: str, select_dataset_names: list[str], task: str, root_dir: str = None):
+    Dataset.merge(
+        name=new_dataset_name,
+        root_dir=root_dir,
+        src_names=select_dataset_names,
+        src_root_dirs=root_dir,
+        task=task,
+    )
