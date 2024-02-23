@@ -439,7 +439,19 @@ class HubPage(BasePage):
     def render_evaluate_result(self):
         if wh.is_evaluated(st.session_state.select_waffle_hub):
             st.subheader("Evaluate Results")
-            st.write(wh.get_evaluate_result(st.session_state.select_waffle_hub))
+            result = wh.get_evaluate_result(st.session_state.select_waffle_hub)
+            leng = len(result)
+            col_size = 5
+            for j in range(0, leng, col_size):
+                cols = st.columns(col_size, gap="small")
+                for i, d in enumerate(result[j : j + col_size]):
+                    if isinstance(d["value"], list):
+                        continue
+                    with cols[i]:
+                        ui.metric_card(title=d["tag"], content=d["value"], key=f"metric_{d['tag']}")
+
+            st.write(result)
+
             self.render_delete_result(RunType.EVALUATE)
 
     def render_inference(self):
