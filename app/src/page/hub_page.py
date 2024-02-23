@@ -264,12 +264,41 @@ class HubPage(BasePage):
     def render_train_result(self):
         if wh.is_trained(st.session_state.select_waffle_hub):
             st.subheader("Train Results")
-            metrics = wh.get_metrics(st.session_state.select_waffle_hub)
-            st.write(metrics[-1])
-            # x = [i + 1 for i in range(len(metrics))]
-            # y = [[metric[i]["value"] for metric in metrics] for i in range(1, len(metrics[0]))]
-            # labels = [metrics[0][i]["tag"] for i in range(1, len(metrics[0]))]
-            # st.pyplot(plot_graphs(x, y, labels, "Metrics"))
+            train_loss, val_loss, metrics = wh.get_metrics(st.session_state.select_waffle_hub)
+            col1, col2 = st.columns([0.5, 0.5], gap="medium")
+            x = [i + 1 for i in range(len(list(train_loss.items())[0][1]))]
+            with col1:
+                if train_loss == {}:
+                    st.warning("Train Loss is empty")
+                else:
+                    y = []
+                    labels = []
+                    for k, v in train_loss.items():
+                        y.append(v)
+                        labels.append(k)
+                    st.pyplot(plot_graphs(x, y, labels, "Train Loss"))
+            with col2:
+                if val_loss == {}:
+                    st.warning("Val Loss is empty")
+                else:
+                    y = []
+                    labels = []
+                    for k, v in val_loss.items():
+                        y.append(v)
+                        labels.append(k)
+                    st.pyplot(plot_graphs(x, y, labels, "Val Loss"))
+
+            col1, col2 = st.columns([0.5, 0.5], gap="medium")
+            with col1:
+                if metrics == {}:
+                    st.warning("Metrics is empty")
+                else:
+                    y = []
+                    labels = []
+                    for k, v in metrics.items():
+                        y.append(v)
+                        labels.append(k)
+                    st.pyplot(plot_graphs(x, y, labels, "Metrics"))
 
     def render_func_config(self, func: str) -> dict:
         train_config = wh.get_train_config(st.session_state.select_waffle_hub)

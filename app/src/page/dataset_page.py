@@ -69,7 +69,6 @@ class DatasetPage(BasePage):
                 st.session_state.select_dataset_name = st.session_state.import_dataset_name
 
         elif data_type == "yolo":
-            st.text("NOT IMPLEMENTED YET")
             st.selectbox(
                 "Task Type",
                 [
