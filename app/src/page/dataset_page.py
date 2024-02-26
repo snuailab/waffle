@@ -117,6 +117,8 @@ class DatasetPage(BasePage):
                 dataset_infos.append(dataset_info)
                 for key, value in dataset_info.items():
                     if isinstance(value, (str, int, float)) and key != "name":
+                        if key == "created":
+                            value = value.split(" ")[0]
                         filter_maps[key].add(value)
 
                 dataset_captions.append(
@@ -125,7 +127,6 @@ class DatasetPage(BasePage):
 
             for key, value in filter_maps.items():
                 filter_maps[key] = list(set(value))
-
         filter_key = st.selectbox("filter key", ["All"] + list(filter_maps.keys()), key="filter_key")
         if filter_key and filter_key != "All":
             values = list(filter_maps[st.session_state.filter_key])
@@ -133,7 +134,13 @@ class DatasetPage(BasePage):
 
             filtered_dataset_index = []
             for i, dataset_info in enumerate(dataset_infos):
-                if dataset_info[st.session_state.filter_key] in st.session_state.filter_value:
+                if filter_key == "created":
+                    if (
+                        dataset_info[st.session_state.filter_key].split(" ")[0]
+                        in st.session_state.filter_value
+                    ):
+                        filtered_dataset_index.append(i)
+                elif dataset_info[st.session_state.filter_key] in st.session_state.filter_value:
                     filtered_dataset_index.append(i)
 
             dataset_list = [dataset_list[i] for i in filtered_dataset_index]
@@ -308,7 +315,6 @@ class DatasetPage(BasePage):
             task=st.session_state.merge_dataset_task_type,
         )
         st.multiselect("Select Datasets", dataset_list, key="merge_dataset_select_datasets")
-        st.write(st.session_state.merge_dataset_select_datasets)
         if st.button(
             "Merge",
             disabled=(len(st.session_state.merge_dataset_select_datasets) < 2)
