@@ -547,10 +547,12 @@ class HubPage(BasePage):
                 if len(image_list) > 1000:
                     image_list = image_list[:1000]
                 image_viewer(image_list, ncol=5, nrow=2, image_name_visible=True)
-            video_path = search.get_video_files(directory=infer_path)
-            if video_path != []:
-                st.write(str(video_path[0].absolute()))
-                st.video(str(video_path[0].absolute()), format="video/avi")
+
+            # TODO: Video Viewer
+            # video_path = search.get_video_files(directory=infer_path)
+            # if video_path != []:
+            #     # st.write(str(video_path[0].absolute()))
+            #     st.video(str(video_path[0].absolute()), format="video/avi")
             self.render_delete_result(RunType.INFERENCE)
 
     def render_export_onnx(self):
@@ -677,9 +679,6 @@ class HubPage(BasePage):
 
         st.subheader("Hub Actions")
         tab = ui.tabs(["Train", "Evaluate", "Inference", "Export"])
-        # train_tab, eval_tab, infer_tab, export_tab = st.tabs(
-        #     ["Train", "Evaluate", "Inference", "Export"]
-        # )
         if tab == "Train":
             st.subheader("Train")
             with st.spinner("Loading default settings..."):
