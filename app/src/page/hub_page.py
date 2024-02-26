@@ -24,40 +24,65 @@ class HubPage(BasePage):
     # render
     def render_new_hub(self):
         st.subheader("New Hub")
-        # Todo: import waffle format
-        model_name = st.text_input("Model Name", key="waffle_hub_name")
-        backend = st.selectbox("Backend", wh.get_available_backends(), key="waffle_hub_backend")
-        task_type = st.selectbox(
-            "Task Type", wh.get_available_tasks(backend=backend), key="waffle_hub_task_type"
+        create_type = st.radio(
+            "Create Type", ["New", "From Waffle"], key="create_type", horizontal=True
         )
-        model_type = st.selectbox(
-            "Model Type",
-            wh.get_available_model_types(backend=backend, task=task_type),
-            key="waffle_hub_model_type",
-        )
-        model_size = st.selectbox(
-            "Model Size",
-            wh.get_available_model_sizes(backend=backend, task=task_type, model_type=model_type),
-            key="waffle_hub_model_size",
-        )
-        categories = st_tags(
-            label="Categories", text="Press enter to add more", key="waffle_hub_categories"
-        )
-
-        if st.button("Create"):
-            if not model_name:
-                st.error("Model Name is required")
-                return
-            hub = wh.new(
-                name=model_name,
-                backend=backend,
-                task=task_type,
-                model_type=model_type,
-                model_size=model_size,
-                categories=categories if categories else None,
-                hub_root_dir=st.session_state.waffle_hub_root_dir,
+        if create_type == "New":
+            hub_name = st.text_input("Hub Name", key="waffle_hub_name")
+            backend = st.selectbox("Backend", wh.get_available_backends(), key="waffle_hub_backend")
+            task_type = st.selectbox(
+                "Task Type", wh.get_available_tasks(backend=backend), key="waffle_hub_task_type"
             )
-            st.session_state.select_waffle_hub = hub
+            model_type = st.selectbox(
+                "Model Type",
+                wh.get_available_model_types(backend=backend, task=task_type),
+                key="waffle_hub_model_type",
+            )
+            model_size = st.selectbox(
+                "Model Size",
+                wh.get_available_model_sizes(backend=backend, task=task_type, model_type=model_type),
+                key="waffle_hub_model_size",
+            )
+            categories = st_tags(
+                label="Categories", text="Press enter to add more", key="waffle_hub_categories"
+            )
+
+            if st.button("Create"):
+                if not hub_name:
+                    st.error("Model Name is required")
+                    return
+                hub = wh.new(
+                    name=hub_name,
+                    backend=backend,
+                    task=task_type,
+                    model_type=model_type,
+                    model_size=model_size,
+                    categories=categories if categories else None,
+                    hub_root_dir=st.session_state.waffle_hub_root_dir,
+                )
+                st.session_state.select_waffle_hub = hub
+                st.success("Create done!")
+
+        elif create_type == "From Waffle":
+            hub_name = st.text_input("Hub Name", key="waffle_hub_name")
+            st_waffle_file = st.file_uploader(
+                "waffle_file",
+                type=["waffle"],
+                key="upload_waffle_file",
+                accept_multiple_files=False,
+            )
+            if st.button("Create", disabled=not st_waffle_file):
+                if not hub_name:
+                    st.error("Model Name is required")
+                    return
+                hub = wh.from_waffle(
+                    name=hub_name,
+                    hub_root_dir=st.session_state.waffle_hub_root_dir,
+                    waffle_file=st_waffle_file,
+                )
+
+                st.session_state.select_waffle_hub = hub
+                st.success("Create done!")
 
     def render_select_hub(self):
         st.subheader("Select Hub")
@@ -239,12 +264,41 @@ class HubPage(BasePage):
     def render_train_result(self):
         if wh.is_trained(st.session_state.select_waffle_hub):
             st.subheader("Train Results")
-            metrics = wh.get_metrics(st.session_state.select_waffle_hub)
-            st.write(metrics[-1])
-            # x = [i + 1 for i in range(len(metrics))]
-            # y = [[metric[i]["value"] for metric in metrics] for i in range(1, len(metrics[0]))]
-            # labels = [metrics[0][i]["tag"] for i in range(1, len(metrics[0]))]
-            # st.pyplot(plot_graphs(x, y, labels, "Metrics"))
+            train_loss, val_loss, metrics = wh.get_metrics(st.session_state.select_waffle_hub)
+            col1, col2 = st.columns([0.5, 0.5], gap="medium")
+            x = [i + 1 for i in range(len(list(train_loss.items())[0][1]))]
+            with col1:
+                if train_loss == {}:
+                    st.warning("Train Loss is empty")
+                else:
+                    y = []
+                    labels = []
+                    for k, v in train_loss.items():
+                        y.append(v)
+                        labels.append(k)
+                    st.pyplot(plot_graphs(x, y, labels, "Train Loss"))
+            with col2:
+                if val_loss == {}:
+                    st.warning("Val Loss is empty")
+                else:
+                    y = []
+                    labels = []
+                    for k, v in val_loss.items():
+                        y.append(v)
+                        labels.append(k)
+                    st.pyplot(plot_graphs(x, y, labels, "Val Loss"))
+
+            col1, col2 = st.columns([0.5, 0.5], gap="medium")
+            with col1:
+                if metrics == {}:
+                    st.warning("Metrics is empty")
+                else:
+                    y = []
+                    labels = []
+                    for k, v in metrics.items():
+                        y.append(v)
+                        labels.append(k)
+                    st.pyplot(plot_graphs(x, y, labels, "Metrics"))
 
     def render_func_config(self, func: str) -> dict:
         train_config = wh.get_train_config(st.session_state.select_waffle_hub)
@@ -385,7 +439,21 @@ class HubPage(BasePage):
     def render_evaluate_result(self):
         if wh.is_evaluated(st.session_state.select_waffle_hub):
             st.subheader("Evaluate Results")
-            st.write(wh.get_evaluate_result(st.session_state.select_waffle_hub))
+            result = wh.get_evaluate_result(st.session_state.select_waffle_hub)
+            leng = len(result)
+            col_size = 5
+            for j in range(0, leng, col_size):
+                cols = st.columns(col_size, gap="small")
+                for i, d in enumerate(result[j : j + col_size]):
+                    if isinstance(d["value"], list):
+                        continue
+                    with cols[i]:
+                        ui.metric_card(
+                            title=d["tag"], content=f"{d['value']:>.3}", key=f"metric_{d['tag']}"
+                        )
+
+            st.write(result)
+
             self.render_delete_result(RunType.EVALUATE)
 
     def render_inference(self):
@@ -607,21 +675,25 @@ class HubPage(BasePage):
 
         st.divider()
 
+        st.subheader("Hub Actions")
         tab = ui.tabs(["Train", "Evaluate", "Inference", "Export"])
         # train_tab, eval_tab, infer_tab, export_tab = st.tabs(
         #     ["Train", "Evaluate", "Inference", "Export"]
         # )
         if tab == "Train":
             st.subheader("Train")
-            self.render_train()
+            with st.spinner("Loading default settings..."):
+                self.render_train()
             st.divider()
-            self.render_train_result()
+            with st.spinner("Loading Train Results..."):
+                self.render_train_result()
         elif tab == "Evaluate":
             st.subheader("Evaluate")
             if wh.is_trained(st.session_state.select_waffle_hub):
                 self.render_evaluate()
                 st.divider()
-                self.render_evaluate_result()
+                with st.spinner("Loading Evaluate Results..."):
+                    self.render_evaluate_result()
             else:
                 st.warning("This hub is not trained yet.")
         elif tab == "Inference":
@@ -629,7 +701,8 @@ class HubPage(BasePage):
             if wh.is_trained(st.session_state.select_waffle_hub):
                 self.render_inference()
                 st.divider()
-                self.render_inference_result()
+                with st.spinner("Loading Inference Results..."):
+                    self.render_inference_result()
             else:
                 st.warning("This hub is not trained yet.")
         elif tab == "Export":

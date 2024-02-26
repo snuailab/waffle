@@ -5,8 +5,7 @@ from collections import OrderedDict, defaultdict
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 
 import streamlit as st
-
-# from waffle_hub.dataset import Dataset
+import streamlit_shadcn_ui as ui
 from src.service import waffle_dataset as wd
 from src.utils.plot import plot_bar
 from streamlit_image_viewer import image_viewer
@@ -56,7 +55,12 @@ class DatasetPage(BasePage):
                 accept_multiple_files=True,
             )
 
-            if st.button("Import"):
+            if st.button(
+                "Import",
+                disabled=not (
+                    st.session_state.import_dataset_name and st_image_zip_file and st_json_files
+                ),
+            ):
                 wd.from_coco(
                     dataset_name=st.session_state.import_dataset_name,
                     task=st.session_state.import_dataset_task_type,
@@ -69,7 +73,34 @@ class DatasetPage(BasePage):
                 st.session_state.select_dataset_name = st.session_state.import_dataset_name
 
         elif data_type == "yolo":
-            st.text("NOT IMPLEMENTED YET")
+            st.selectbox(
+                "Task Type",
+                [
+                    "classification",
+                    "object_detection",
+                    "instance_segmentation",
+                ],
+                key="import_dataset_task_type",
+            )
+            st_yolo_root_zip_file = st.file_uploader(
+                "yolo_root_zip_file",
+                type=["zip"],
+                key="import_dataset_yolo_root_zip",
+                accept_multiple_files=False,
+            )
+            if st.button(
+                "Import",
+                disabled=not (st.session_state.import_dataset_name and st_yolo_root_zip_file),
+            ):
+                wd.from_yolo(
+                    dataset_name=st.session_state.import_dataset_name,
+                    task=st.session_state.import_dataset_task_type,
+                    yolo_root_zip_file=st_yolo_root_zip_file,
+                    root_dir=st.session_state.waffle_dataset_root_dir,
+                )
+
+                st.success("Import done!")
+                st.session_state.select_dataset_name = st.session_state.import_dataset_name
 
     def render_select_dataset(self):
         st.subheader("Select Dataset")
@@ -78,22 +109,24 @@ class DatasetPage(BasePage):
         filter_maps = defaultdict(set)
         dataset_infos = []
         dataset_captions = []
-        for name in dataset_list:
-            dataset_info = wd.get_dataset_info_dict(
-                dataset_name=name, root_dir=st.session_state.waffle_dataset_root_dir
-            )
-            dataset_infos.append(dataset_info)
-            for key, value in dataset_info.items():
-                if isinstance(value, (str, int, float)) and key != "name":
-                    filter_maps[key].add(value)
+        with st.spinner("Loading get dataset list..."):
+            for name in dataset_list:
+                dataset_info = wd.get_dataset_info_dict(
+                    dataset_name=name, root_dir=st.session_state.waffle_dataset_root_dir
+                )
+                dataset_infos.append(dataset_info)
+                for key, value in dataset_info.items():
+                    if isinstance(value, (str, int, float)) and key != "name":
+                        if key == "created":
+                            value = value.split(" ")[0]
+                        filter_maps[key].add(value)
 
-            dataset_captions.append(
-                f"Task: {dataset_info['task'].upper():>24}, Categories: {str([category['name'] for category in dataset_info['categories']]):>20}, Created: {dataset_info['created']:>20}"
-            )
+                dataset_captions.append(
+                    f"Task: {dataset_info['task'].upper():>24}, Categories: {str([category['name'] for category in dataset_info['categories']]):>20}, Created: {dataset_info['created']:>20}"
+                )
 
-        for key, value in filter_maps.items():
-            filter_maps[key] = list(set(value))
-
+            for key, value in filter_maps.items():
+                filter_maps[key] = list(set(value))
         filter_key = st.selectbox("filter key", ["All"] + list(filter_maps.keys()), key="filter_key")
         if filter_key and filter_key != "All":
             values = list(filter_maps[st.session_state.filter_key])
@@ -101,7 +134,13 @@ class DatasetPage(BasePage):
 
             filtered_dataset_index = []
             for i, dataset_info in enumerate(dataset_infos):
-                if dataset_info[st.session_state.filter_key] in st.session_state.filter_value:
+                if filter_key == "created":
+                    if (
+                        dataset_info[st.session_state.filter_key].split(" ")[0]
+                        in st.session_state.filter_value
+                    ):
+                        filtered_dataset_index.append(i)
+                elif dataset_info[st.session_state.filter_key] in st.session_state.filter_value:
                     filtered_dataset_index.append(i)
 
             dataset_list = [dataset_list[i] for i in filtered_dataset_index]
@@ -111,9 +150,7 @@ class DatasetPage(BasePage):
             "Select Dataset", dataset_list, 0, captions=dataset_captions, key="select_dataset_name"
         )
 
-    def render_actions(self):
-        st.subheader("Dataset Actions")
-
+    def render_split_dataset(self):
         st.subheader("Split")
         train_ratio = st.slider("train ratio", 0.0, 1.0, 0.8, 0.1, key="split_train_ratio")
         val_ratio = st.slider("val ratio", 0.0, 1.0, 0.1, 0.1, key="split_val_ratio")
@@ -143,10 +180,9 @@ class DatasetPage(BasePage):
             )
             st.success("Split done!")
 
-        st.divider()
-
+    def render_export_dataset(self):
         st.subheader("Download Dataset")
-        data_type = st.selectbox("format", ["coco", "yolo"])
+        data_type = st.selectbox("format", ["coco", "yolo", "autocare_dlt", "transformers"])
         if st.button("Export"):
             exported_directory = wd.export(
                 dataset_name=st.session_state.select_dataset_name,
@@ -163,17 +199,6 @@ class DatasetPage(BasePage):
                         "Download", data, f"{data_type}.zip", key="download_exported_dataset"
                     )
 
-        st.divider()
-
-        agree = st.checkbox("I agree to delete this dataset. This action cannot be undone.")
-        if st.button("Delete", disabled=not agree):
-            wd.delete(
-                dataset_name=st.session_state.select_dataset_name,
-                root_dir=st.session_state.waffle_dataset_root_dir,
-            )
-            st.success("Delete done!")
-            st.experimental_rerun()
-
     def render_dataset_info(self):
         st.subheader("Dataset Info")
         dataset_info = wd.get_dataset_info_dict(
@@ -181,6 +206,18 @@ class DatasetPage(BasePage):
             root_dir=st.session_state.waffle_dataset_root_dir,
         )
         st.write(dataset_info)
+
+        st.divider()
+
+        with st.expander("Dataset Delete"):
+            agree = st.checkbox("I agree to delete this dataset. This action cannot be undone.")
+            if st.button("Delete", disabled=not agree):
+                wd.delete(
+                    dataset_name=st.session_state.select_dataset_name,
+                    root_dir=st.session_state.waffle_dataset_root_dir,
+                )
+                st.success("Delete done!")
+                st.rerun()
 
     def render_dataset_statistics(self):
         st.subheader("Statistics")
@@ -202,6 +239,9 @@ class DatasetPage(BasePage):
                 set_name=set_name,
                 root_dir=st.session_state.waffle_dataset_root_dir,
             )
+            if statistics is None:
+                st.warning("No statistics available.")
+                return
             st.write(
                 {
                     "num_images": statistics["num_images"],
@@ -255,19 +295,62 @@ class DatasetPage(BasePage):
             )
             image_viewer(image_paths, ncol=5, nrow=3)
 
+    def render_merge_dataset(self):
+        st.subheader("Merge Dataset")
+
+        st.text_input("Dataset Name", key="merge_dataset_name")
+        st.selectbox(
+            "Task Type",
+            [
+                "classification",
+                "object_detection",
+                "instance_segmentation",
+                "semantic_segmentation",
+                "text_recognition",
+            ],
+            key="merge_dataset_task_type",
+        )
+        dataset_list = wd.get_dataset_list(
+            root_dir=st.session_state.waffle_dataset_root_dir,
+            task=st.session_state.merge_dataset_task_type,
+        )
+        st.multiselect("Select Datasets", dataset_list, key="merge_dataset_select_datasets")
+        if st.button(
+            "Merge",
+            disabled=(len(st.session_state.merge_dataset_select_datasets) < 2)
+            or not st.session_state.merge_dataset_name,
+        ):
+            with st.spinner("Merging..."):
+                wd.merge(
+                    new_dataset_name=st.session_state.merge_dataset_name,
+                    task=st.session_state.merge_dataset_task_type,
+                    select_dataset_names=st.session_state.merge_dataset_select_datasets,
+                    root_dir=st.session_state.waffle_dataset_root_dir,
+                )
+                st.success("Merge done!")
+
     def render_content(self):
         with st.expander("Import New Dataset"):
             self.render_import_dataset()
         st.divider()
-        self.render_select_dataset()
+
+        col1, col2 = st.columns([0.5, 0.5], gap="medium")
+        with col1:
+            self.render_select_dataset()
         if st.session_state.select_dataset_name:
-            st.divider()
-
-            col1, col2 = st.columns([0.5, 0.5], gap="medium")
-            with col1:
-                self.render_dataset_info()
             with col2:
-                self.render_actions()
+                self.render_dataset_info()
 
-            with st.expander("Dataset Statistics"):
-                self.render_dataset_statistics()
+            st.divider()
+            st.subheader("Dataset Actions")
+            tab = ui.tabs(["Split", "Statistics", "Export", "Merge"])
+            if tab == "Split":
+                self.render_split_dataset()
+            elif tab == "Statistics":
+                with st.spinner("Loading statistics..."):
+                    self.render_dataset_statistics()
+            elif tab == "Export":
+                self.render_export_dataset()
+            elif tab == "Merge":
+                with st.spinner("Loading merge page..."):
+                    self.render_merge_dataset()

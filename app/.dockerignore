@@ -1,6 +1,11 @@
+hubs/
+datasets/
 __pycache__/
 .pre-commit-config.yaml
 .vscode/
 .gitignore
 .dockerignore
 dockerfile
+LICENSE
+logs/
+*.log

@@ -7,7 +7,7 @@ from typing import Union
 
 from waffle_hub.dataset import Dataset
 from waffle_hub.schema.fields import Image
-from waffle_utils.file import io
+from waffle_utils.file import io, search
 
 SET_CODES = {
     "total": None,
@@ -55,6 +55,9 @@ def get_images(dataset_name: str, set_name: str = "total", root_dir: str = None)
 
 def get_statistics(dataset_name: str, set_name: str = "total", root_dir: str = None) -> dict:
     dataset = Dataset.load(dataset_name, root_dir=root_dir)
+    if dataset.task.lower() == "text_recognition":
+        # raise ValueError("Text recognition dataset does not support statistics.")
+        return None
     if set_name == "total":
         images = dataset.get_images()
     else:
@@ -97,7 +100,10 @@ def get_statistics(dataset_name: str, set_name: str = "total", root_dir: str = N
 def get_split_list(dataset_name: str, root_dir: str = None) -> list[str]:
     dataset = Dataset.load(dataset_name, root_dir=root_dir)
     set_names = ["train", "val", "test", "unlabeled"]
-    split_ids = dataset.get_split_ids()
+    try:
+        split_ids = dataset.get_split_ids()
+    except FileNotFoundError:
+        return []
     return [set_name for set_name in set_names if len(split_ids[SET_CODES[set_name]]) > 0]
 
 
@@ -131,7 +137,6 @@ def get_sample_image_paths(
 
 
 # waffle dataset methods
-# TODO: type?
 def from_coco(dataset_name: str, root_dir: str, task: str, image_zip_file, json_files):
     temp_image_zip_file = NamedTemporaryFile(suffix=".zip")
     temp_image_zip_file.write(image_zip_file.read())
@@ -152,14 +157,29 @@ def from_coco(dataset_name: str, root_dir: str, task: str, image_zip_file, json_
         )
 
 
-# def from_yolo(dataset_name: str, root_dir: str, task: str, yolo_root_dir: str, yaml_path: str):
-#     Dataset.from_yolo(
-#         name=dataset_name,
-#         task=task,
-#         yolo_root_dir=yolo_root_dir,
-#         yaml_path=yaml_path,
-#         root_dir=root_dir,
-#     )
+def from_yolo(dataset_name: str, root_dir: str, task: str, yolo_root_zip_file):
+    temp_root_zip_file = NamedTemporaryFile(suffix=".zip")
+    temp_root_zip_file.write(yolo_root_zip_file.read())
+
+    with TemporaryDirectory() as temp_dir:
+        io.unzip(temp_root_zip_file.name, temp_dir, create_directory=True)
+        yaml_file = search.get_files(temp_dir, extension=".yaml")
+        if yaml_file:
+            if len(yaml_file) > 1:
+                raise ValueError("There are multiple yaml files in the root directory.")
+            temp_yaml_file = yaml_file[0]
+        else:
+            if task != "classification":
+                raise ValueError(f"{task} requires a yaml file.")
+            temp_yaml_file = None
+
+        Dataset.from_yolo(
+            name=dataset_name,
+            task=task,
+            yolo_root_dir=temp_dir,
+            yaml_path=temp_yaml_file,
+            root_dir=root_dir,
+        )
 
 
 def load(dataset_name: str, root_dir: str = None) -> Dataset:
@@ -181,3 +201,13 @@ def export(dataset_name: str, data_type: str, root_dir: str = None) -> str:
 def delete(dataset_name: str, root_dir: str = None):
     dataset = Dataset.load(dataset_name, root_dir=root_dir)
     dataset.delete()
+
+
+def merge(new_dataset_name: str, select_dataset_names: list[str], task: str, root_dir: str = None):
+    Dataset.merge(
+        name=new_dataset_name,
+        root_dir=root_dir,
+        src_names=select_dataset_names,
+        src_root_dirs=root_dir,
+        task=task,
+    )
