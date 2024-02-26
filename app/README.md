@@ -2,11 +2,13 @@ Waffle_app is a streamlit demo for easy delivery of [Waffle](https://snuailab.gi
 # Install
 ### pip
 ```
+cd app
 pip install -r requirements.txt
 ```
 
 # Run
 ### streamlit
 ```
-streamlit run main.py --server.runOnSave False --server.allowRunOnSave False --server.fileWatcherType none --server.port 80
+cd app
+streamlit run main.py --server.runOnSave False --server.allowRunOnSave False --server.fileWatcherType none --server.port <PORT>
 ```

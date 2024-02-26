@@ -1,4 +1,5 @@
 import multiprocessing
+from pathlib import Path
 
 if multiprocessing.current_process().name == "MainProcess":
     import os
@@ -25,6 +26,9 @@ if multiprocessing.current_process().name == "MainProcess":
         layout="wide",
     )
 
+    DATASET_ROOT_PATH = Path("datasets")
+    HUB_ROOT_PATH = Path("hubs")
+
     st.sidebar.title("Waffle App")
     current_page = st.sidebar.selectbox(
         label="Select Page",
@@ -33,17 +37,16 @@ if multiprocessing.current_process().name == "MainProcess":
 
     st.sidebar.divider()
     st.sidebar.subheader("Settings")
-    st.sidebar.text_input(
+    st_waffle_dataset_root_dir = st.sidebar.text_input(
         "Dataset Root Dir",
         value=wd.get_parse_root_dir(),
-        key="waffle_dataset_root_dir",
     )
-    st.sidebar.text_input(
+    st.session_state.waffle_dataset_root_dir = DATASET_ROOT_PATH / st_waffle_dataset_root_dir
+    st_waffle_hub_root_dir = st.sidebar.text_input(
         "Hub Root Dir",
         value=wh.get_parse_root_dir(),
-        key="waffle_hub_root_dir",
     )
-
+    st.session_state.waffle_hub_root_dir = HUB_ROOT_PATH / st_waffle_hub_root_dir
     st.sidebar.divider()
 
     page = nav(current_page)
