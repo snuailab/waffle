@@ -1,14 +1,37 @@
+# Waffle App
+
 Waffle_app is a streamlit demo for easy delivery of [Waffle](https://snuailab.github.io/waffle/).
-# Install
+
+## Install
+
 ### pip
-```
+
+```bash
 cd app
 pip install -r requirements.txt
 ```
 
-# Run
+## Run
+
 ### streamlit
-```
+
+```bash
 cd app
 streamlit run main.py --server.runOnSave False --server.allowRunOnSave False --server.fileWatcherType none --server.port <PORT>
+```
+
+## Docker
+
+Docker build and runs should run from parent directory.
+
+### Build
+
+```bash
+./build_docker.sh
+```
+
+### Run Docker-compose
+
+```bash
+docker compose up -d
 ```
