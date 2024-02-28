@@ -1,0 +1,15 @@
+# waffle dependencies
+waffle-hub==0.3.1
+
+# streamlit dependencies
+streamlit==1.29.0
+streamlit-tags
+streamlit-image_viewer
+streamlit-ace
+streamlit-datalist
+streamlit-autorefresh==1.0.1
+streamlit-shadcn-ui
+
+python-dotenv
+
+nvitop

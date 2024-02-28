@@ -1,0 +1,9 @@
+hubs/
+datasets/
+__pycache__/
+.pre-commit-config.yaml
+.vscode/
+.gitignore
+LICENSE
+logs/
+*.log
