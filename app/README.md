@@ -22,8 +22,6 @@ streamlit run main.py --server.runOnSave False --server.allowRunOnSave False --s
 
 ## Docker
 
-Docker build and runs should run from parent directory.
-
 ### Build
 
 ```bash
