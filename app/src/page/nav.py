@@ -2,19 +2,23 @@ from collections import OrderedDict, namedtuple
 
 from src.schema import PageInfo
 
-from . import DatasetPage, HubPage, PlayGround, RunPage
+from . import DatasetPage, HubPage, MenuPage, PlayGround, RunPage
 
 ComponentInfo = namedtuple("ComponentInfo", ["page_class", "page_info"])
 
 pages = OrderedDict(
     {
-        "Dataset": ComponentInfo(
+        "Dough": ComponentInfo(
             DatasetPage,
-            PageInfo(title="Dataset", subtitle="", description="This is Waffle Dataset!"),
+            PageInfo(title="Dough", subtitle="", description="This is Waffle Dataset!"),
         ),
         "Hub": ComponentInfo(
             HubPage,
             PageInfo(title="Hub", subtitle="", description="This is Waffle Hub!"),
+        ),
+        "Menu": ComponentInfo(
+            MenuPage,
+            PageInfo(title="Menu", subtitle="", description="This is Waffle Menu!"),
         ),
         # "Playground": ComponentInfo(
         #     PlayGround,
