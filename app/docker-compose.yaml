@@ -19,9 +19,10 @@ services:
           devices:
             - driver: nvidia
               capabilities: [gpu]
-    networks:
-      - waffle_network
+    network_mode: host
+    # networks:
+    #   - waffle_network
     entrypoint: bash entrypoint.sh
-networks:
-  waffle_network:
-    name: waffle_docker_network
+# networks:
+#   waffle_network:
+#     name: waffle_docker_network
