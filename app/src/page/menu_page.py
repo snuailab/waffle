@@ -134,7 +134,7 @@ class MenuPage(BasePage):
             hub = wh.load(name, root_dir=st.session_state.waffle_hub_root_dir)
             model_status = wh.get_train_status(hub)
 
-            if model_status.status_desc is None or model_status.status_desc in ["RUNNING", "FAILED"]:
+            if model_status is None or model_status.status_desc in ["RUNNING", "FAILED"]:
                 continue
 
             model_info = wh.get_model_config_dict(hub)
