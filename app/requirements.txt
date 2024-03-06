@@ -1,5 +1,6 @@
 # waffle dependencies
 waffle-hub==0.3.1
+git+https://github.com/snuailab/waffle_menu.git@main
 
 # streamlit dependencies
 streamlit==1.29.0

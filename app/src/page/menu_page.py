@@ -1,13 +1,14 @@
 import logging
 from collections import defaultdict
 from pathlib import Path
+from tempfile import NamedTemporaryFile, TemporaryDirectory
 
 import streamlit as st
 import streamlit_shadcn_ui as ui
 from src.component.auto_component import generate_component
 from src.schema.run import RunType
-from src.service import waffle_dataset as wd
 from src.service import waffle_hub as wh
+from src.service import waffle_menu as wm
 from src.service.run_service import run_service
 from src.utils.plot import plot_graphs
 from src.utils.resource import get_available_devices
@@ -28,7 +29,7 @@ class MenuPage(BasePage):
         st.session_state.sampling_button_disabled = False
         # result_dir = st.text_input("Sampling Experiment Name", key="sampling_result_dir")
         method = st.selectbox(
-            "Sampling Method", ["Random", "Entropy", "PL2N"], index=0, key="sampling_method"
+            "Sampling Method", ["PL2N", "Random", "Entropy"], index=0, key="sampling_method"
         )
 
         self.render_upload_unlabeled()
@@ -37,12 +38,14 @@ class MenuPage(BasePage):
             with col2:
                 col = st.columns([0.6, 0.4], gap="small")
                 with col[0]:
-                    self.render_select_hub()
+                    self.render_select_hub(method)
                 with col[1]:
                     self.render_hub_info()
 
         with col1:
             self.render_sampling_config(method)
+
+        self.render_sampling_button(method)
 
     def render_upload_unlabeled(self):
         st.subheader("Upload Unlabeled Data")
@@ -65,17 +68,20 @@ class MenuPage(BasePage):
                 "Upload Image Zip files",
                 type=["zip"],
                 key="unlabeled_image_zip",
-                accept_multiple_files=True,
+                accept_multiple_files=False,
             )
         elif data_type == "Video file":
             st_data = st.file_uploader(
                 "Upload Video", type=["mp4", "avi", "mkv"], key="unlabeled_video"
             )
+            st.info("To-do")
         if not st_data:
             st.error("Please upload a file")
             st.session_state.sampling_button_disabled = True
 
-    def render_sampling_config(self, method: str) -> dict:
+    def render_sampling_config(self, method: str):
+        if st.session_state.select_waffle_hub is None:
+            return
         st.subheader(f"Sampling Config ({method})")
         st.number_input("num_samples", value=100, key="sampling_num_samples")
         if method == "Random":
@@ -113,11 +119,15 @@ class MenuPage(BasePage):
                 "batch_size", value=int(default_params["batch_size"]), key="sampling_batch_size"
             )
             st.number_input("num_workers", value=0, key="sampling_num_workers")
+            if st.session_state.sampling_device == []:
+                st.error("Please select a device")
+                st.session_state.sampling_button_disabled = True
 
-    def render_select_hub(self):
+    def render_select_hub(self, method: str):
         st.subheader("Select Hub")
         model_list = wh.get_hub_list(root_dir=st.session_state.waffle_hub_root_dir)
 
+        model_name_list = []
         model_infos = []
         model_captions = []
         for name in model_list:
@@ -128,9 +138,10 @@ class MenuPage(BasePage):
                 continue
 
             model_info = wh.get_model_config_dict(hub)
-            if model_info["task"]:  # TODO
-                pass
+            if not model_info["task"] in wm.get_available_tasks(method):
+                continue
 
+            model_name_list.append(name)
             model_info["status"] = model_status.status_desc
             model_infos.append(model_info)
 
@@ -139,7 +150,7 @@ class MenuPage(BasePage):
             )
 
         hub_name = st.radio(
-            "Select Hub", model_list, 0, captions=model_captions, key="select_waffle_hub_name"
+            "Select Hub", model_name_list, 0, captions=model_captions, key="select_waffle_hub_name"
         )
         st.session_state.select_waffle_hub = wh.load(
             hub_name, root_dir=st.session_state.waffle_hub_root_dir
@@ -148,6 +159,101 @@ class MenuPage(BasePage):
     def render_hub_info(self):
         st.subheader("Hub Info")
         st.write(wh.get_model_config_dict(st.session_state.select_waffle_hub))
+
+    def render_sampling_button(self, method: str):
+        if st.button(
+            "Sampling", key="sampling_button", disabled=st.session_state.sampling_button_disabled
+        ):
+            with st.spinner("Sampling..."):
+                with TemporaryDirectory() as temp_dir:
+                    image_dir = Path(temp_dir) / "images"
+                    result_dir = Path(temp_dir) / "result"
+                    sample_zip_file = Path(temp_dir) / "sample.zip"
+                    io.make_directory(image_dir)
+                    io.make_directory(result_dir)
+                    if st.session_state.unlabeled_data_type == "Image files":
+                        for i, file in enumerate(st.session_state.unlabeled_images):
+                            file_path = Path(image_dir) / f"image_{i}{Path(file.name).suffix}"
+                            with open(file_path, "wb") as f:
+                                f.write(file.read())
+                    elif st.session_state.unlabeled_data_type == "Zip files":
+                        temp_unlabeled_image_zip_file = NamedTemporaryFile(suffix=".zip")
+                        temp_unlabeled_image_zip_file.write(
+                            st.session_state.unlabeled_image_zip.read()
+                        )
+                        io.unzip(
+                            temp_unlabeled_image_zip_file.name, image_dir, create_directory=True
+                        )
+                    elif st.session_state.unlabeled_data_type == "Video file":
+                        st.info("To-do")
+                        return
+
+                    if method == "Random":
+                        wm.random_sampling(
+                            image_dir=image_dir,
+                            num_samples=st.session_state.sampling_num_samples,
+                            result_dir=result_dir,
+                            seed=st.session_state.sampling_seed,
+                        )
+                    elif method == "Entropy":
+                        device = (
+                            "cpu"
+                            if "cpu" in st.session_state.sampling_device
+                            else ",".join(st.session_state.sampling_device)
+                        )
+                        wm.entropy_sampling(
+                            image_dir=image_dir,
+                            num_samples=st.session_state.sampling_num_samples,
+                            result_dir=result_dir,
+                            hub=st.session_state.select_waffle_hub,
+                            image_size=[
+                                st.session_state.sampling_image_width,
+                                st.session_state.sampling_image_height,
+                            ],
+                            batch_size=st.session_state.sampling_batch_size,
+                            device=device,
+                            num_workers=st.session_state.sampling_num_workers,
+                        )
+                    elif method == "PL2N":
+                        device = (
+                            "cpu"
+                            if "cpu" in st.session_state.sampling_device
+                            else ",".join(st.session_state.sampling_device)
+                        )
+                        wm.pl2n_sampling(
+                            image_dir=image_dir,
+                            num_samples=st.session_state.sampling_num_samples,
+                            result_dir=result_dir,
+                            hub=st.session_state.select_waffle_hub,
+                            image_size=[
+                                st.session_state.sampling_image_width,
+                                st.session_state.sampling_image_height,
+                            ],
+                            batch_size=st.session_state.sampling_batch_size,
+                            device=device,
+                            num_workers=st.session_state.sampling_num_workers,
+                            diversity_sampling=st.session_state.sampling_diversity_sampling,
+                        )
+
+                    st.subheader("Results")
+                    image_list = search.get_image_files(directory=result_dir / "images")
+                    if len(image_list) > 1000:
+                        image_list = image_list[:1000]
+                    image_viewer(image_list, ncol=5, nrow=2, image_name_visible=False)
+
+                    io.zip(result_dir, sample_zip_file, recursive=True)
+                    with open(sample_zip_file, "rb") as f:
+                        zip_bytes = f.read()
+                    st.subheader("Download Results")
+                    st.download_button(
+                        label="Download Sample",
+                        data=zip_bytes,
+                        file_name="sample.zip",
+                        key="download_sample",
+                    )
+                    st.write(wm.get_result_json(result_dir))
+                    st.write(wm.get_sample_json(result_dir))
+                    st.write(wm.get_total_json(result_dir))
 
     def render_content(self):
         tab = ui.tabs(["Sampling", "Dimensional Reduction"])

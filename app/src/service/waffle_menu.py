@@ -1,80 +1,96 @@
-import os
-import time
-from tempfile import NamedTemporaryFile
+from pathlib import Path
+from typing import Union
 
-import torch
-from src.schema.run import RunType
 from waffle_hub.hub import Hub
-from waffle_hub.schema.result import EvaluateResult, InferenceResult, TrainResult
-from waffle_hub.schema.running_status import (
-    EvaluatingStatus,
-    ExportingOnnxStatus,
-    ExportingWaffleStatus,
-    InferencingStatus,
-    TrainingStatus,
+from waffle_menu.active_learning import (
+    EntropySampling,
+    PL2NSampling,
+    RandomSampling,
 )
 from waffle_utils.file import io
 
-METRICS_MAP = {
-    "autocare_dlt": {
-        "SEMANTIC_SEGMENTATION": {
-            "train_loss": ["train/loss"],
-            "val_loss": ["val/loss"],
-            "metric": ["val/mpa"],
-        },
-        "OBJECT_DETECTION": {
-            "train_loss": ["train/loss"],
-            "val_loss": [],
-            "metric": ["val/COCOAP50", "val/COCOAP50_95"],
-        },
-        "CLASSIFICATION": {
-            "train_loss": ["train/loss"],
-            "val_loss": [],
-            "metric": ["val/f1", "val/precision", "val/recall", "val/accuracy"],
-        },
-        "TEXT_RECOGNITION": {
-            "train_loss": ["train/loss"],
-            "val_loss": [],
-            "metric": ["val/norm_ED", "val/accuracy"],
-        },
-    },
-    "ultralytics": {
-        "INSTANCE_SEGMENTATION": {
-            "train_loss": ["train/box_loss", "train/seg_loss", "train/cls_loss", "train/dfl_loss"],
-            "val_loss": ["val/box_loss", "val/seg_loss", "val/cls_loss", "val/dfl_loss"],
-            "metric": [
-                "metrics/precision(M)",
-                "metrics/recall(M)",
-                "metrics/mAP50(M)",
-                "metrics/mAP50-95(M)",
-            ],
-        },
-        "OBJECT_DETECTION": {
-            "train_loss": ["train/box_loss", "train/cls_loss", "train/dfl_loss"],
-            "val_loss": ["val/box_loss", "val/cls_loss", "val/dfl_loss"],
-            "metric": [
-                "metrics/precision(B)",
-                "metrics/recall(B)",
-                "metrics/mAP50(B)",
-                "metrics/mAP50-95(B)",
-            ],
-        },
-        "CLASSIFICATION": {
-            "train_loss": ["train/loss"],
-            "val_loss": ["val/loss"],
-            "metric": ["metrics/accuracy_top1", "metrics/accuracy_top5"],
-        },
-    },
-    "transformers": {
-        "CLASSIFICATION": {
-            "train_loss": ["loss"],
-            "val_loss": ["eval_loss"],
-            "metric": ["eval_accuracy"],
-        },
-        "OBJECT_DETECTION": {
-            "train_loss": ["loss"],
-            "val_loss": ["eval_loss"],
-            "metric": [],
-        },
-    },
+METHOD_MAP = {
+    # "Random": # all
+    "Entropy": ["CLASSIFICATION"],
+    "PL2N": ["CLASSIFICATION", "OBJECT_DETECTION"],
 }
+
+
+def get_available_tasks(method: str):
+    if method in METHOD_MAP.keys():
+        return METHOD_MAP[method]
+    else:
+        raise ValueError(f"Invalid method: {method}")
+
+
+def random_sampling(
+    image_dir: Union[str, Path], num_samples: int, result_dir: Union[str, Path], seed: int
+):
+    RandomSampling(seed=seed).sample(
+        image_dir=str(image_dir),
+        num_images=num_samples,
+        result_dir=str(result_dir),
+        save_images=True,
+    )
+
+
+def entropy_sampling(
+    image_dir: Union[str, Path],
+    num_samples: int,
+    result_dir: Union[str, Path],
+    hub: Hub,
+    image_size: list[int],
+    batch_size: int,
+    device: str,
+    num_workers: int,
+):
+    result = EntropySampling(
+        hub=hub,
+        image_size=image_size,
+        batch_size=batch_size,
+        device=device,
+        num_workers=num_workers,
+    ).sample(
+        image_dir=str(image_dir),
+        num_images=num_samples,
+        result_dir=str(result_dir),
+        save_images=True,
+    )
+
+
+def pl2n_sampling(
+    image_dir: Union[str, Path],
+    num_samples: int,
+    result_dir: Union[str, Path],
+    hub: Hub,
+    image_size: list[int],
+    batch_size: int,
+    device: str,
+    num_workers: int,
+    diversity_sampling: bool,
+):
+    result = PL2NSampling(
+        hub=hub,
+        diversity_sampling=diversity_sampling,
+        image_size=image_size,
+        batch_size=batch_size,
+        device=device,
+        num_workers=num_workers,
+    ).sample(
+        image_dir=str(image_dir),
+        num_images=num_samples,
+        result_dir=str(result_dir),
+        save_images=True,
+    )
+
+
+def get_result_json(result_dir: Union[str, Path]) -> dict:
+    return io.load_json(Path(result_dir) / "result.json")
+
+
+def get_sample_json(result_dir: Union[str, Path]) -> dict:
+    return io.load_json(Path(result_dir) / "sampled.json")
+
+
+def get_total_json(result_dir: Union[str, Path]) -> dict:
+    return io.load_json(Path(result_dir) / "total.json")
