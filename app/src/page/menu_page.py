@@ -1,17 +1,16 @@
 import logging
-from collections import defaultdict
 from pathlib import Path
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 
+import numpy as np
 import streamlit as st
 import streamlit_shadcn_ui as ui
-from src.component.auto_component import generate_component
 from src.schema.run import RunType
 from src.service import waffle_hub as wh
 from src.service import waffle_menu as wm
 from src.service.run_service import run_service
-from src.utils.plot import plot_graphs
 from src.utils.resource import get_available_devices
+from src.utils.video import video_frames_save
 from streamlit_image_viewer import image_viewer
 from streamlit_tags import st_tags
 from waffle_utils.file import io, search
@@ -74,7 +73,12 @@ class MenuPage(BasePage):
             st_data = st.file_uploader(
                 "Upload Video", type=["mp4", "avi", "mkv"], key="unlabeled_video"
             )
-            st.info("To-do")
+            st.select_slider(
+                "Capture Frame Rate(per sec)",
+                options=(list(np.arange(0.1, 1.0, 0.1)) + list(range(1, 11))),
+                value=1,
+                key="unlabeled_video_capture_frame_rate",
+            )
         if not st_data:
             st.error("Please upload a file")
             st.session_state.sampling_button_disabled = True
@@ -102,18 +106,11 @@ class MenuPage(BasePage):
                     key="sampling_image_height",
                 )
 
-            sub_col = st.columns(2, gap="medium")
-            with sub_col[0]:
+            if method == "PL2N":
                 container = st.container(border=True)
                 container.checkbox(
-                    "letter_box", value=bool(default_params["letter_box"]), key="sampling_letterbox"
+                    "Diversity Sampling", value=True, key="sampling_diversity_sampling"
                 )
-            with sub_col[1]:
-                if method == "PL2N":
-                    container = st.container(border=True)
-                    container.checkbox(
-                        "Diversity Sampling", value=True, key="sampling_diversity_sampling"
-                    )
             st.multiselect("device", get_available_devices(), key="sampling_device")
             st.number_input(
                 "batch_size", value=int(default_params["batch_size"]), key="sampling_batch_size"
@@ -155,6 +152,8 @@ class MenuPage(BasePage):
         st.session_state.select_waffle_hub = wh.load(
             hub_name, root_dir=st.session_state.waffle_hub_root_dir
         )
+        if st.session_state.select_waffle_hub == None:
+            st.session_state.sampling_button_disabled = True
 
     def render_hub_info(self):
         st.subheader("Hub Info")
@@ -186,7 +185,15 @@ class MenuPage(BasePage):
                         )
                     elif st.session_state.unlabeled_data_type == "Video file":
                         st.info("To-do")
-                        return
+                        video_path = Path(temp_dir) / st.session_state.unlabeled_video.name
+                        with open(video_path, "wb") as f:
+                            f.write(st.session_state.unlabeled_video.getbuffer())
+
+                        video_frames_save(
+                            video_path,
+                            image_dir,
+                            capture_frame_rate=st.session_state.unlabeled_video_capture_frame_rate,
+                        )
 
                     if method == "Random":
                         wm.random_sampling(

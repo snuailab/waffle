@@ -10,7 +10,15 @@ from waffle_menu.active_learning import (
 from waffle_utils.file import io
 
 METHOD_MAP = {
-    # "Random": # all
+    "Random": [
+        "CLASSIFICATION",
+        "OBJECT_DETECTION",
+        "INSTANCE_SEGMENTATION",
+        "SEMANTIC_SEGMENTATION",
+        "KEYPOINT_DETECTION",
+        "TEXT_RECOGNITION",
+        "REGRESSION",
+    ],  # all tasks
     "Entropy": ["CLASSIFICATION"],
     "PL2N": ["CLASSIFICATION", "OBJECT_DETECTION"],
 }
