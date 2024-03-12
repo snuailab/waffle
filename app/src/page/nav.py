@@ -2,7 +2,7 @@ from collections import OrderedDict, namedtuple
 
 from src.schema import PageInfo
 
-from . import DatasetPage, HubPage, MenuPage, PlayGround, RunPage
+from . import DatasetPage, HubPage, MenuPage, MenuTestPage, PlayGround, RunPage
 
 ComponentInfo = namedtuple("ComponentInfo", ["page_class", "page_info"])
 
@@ -19,6 +19,10 @@ pages = OrderedDict(
         "Menu": ComponentInfo(
             MenuPage,
             PageInfo(title="Menu", subtitle="", description="This is Waffle Menu!"),
+        ),
+        "Menu-Test": ComponentInfo(
+            MenuTestPage,
+            PageInfo(title="Menu-Test", subtitle="", description="This is Waffle Menu Test Page!"),
         ),
         # "Playground": ComponentInfo(
         #     PlayGround,
