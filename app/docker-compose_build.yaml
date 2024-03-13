@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis-server
+    restart: unless-stopped
+    network_mode: host
+
+  celeryworker:
+    # image: waffle_app_worker
+    container_name: waffle_app_worker
+    build:
+      context: .
+      dockerfile: backend/worker/Dockerfile
+    depends_on:
+      - redis
+    network_mode: host
+    # environment:
+    #   - API_PORT=6001
+    volumes:
+      - ./backend:/workspace
+      - /mnt/snuailab/waffle_app/datasets:/workspace/datasets
+      - /mnt/snuailab/waffle_app/hubs:/workspace/hubs
+      - /mnt/snuailab/waffle_app/share_temp:/workspace/share_temp
+    command: bash worker/worker-start.sh
+
+  webserver:
+    # image: waffle_app_worker
+    container_name: waffle_app_webserver
+    build:
+      context: .
+      dockerfile: backend/webserver/Dockerfile
+    depends_on:
+      - redis
+    network_mode: host
+    environment:
+      - API_PORT=6001
+    volumes:
+      - ./backend:/workspace
+      - /mnt/snuailab/waffle_app/datasets:/workspace/datasets
+      - /mnt/snuailab/waffle_app/hubs:/workspace/hubs
+      - /mnt/snuailab/waffle_app/share_temp:/workspace/share_temp
+    command: bash webserver/webserver-start.sh
+
+
+
+# networks:
+#   waffle_network:
+#     name: waffle_docker_network

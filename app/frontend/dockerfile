@@ -1,7 +1,7 @@
 FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
 
-RUN apt update \
-    && apt install --no-install-recommends -y gcc git zip curl htop libgl1-mesa-glx libglib2.0-0 libpython3-dev gnupg g++ wget
+RUN apt update && apt upgrade -y \
+    && apt install --no-install-recommends -y --no-cache --fix-missing gcc git zip curl htop libgl1-mesa-glx libglib2.0-0 libpython3-dev gnupg g++ wget
 
 ENV OMP_NUM_THREADS=1
 ENV MKL_SERVICE_FORCE_INTEL=1
