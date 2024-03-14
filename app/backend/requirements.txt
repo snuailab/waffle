@@ -4,6 +4,8 @@ typer==0.9.0
 uvicorn==0.26.0
 fastapi==0.109.0
 
+python-dotenv
+
 # waffle dependencies
 waffle-hub==0.3.1
 waffle-utils==1.1.0

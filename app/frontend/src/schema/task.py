@@ -2,13 +2,13 @@ from dataclasses import asdict, dataclass
 
 
 @dataclass
-class RunInfo:
-    name: str = None
-    run_type: str = None
+class TaskInfo:
+    name: str
+    task_id: str
+    task_type: str
 
     status: str = None
 
-    scheduled_time: str = None
     start_time: str = None
     end_time: str = None
 
@@ -22,7 +22,7 @@ class RunInfo:
         return asdict(self)
 
 
-class RunType:
+class TaskType:
     TRAIN = "train"
     EVALUATE = "evaluate"
     INFERENCE = "inference"
