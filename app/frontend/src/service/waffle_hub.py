@@ -241,7 +241,7 @@ def new(
         model_type=model_type,
         model_size=model_size,
         categories=categories if categories else None,
-        hub_root_dir=hub_root_dir,
+        root_dir=hub_root_dir,
     )
 
 
