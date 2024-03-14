@@ -50,6 +50,7 @@ class HubPage(BasePage):
                 if not hub_name:
                     st.error("Model Name is required")
                     return
+                st.warning(f"{st.session_state.waffle_hub_root_dir}")
                 hub = wh.new(
                     name=hub_name,
                     backend=backend,

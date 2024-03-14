@@ -20,5 +20,3 @@ COPY ./frontend/requirements.txt /workspace/requirements.txt
 RUN pip install -U pip \
     && pip install -r requirements.txt \
     && pip install -U numpy
-
-ENTRYPOINT ["bash", "entrypoint.sh"]
