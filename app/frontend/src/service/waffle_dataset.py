@@ -206,7 +206,7 @@ def delete(dataset_name: str, root_dir: str = None):
 def merge(new_dataset_name: str, select_dataset_names: list[str], task: str, root_dir: str = None):
     Dataset.merge(
         name=new_dataset_name,
-        root_dir=root_dir,
+        root_dir=str(root_dir),
         src_names=select_dataset_names,
         src_root_dirs=root_dir,
         task=task,

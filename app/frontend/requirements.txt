@@ -1,5 +1,5 @@
 # waffle dependencies
-waffle-hub>=0.3.1
+waffle-hub==0.3.1
 
 # streamlit dependencies
 streamlit==1.29.0
