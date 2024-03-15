@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  waffle_app:
+    image: snuailab/waffle-app:latest
+    container_name: waffle_app
+    volumes:
+      - /opt/snuailab/waffle_app/datasets:/workspace/datasets
+      - /opt/snuailab/waffle_app/results:/workspace/results
+      - /opt/snuailab/waffle_app/models:/workspace/models
+    environment:
+      - WAFFLE_APP_PORT=80
+      - MKL_SERVICE_FORCE_INTEL=1
+    ports:
+      - "80:80"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    network_mode: host
+    # networks:
+    #   - waffle_network
+    entrypoint: bash entrypoint.sh
+# networks:
+#   waffle_network:
+#     name: waffle_docker_network

@@ -2,9 +2,9 @@ from collections import defaultdict
 from dataclasses import asdict
 
 import streamlit as st
-from src.schema.run import RunType
+from src.schema.task import TaskType
 from src.service import waffle_hub as wh
-from src.service.run_service import run_service
+from src.service.api_service import api_service
 from src.utils.resource import cpu_check, gpu_check, memory_check
 from streamlit_autorefresh import st_autorefresh
 from waffle_hub.hub import Hub
@@ -28,15 +28,14 @@ class RunPage(BasePage):
 
     def render_train_list(self):
         st.subheader("Train Process List")
-        train_run_list = run_service.get_run_list(RunType.TRAIN)
+        train_task_list = api_service.get_task_list(TaskType.TRAIN)
         info_dict = defaultdict(list)
-        for run_name in train_run_list:
-            run = run_service.get_run(run_name)
-            run_info = run["run_info"]
-            for key, value in asdict(run_info).items():
+        for task_name in train_task_list:
+            task_info = api_service.get_task_info(task_name)
+            for key, value in asdict(task_info).items():
                 info_dict[key].append(value)
-        option_set = set(run_service.get_run_list(RunType.TRAIN)) - set(
-            run_service.get_running_process_name_list(RunType.TRAIN)
+        option_set = set(api_service.get_task_list(TaskType.TRAIN)) - set(
+            api_service.get_running_task_list(TaskType.TRAIN)
         )
 
         col1, col2 = st.columns([0.8, 0.2], gap="medium")
@@ -50,7 +49,7 @@ class RunPage(BasePage):
             )
             st.button(
                 "Delete Train Status",
-                on_click=lambda: run_service.del_run_list(
+                on_click=lambda: api_service.del_task_list(
                     st.session_state.run_page_train_remove_status_select
                 ),
             )
@@ -59,25 +58,24 @@ class RunPage(BasePage):
         st.subheader("Kill Train Process")
         st.selectbox(
             "Select",
-            options=run_service.get_running_process_name_list(RunType.TRAIN),
+            options=api_service.get_running_task_list(TaskType.TRAIN),
             key="run_page_train_kill_select",
         )
         st.button(
             "Train Kill",
-            on_click=lambda: run_service.kill(st.session_state.run_page_train_kill_select),
+            on_click=lambda: api_service.kill(st.session_state.run_page_train_kill_select),
         )
 
     def render_eval_list(self):
         st.subheader("Evaluate Process List")
-        eval_run_list = run_service.get_run_list(RunType.EVALUATE)
+        eval_task_list = api_service.get_task_list(TaskType.EVALUATE)
         info_dict = defaultdict(list)
-        for run_name in eval_run_list:
-            run = run_service.get_run(run_name)
-            run_info = run["run_info"]
-            for key, value in asdict(run_info).items():
+        for task_name in eval_task_list:
+            task_info = api_service.get_task_info(task_name)
+            for key, value in asdict(task_info).items():
                 info_dict[key].append(value)
-        option_set = set(run_service.get_run_list(RunType.EVALUATE)) - set(
-            run_service.get_running_process_name_list(RunType.EVALUATE)
+        option_set = set(api_service.get_task_list(TaskType.EVALUATE)) - set(
+            api_service.get_running_task_list(TaskType.EVALUATE)
         )
 
         col1, col2 = st.columns([0.8, 0.2], gap="medium")
@@ -91,7 +89,7 @@ class RunPage(BasePage):
             )
             st.button(
                 "Delete Evaluate Status",
-                on_click=lambda: run_service.del_run_list(
+                on_click=lambda: api_service.del_task_list(
                     st.session_state.run_page_eval_remove_status_select
                 ),
             )
@@ -100,25 +98,24 @@ class RunPage(BasePage):
         st.subheader("Kill Evaluate Process")
         st.selectbox(
             "Select",
-            options=run_service.get_running_process_name_list(RunType.EVALUATE),
+            options=api_service.get_running_task_list(TaskType.EVALUATE),
             key="run_page_eval_kill_select",
         )
         st.button(
             "Evaluate Kill",
-            on_click=lambda: run_service.kill(st.session_state.run_page_eval_kill_select),
+            on_click=lambda: api_service.kill(st.session_state.run_page_eval_kill_select),
         )
 
     def render_infer_list(self):
         st.subheader("Inference Process List")
-        infer_run_list = run_service.get_run_list(RunType.INFERENCE)
+        infer_task_list = api_service.get_task_list(TaskType.INFERENCE)
         info_dict = defaultdict(list)
-        for run_name in infer_run_list:
-            run = run_service.get_run(run_name)
-            run_info = run["run_info"]
-            for key, value in asdict(run_info).items():
+        for task_name in infer_task_list:
+            task_info = api_service.get_task_info(task_name)
+            for key, value in asdict(task_info).items():
                 info_dict[key].append(value)
-        option_set = set(run_service.get_run_list(RunType.INFERENCE)) - set(
-            run_service.get_running_process_name_list(RunType.INFERENCE)
+        option_set = set(api_service.get_task_list(TaskType.INFERENCE)) - set(
+            api_service.get_running_task_list(TaskType.INFERENCE)
         )
 
         col1, col2 = st.columns([0.8, 0.2], gap="medium")
@@ -132,7 +129,7 @@ class RunPage(BasePage):
             )
             st.button(
                 "Delete Inference Status",
-                on_click=lambda: run_service.del_run_list(
+                on_click=lambda: api_service.del_task_list(
                     st.session_state.run_page_infer_remove_status_select
                 ),
             )
@@ -141,25 +138,24 @@ class RunPage(BasePage):
         st.subheader("Kill Inference Process")
         st.selectbox(
             "Select",
-            options=run_service.get_running_process_name_list(RunType.INFERENCE),
+            options=api_service.get_running_task_list(TaskType.INFERENCE),
             key="run_page_infer_kill_select",
         )
         st.button(
             "Inference Kill",
-            on_click=lambda: run_service.kill(st.session_state.run_page_infer_kill_select),
+            on_click=lambda: api_service.kill(st.session_state.run_page_infer_kill_select),
         )
 
     def render_export_onnx_list(self):
         st.subheader("Export Onnx Process List")
-        export_onnx_run_list = run_service.get_run_list(RunType.EXPORT_ONNX)
+        export_onnx_task_list = api_service.get_task_list(TaskType.EXPORT_ONNX)
         info_dict = defaultdict(list)
-        for run_name in export_onnx_run_list:
-            run = run_service.get_run(run_name)
-            run_info = run["run_info"]
-            for key, value in asdict(run_info).items():
+        for task_name in export_onnx_task_list:
+            task_info = api_service.get_task_info(task_name)
+            for key, value in asdict(task_info).items():
                 info_dict[key].append(value)
-        option_set = set(run_service.get_run_list(RunType.EXPORT_ONNX)) - set(
-            run_service.get_running_process_name_list(RunType.EXPORT_ONNX)
+        option_set = set(api_service.get_task_list(TaskType.EXPORT_ONNX)) - set(
+            api_service.get_running_task_list(TaskType.EXPORT_ONNX)
         )
 
         col1, col2 = st.columns([0.8, 0.2], gap="medium")
@@ -173,7 +169,7 @@ class RunPage(BasePage):
             )
             st.button(
                 "Delete Export Onnx Status",
-                on_click=lambda: run_service.del_run_list(
+                on_click=lambda: api_service.del_task_list(
                     st.session_state.run_page_export_onnx_remove_status_select
                 ),
             )
@@ -182,53 +178,12 @@ class RunPage(BasePage):
         st.subheader("Kill Export Onnx Process")
         st.selectbox(
             "Select",
-            options=run_service.get_running_process_name_list(RunType.EXPORT_ONNX),
+            options=api_service.get_running_task_list(TaskType.EXPORT_ONNX),
             key="run_page_export_onnx_kill_select",
         )
         st.button(
             "Export Onnx Kill",
-            on_click=lambda: run_service.kill(st.session_state.run_page_export_onnx_kill_select),
-        )
-
-    def render_export_waffle_list(self):
-        st.subheader("Export Waffle Process List")
-        export_waffle_run_list = run_service.get_run_list(RunType.EXPORT_WAFFLE)
-        info_dict = defaultdict(list)
-        for run_name in export_waffle_run_list:
-            run = run_service.get_run(run_name)
-            run_info = run["run_info"]
-            for key, value in asdict(run_info).items():
-                info_dict[key].append(value)
-        option_set = set(run_service.get_run_list(RunType.EXPORT_WAFFLE)) - set(
-            run_service.get_running_process_name_list(RunType.EXPORT_WAFFLE)
-        )
-
-        col1, col2 = st.columns([0.8, 0.2], gap="medium")
-        with col1:
-            st.table(info_dict)
-        with col2:
-            st.selectbox(
-                "Remove Export Waffle Status",
-                options=list(option_set),
-                key="run_page_export_waffle_remove_status_select",
-            )
-            st.button(
-                "Delete Export Waffle Status",
-                on_click=lambda: run_service.del_run_list(
-                    st.session_state.run_page_export_waffle_remove_status_select
-                ),
-            )
-
-    def render_export_waffle_kill(self):
-        st.subheader("Kill Export Waffle Process")
-        st.selectbox(
-            "Select",
-            options=run_service.get_running_process_name_list(RunType.EXPORT_WAFFLE),
-            key="run_page_export_waffle_kill_select",
-        )
-        st.button(
-            "Export Waffle Kill",
-            on_click=lambda: run_service.kill(st.session_state.run_page_export_waffle_kill_select),
+            on_click=lambda: api_service.kill(st.session_state.run_page_export_onnx_kill_select),
         )
 
     def render_content(self):
@@ -249,10 +204,9 @@ class RunPage(BasePage):
         self.render_eval_list()
         self.render_infer_list()
         self.render_export_onnx_list()
-        self.render_export_waffle_list()
 
         st.divider()
-        cols = st.columns(5)
+        cols = st.columns(4)
         with cols[0]:
             self.render_train_kill()
         with cols[1]:
@@ -261,7 +215,5 @@ class RunPage(BasePage):
             self.render_infer_kill()
         with cols[3]:
             self.render_export_onnx_kill()
-        with cols[4]:
-            self.render_export_waffle_kill()
 
         st.divider()

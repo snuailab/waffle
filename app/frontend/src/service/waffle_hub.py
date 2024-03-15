@@ -3,9 +3,9 @@ import time
 from tempfile import NamedTemporaryFile
 
 import torch
-from src.schema.run import RunType
+from src.schema.task import TaskType
+from src.service.api_service import api_service
 from waffle_hub.hub import Hub
-from waffle_hub.schema.result import EvaluateResult, InferenceResult, TrainResult
 from waffle_hub.schema.running_status import (
     EvaluatingStatus,
     ExportingOnnxStatus,
@@ -106,15 +106,15 @@ def get_export_waffle_status(hub: Hub) -> ExportingWaffleStatus:
 
 
 def get_status(run_type: str, hub: Hub) -> dict:
-    if run_type == RunType.TRAIN:
+    if run_type == TaskType.TRAIN:
         return get_train_status(hub)
-    elif run_type == RunType.EVALUATE:
+    elif run_type == TaskType.EVALUATE:
         return get_evaluate_status(hub)
-    elif run_type == RunType.INFERENCE:
+    elif run_type == TaskType.INFERENCE:
         return get_inference_status(hub)
-    elif run_type == RunType.EXPORT_ONNX:
+    elif run_type == TaskType.EXPORT_ONNX:
         return get_export_onnx_status(hub)
-    elif run_type == RunType.EXPORT_WAFFLE:
+    elif run_type == TaskType.EXPORT_WAFFLE:
         return get_export_waffle_status(hub)
     else:
         return None
@@ -279,74 +279,83 @@ def delete_artifact(hub: Hub) -> None:
 
 def delete_status(hub: Hub, run_type: str) -> None:
     if hub is not None:
-        if run_type == RunType.TRAIN:
+        if run_type == TaskType.TRAIN:
             if hub.training_status_file.exists():
                 io.remove_file(hub.training_status_file)
-        elif run_type == RunType.EVALUATE:
+        elif run_type == TaskType.EVALUATE:
             if hub.evaluating_status_file.exists():
                 io.remove_file(hub.evaluating_status_file)
-        elif run_type == RunType.INFERENCE:
+        elif run_type == TaskType.INFERENCE:
             if hub.inferencing_status_file.exists():
                 io.remove_file(hub.inferencing_status_file)
-        elif run_type == RunType.EXPORT_ONNX:
+        elif run_type == TaskType.EXPORT_ONNX:
             if hub.exporting_onnx_status_file.exists():
                 io.remove_file(hub.exporting_onnx_status_file)
-        elif run_type == RunType.EXPORT_WAFFLE:
+        elif run_type == TaskType.EXPORT_WAFFLE:
             if hub.exporting_waffle_status_file.exists():
                 io.remove_file(hub.exporting_waffle_status_file)
 
 
 def delete_evaluate_result(hub: Hub) -> None:
-    delete_status(run_type=RunType.EVALUATE, hub=hub)
+    delete_status(run_type=TaskType.EVALUATE, hub=hub)
     if hub.evaluate_file.exists():
         io.remove_file(hub.evaluate_file)
 
 
 def delete_inference_result(hub: Hub) -> None:
-    delete_status(run_type=RunType.INFERENCE, hub=hub)
+    delete_status(run_type=TaskType.INFERENCE, hub=hub)
     if hub.inference_dir.exists():
         io.remove_directory(hub.inference_dir, recursive=True)
 
 
 def delete_export_onnx_result(hub: Hub) -> None:
-    delete_status(run_type=RunType.EXPORT_ONNX, hub=hub)
+    delete_status(run_type=TaskType.EXPORT_ONNX, hub=hub)
     if hub.onnx_file.exists():
         io.remove_file(hub.onnx_file)
 
 
 def delete_export_waffle_result(hub: Hub) -> None:
-    delete_status(run_type=RunType.EXPORT_WAFFLE, hub=hub)
+    delete_status(run_type=TaskType.EXPORT_WAFFLE, hub=hub)
     if hub.waffle_file.exists():
         io.remove_file(hub.waffle_file)
 
 
 def delete_result(hub: Hub, run_type: str) -> None:
-    if run_type == RunType.EVALUATE:
+    if run_type == TaskType.EVALUATE:
         delete_evaluate_result(hub)
-    elif run_type == RunType.INFERENCE:
+    elif run_type == TaskType.INFERENCE:
         delete_inference_result(hub)
-    elif run_type == RunType.EXPORT_ONNX:
+    elif run_type == TaskType.EXPORT_ONNX:
         delete_export_onnx_result(hub)
-    elif run_type == RunType.EXPORT_WAFFLE:
+    elif run_type == TaskType.EXPORT_WAFFLE:
         delete_export_waffle_result(hub)
 
 
-def train(hub: Hub, args: dict) -> TrainResult:
+def train(hub: Hub, args: dict) -> None:
     if hub.artifact_dir.exists():
         hub.delete_artifact()
-    return hub.train(**args)
+    delete_status(run_type=TaskType.TRAIN, hub=hub)
+
+    args.update({"hub_name": hub.name, "hub_root_dir": str(hub.root_dir)})
+
+    task_name = f"{hub.name}_{TaskType.TRAIN}"
+    api_service.add_task(name=task_name, task_type=TaskType.TRAIN, args=args)
 
 
 def is_trained(hub: Hub) -> bool:
     if hub is not None:
         status = hub.get_training_status()
         if status is not None:
-            return status["status_desc"] == "SUCCESS"
+            return status["status_desc"] in ["SUCCESS", "STOPPED"]
     return False
 
 
-def evaluate(hub: Hub, args: dict) -> EvaluateResult:
-    return hub.evaluate(**args)
+def evaluate(hub: Hub, args: dict) -> None:
+    delete_status(run_type=TaskType.EVALUATE, hub=hub)
+    args.update({"hub_name": hub.name, "hub_root_dir": str(hub.root_dir)})
+
+    task_name = f"{hub.name}_{TaskType.EVALUATE}"
+    api_service.add_task(name=task_name, task_type=TaskType.EVALUATE, args=args)
 
 
 def is_evaluated(hub: Hub) -> bool:
@@ -357,10 +366,15 @@ def is_evaluated(hub: Hub) -> bool:
     return False
 
 
-def inference(hub: Hub, args: dict) -> InferenceResult:
+def inference(hub: Hub, args: dict) -> None:
     if hub.inference_dir.exists():
         io.remove_directory(hub.inference_dir, recursive=True)
-    return hub.inference(**args)
+    delete_status(run_type=TaskType.INFERENCE, hub=hub)
+
+    args.update({"hub_name": hub.name, "hub_root_dir": str(hub.root_dir)})
+
+    task_name = f"{hub.name}_{TaskType.INFERENCE}"
+    api_service.add_task(name=task_name, task_type=TaskType.INFERENCE, args=args)
 
 
 def is_inferenced(hub: Hub) -> bool:
@@ -372,7 +386,12 @@ def is_inferenced(hub: Hub) -> bool:
 
 
 def export_onnx(hub: Hub, args: dict):
-    return hub.export_onnx(**args)
+    delete_status(run_type=TaskType.EXPORT_ONNX, hub=hub)
+
+    args.update({"hub_name": hub.name, "hub_root_dir": str(hub.root_dir)})
+
+    task_name = f"{hub.name}_{TaskType.EXPORT_ONNX}"
+    api_service.add_task(name=task_name, task_type=TaskType.EXPORT_ONNX, args=args)
 
 
 def is_exported_onnx(hub: Hub) -> bool:
@@ -384,7 +403,11 @@ def is_exported_onnx(hub: Hub) -> bool:
 
 
 def export_waffle(hub: Hub):
-    return hub.export_waffle()
+    delete_status(run_type=TaskType.EXPORT_WAFFLE, hub=hub)
+
+    task_name = f"{hub.name}_{TaskType.EXPORT_WAFFLE}"
+    args = {"hub_name": hub.name, "hub_root_dir": str(hub.root_dir)}
+    api_service.add_task(name=task_name, task_type=TaskType.EXPORT_WAFFLE, args=args)
 
 
 def is_exported_waffle(hub: Hub) -> bool:

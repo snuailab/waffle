@@ -5,10 +5,9 @@ from pathlib import Path
 import streamlit as st
 import streamlit_shadcn_ui as ui
 from src.component.auto_component import generate_component
-from src.schema.run import RunType
+from src.schema.task import TaskType
 from src.service import waffle_dataset as wd
 from src.service import waffle_hub as wh
-from src.service.run_service import run_service
 from src.utils.plot import plot_graphs
 from src.utils.resource import get_available_devices
 from streamlit_image_viewer import image_viewer
@@ -51,6 +50,7 @@ class HubPage(BasePage):
                 if not hub_name:
                     st.error("Model Name is required")
                     return
+                st.warning(f"{st.session_state.waffle_hub_root_dir}")
                 hub = wh.new(
                     name=hub_name,
                     backend=backend,
@@ -228,7 +228,7 @@ class HubPage(BasePage):
             )
             kwargs = {
                 "dataset": st.session_state.waffle_hub_train_dataset,
-                "dataset_root_dir": st.session_state.waffle_dataset_root_dir,
+                "dataset_root_dir": str(st.session_state.waffle_dataset_root_dir),
                 "epochs": st.session_state.train_epochs,
                 "learning_rate": st.session_state.train_learning_rate,
                 "batch_size": st.session_state.train_batch_size,
@@ -240,16 +240,9 @@ class HubPage(BasePage):
                 "device": device,
                 "workers": st.session_state.train_num_workers,
                 "seed": st.session_state.train_seed,
-                "advance_params": None,  # TODO: Advance Configs
+                "advance_params": {},  # TODO: Advance Configs
             }
-            run_args = {
-                "hub": st.session_state.select_waffle_hub,
-                "args": kwargs,
-            }
-
-            wh.delete_status(st.session_state.select_waffle_hub, RunType.TRAIN)
-            run_name = f"{st.session_state.select_waffle_hub.name}_{str(RunType.TRAIN)}"
-            run_service.add_run(run_name, RunType.TRAIN, wh.train, run_args)
+            wh.train(st.session_state.select_waffle_hub, kwargs)
             st.info("Train Process is registered.")
 
         # for name, type in TrainConfig.__annotations__.items():
@@ -400,7 +393,7 @@ class HubPage(BasePage):
         config = self.render_func_config("eval")
         dataset_dict = {
             "dataset": st.session_state.waffle_hub_eval_dataset,
-            "dataset_root_dir": st.session_state.waffle_dataset_root_dir,
+            "dataset_root_dir": str(st.session_state.waffle_dataset_root_dir),
         }
         config.update(dataset_dict)
 
@@ -427,13 +420,7 @@ class HubPage(BasePage):
 
         if st.button("Evaluate", disabled=st.session_state.eval_button_disabled):
             kwargs = config
-            run_args = {
-                "hub": st.session_state.select_waffle_hub,
-                "args": kwargs,
-            }
-            wh.delete_status(st.session_state.select_waffle_hub, RunType.EVALUATE)
-            run_name = f"{st.session_state.select_waffle_hub.name}_{str(RunType.EVALUATE)}"
-            run_service.add_run(run_name, RunType.EVALUATE, wh.evaluate, run_args)
+            wh.evaluate(st.session_state.select_waffle_hub, kwargs)
             st.info("Evaluate Process is registered.")
 
     def render_evaluate_result(self):
@@ -454,7 +441,7 @@ class HubPage(BasePage):
 
             st.write(result)
 
-            self.render_delete_result(RunType.EVALUATE)
+            self.render_delete_result(TaskType.EVALUATE)
 
     def render_inference(self):
         st.session_state.infer_button_disabled = False
@@ -524,14 +511,11 @@ class HubPage(BasePage):
                 "draw": True,
             }
             config.update(infer_dict)
-            run_args = {
-                "hub": st.session_state.select_waffle_hub,
-                "args": config,
-            }
 
-            wh.delete_status(st.session_state.select_waffle_hub, RunType.INFERENCE)
-            run_name = f"{st.session_state.select_waffle_hub.name}_{str(RunType.INFERENCE)}"
-            run_service.add_run(run_name, RunType.INFERENCE, wh.inference, run_args)
+            wh.inference(st.session_state.select_waffle_hub, config)
+            # wh.delete_status(st.session_state.select_waffle_hub, TaskType.INFERENCE)
+            # run_name = f"{st.session_state.select_waffle_hub.name}_{str(TaskType.INFERENCE)}"
+            # run_service.add_run(run_name, TaskType.INFERENCE, wh.inference, run_args)
             st.info("Inference Process is registered.")
 
     def render_inference_result(self):
@@ -547,13 +531,11 @@ class HubPage(BasePage):
                 if len(image_list) > 1000:
                     image_list = image_list[:1000]
                 image_viewer(image_list, ncol=5, nrow=2, image_name_visible=True)
-
-            # TODO: Video Viewer
-            # video_path = search.get_video_files(directory=infer_path)
-            # if video_path != []:
-            #     # st.write(str(video_path[0].absolute()))
-            #     st.video(str(video_path[0].absolute()), format="video/avi")
-            self.render_delete_result(RunType.INFERENCE)
+            video_path = search.get_video_files(directory=infer_path)
+            if video_path != []:
+                st.write(str(video_path[0].absolute()))
+                # st.video(str(video_path[0].absolute()), format="video/avi")
+            self.render_delete_result(TaskType.INFERENCE)
 
     def render_export_onnx(self):
         train_config = wh.get_train_config(st.session_state.select_waffle_hub)
@@ -598,23 +580,12 @@ class HubPage(BasePage):
                 "device": device,
                 "opset_version": opset_version,
             }
-            run_args = {
-                "hub": st.session_state.select_waffle_hub,
-                "args": kwargs,
-            }
-            wh.delete_status(st.session_state.select_waffle_hub, RunType.EXPORT_ONNX)
-            run_name = f"{st.session_state.select_waffle_hub.name}_{str(RunType.EXPORT_ONNX)}"
-            run_service.add_run(run_name, RunType.EXPORT_ONNX, wh.export_onnx, run_args)
+            wh.export_onnx(st.session_state.select_waffle_hub, kwargs)
             st.info("Export Onnx Process is registered.")
 
     def render_export_waffle(self):
         if st.button("Export Waffle"):
-            run_args = {
-                "hub": st.session_state.select_waffle_hub,
-            }
-            wh.delete_status(st.session_state.select_waffle_hub, RunType.EXPORT_WAFFLE)
-            run_name = f"{st.session_state.select_waffle_hub.name}_{str(RunType.EXPORT_WAFFLE)}"
-            run_service.add_run(run_name, RunType.EXPORT_WAFFLE, wh.export_waffle, run_args)
+            wh.export_waffle(st.session_state.select_waffle_hub)
             st.info("Export Waffle Process is registered.")
 
     def render_export_onnx_result(self):
@@ -629,7 +600,7 @@ class HubPage(BasePage):
                 file_name=Path(onnx_file_path).name,
                 key="download_onnx_model",
             )
-            self.render_delete_result(RunType.EXPORT_ONNX)
+            self.render_delete_result(TaskType.EXPORT_ONNX)
 
     def render_export_waffle_result(self):
         if wh.is_exported_waffle(st.session_state.select_waffle_hub):
@@ -643,7 +614,7 @@ class HubPage(BasePage):
                 file_name=Path(waffle_file_path).name,
                 key="download_waffle_model",
             )
-            self.render_delete_result(RunType.EXPORT_WAFFLE)
+            self.render_delete_result(TaskType.EXPORT_WAFFLE)
 
     def render_delete_hub(self):
         agree = st.checkbox("I agree to delete this hub. This action cannot be undone.")
@@ -679,6 +650,9 @@ class HubPage(BasePage):
 
         st.subheader("Hub Actions")
         tab = ui.tabs(["Train", "Evaluate", "Inference", "Export"])
+        # train_tab, eval_tab, infer_tab, export_tab = st.tabs(
+        #     ["Train", "Evaluate", "Inference", "Export"]
+        # )
         if tab == "Train":
             st.subheader("Train")
             with st.spinner("Loading default settings..."):
