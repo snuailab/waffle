@@ -1,6 +1,52 @@
 version: "3.3"
 
 services:
+  waffle_app_mq:
+    image: redis:alpine
+    container_name: redis-server
+    restart: unless-stopped
+    network_mode: host
+
+  api_worker:
+    image: waffle-app_worker
+    container_name: wa_worker
+    restart: unless-stopped
+    depends_on:
+      - waffle_app_mq
+    network_mode: host
+    # environment:
+    #   - API_PORT=6001
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    volumes:
+      - ./backend:/workspace
+      - /mnt/snuailab/waffle_app/datasets:/workspace/datasets
+      - /mnt/snuailab/waffle_app/hubs:/workspace/hubs
+      - /mnt/snuailab/waffle_app/share_temp:/workspace/share_temp
+    command: bash worker/worker-start.sh
+
+  api_server:
+    image: waffle_app_worker
+    container_name: waffle_app_api
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      - waffle_app_mq
+    network_mode: host
+    environment:
+      - API_PORT=6001
+    volumes:
+      - ./backend:/workspace
+      - /mnt/snuailab/waffle_app/datasets:/workspace/datasets
+      - /mnt/snuailab/waffle_app/hubs:/workspace/hubs
+      - /mnt/snuailab/waffle_app/share_temp:/workspace/share_temp
+    command: bash webserver-start.sh
+
   waffle_app:
     image: snuailab/waffle-app:latest
     container_name: waffle_app
@@ -23,6 +69,8 @@ services:
     # networks:
     #   - waffle_network
     entrypoint: bash entrypoint.sh
+
+
 # networks:
 #   waffle_network:
 #     name: waffle_docker_network

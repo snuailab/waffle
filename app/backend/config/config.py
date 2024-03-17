@@ -1,6 +1,5 @@
 import os
 
-
 class Config:
     TITLE: str = "Waffle APP Backend API"
     DESCRIPTION: str = "Backend API for Waffle APP"
