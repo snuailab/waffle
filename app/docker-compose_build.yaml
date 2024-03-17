@@ -1,0 +1,81 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis-server
+    restart: unless-stopped
+    network_mode: host
+
+  celeryworker:
+    image: waffle_app_worker
+    container_name: waffle_app_worker
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      - redis
+    network_mode: host
+    environment:
+      - WAFFLE_DATASET_ROOT_DIR=/waffle/datasets
+      - WAFFLE_HUB_ROOT_DIR=/waffle/hubs
+    #   - API_PORT=6001
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    volumes:
+      - ./backend:/workspace
+      - ${WAFFLE_ROOT_DIR}:/waffle
+    command: bash worker/worker-start.sh
+
+  webserver:
+    image: waffle_app_worker
+    container_name: waffle_app_webserver
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      - redis
+    network_mode: host
+
+    environment:
+      - API_PORT=6001
+      - MKL_SERVICE_FORCE_INTEL=1
+      - WAFFLE_DATASET_ROOT_DIR=/waffle/datasets
+      - WAFFLE_HUB_ROOT_DIR=/waffle/hubs
+    volumes:
+      - ./backend:/workspace
+      - ${WAFFLE_ROOT_DIR}:/waffle
+    command: bash webserver/webserver-start.sh
+
+  waffle_app:
+    # image: snuailab/waffle-app:latest
+    container_name: waffle_app
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    volumes:
+      - ./frontend:/workspace
+      - ${WAFFLE_ROOT_DIR}:/waffle
+    environment:
+      - WAFFLE_APP_PORT=5050
+      - MKL_SERVICE_FORCE_INTEL=1
+      - WAFFLE_DATASET_ROOT_DIR=/waffle/datasets
+      - WAFFLE_HUB_ROOT_DIR=/waffle/hubs
+    ports:
+      - "80:80"
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    depends_on:
+      - redis
+      - celeryworker
+      - webserver
+    entrypoint: bash entrypoint.sh
+
